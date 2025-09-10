@@ -6,7 +6,7 @@ Configuration personnelle versionnée pour Claude Code.
 
 ```
 claude-config/
-├── output_styles/         # Styles de sortie personnalisés
+├── output-styles/         # Styles de sortie personnalisés
 ├── hooks/                 # Scripts de hooks
 ├── settings.local.json    # Vos paramètres personnels (ignoré par Git)
 ├── install.sh             # Script d'installation

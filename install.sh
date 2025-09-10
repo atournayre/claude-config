@@ -55,9 +55,9 @@ install_config() {
         echo "⚠️  Conseil: créez settings.local.json pour vos paramètres personnels"
     fi
     
-    echo "Copie du dossier output_styles..."
-    rm -rf "$CLAUDE_DIR/output_styles"
-    cp -r "$CONFIG_DIR/output_styles" "$CLAUDE_DIR/output_styles"
+    echo "Copie du dossier output-styles..."
+    rm -rf "$CLAUDE_DIR/output-styles"
+    cp -r "$CONFIG_DIR/output-styles" "$CLAUDE_DIR/output-styles"
     
     echo "Copie du dossier hooks..."
     rm -rf "$CLAUDE_DIR/hooks"
@@ -70,7 +70,7 @@ install_config() {
     echo ""
     echo "Les fichiers suivants ont été copiés:"
     echo "  ~/.claude/settings.json"
-    echo "  ~/.claude/output_styles/"
+    echo "  ~/.claude/output-styles/"
     echo "  ~/.claude/hooks/"
     echo ""
     echo "Pour synchroniser après des modifications, utilisez: $0 sync"
