@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sudo dpkg:*)"
+    ],
+    "deny": []
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "npx ccusage statusline"
+  }
+}
