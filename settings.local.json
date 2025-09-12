@@ -7,6 +7,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "npx ccusage statusline"
+    "command": "python3 status_lines/status_line_v5.py",
+    "padding": 0
   }
 }

@@ -41,6 +41,7 @@ DIRECTORIES=(
     "output-styles"
     "hooks"
     "commands"
+    "status_lines"
 )
 
 # Fonction pour copier la configuration
