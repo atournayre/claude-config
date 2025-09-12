@@ -234,7 +234,7 @@ def format_extras(extras, git_info, daily_cost=None):
         else:
             pairs.append(f"{key}:{value}")
     
-    return " ".join(pairs)
+    return " | ".join(pairs)
 
 
 def generate_status_line(input_data):
@@ -273,7 +273,7 @@ def generate_status_line(input_data):
 
     # Combined Agent + Model + Version - Gradient effect
     if agent_name:
-        agent_model_version = f"{agent_name} • {model_name}"
+        agent_model_version = f"{agent_name} | {model_name}"
     else:
         agent_model_version = model_name
     if version:
