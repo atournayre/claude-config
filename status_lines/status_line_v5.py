@@ -254,8 +254,8 @@ def generate_status_line(input_data):
 
     if error:
         # Log the error but show a default message
-        log_status_line(input_data, f"[{model_name}] 💭 No session data", error)
-        return f"\033[34m[{model_name}]\033[0m \033[90m💭 No session data\033[0m"
+        log_status_line(input_data, f"{model_name} 💭 No session data", error)
+        return f"\033[34m{model_name}\033[0m \033[90m💭 No session data\033[0m"
 
     # Extract agent name, prompts, and extras
     agent_name = session_data.get("agent_name", None)
@@ -278,7 +278,7 @@ def generate_status_line(input_data):
         agent_model_version = model_name
     if version:
         agent_model_version += f" / v{version}"
-    parts.append(f"\033[95m[{agent_model_version}]\033[0m")  # Magenta
+    parts.append(f"\033[95m{agent_model_version}\033[0m")  # Magenta
 
     # Most recent prompt with icon
     if prompts:
@@ -292,8 +292,8 @@ def generate_status_line(input_data):
     # Add extras and git info
     extras_str = format_extras(extras, git_info, daily_cost)
     if extras_str:
-        # Display extras in cyan with brackets
-        parts.append(f"\033[36m[{extras_str}]\033[0m")
+        # Display extras in cyan
+        parts.append(f"\033[36m{extras_str}\033[0m")
 
     # Join with separator
     status_line = " | ".join(parts)
@@ -320,11 +320,11 @@ def main():
 
     except json.JSONDecodeError:
         # Handle JSON decode errors gracefully - output basic status
-        print("\033[31m[Claude] 💭 JSON Error\033[0m")
+        print("\033[31mClaude 💭 JSON Error\033[0m")
         sys.exit(0)
     except Exception as e:
         # Handle any other errors gracefully - output basic status
-        print(f"\033[31m[Claude] 💭 Error: {str(e)}\033[0m")
+        print(f"\033[31mClaude 💭 Error: {str(e)}\033[0m")
         sys.exit(0)
 
 
