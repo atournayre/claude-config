@@ -258,7 +258,7 @@ def generate_status_line(input_data):
         return f"\033[34m[{model_name}]\033[0m \033[90m💭 No session data\033[0m"
 
     # Extract agent name, prompts, and extras
-    agent_name = session_data.get("agent_name", "Agent")
+    agent_name = session_data.get("agent_name", None)
     prompts = session_data.get("prompts", [])
     extras = session_data.get("extras", {})
     
@@ -272,7 +272,10 @@ def generate_status_line(input_data):
     parts = []
 
     # Combined Agent + Model + Version - Gradient effect
-    agent_model_version = f"{agent_name} • {model_name}"
+    if agent_name:
+        agent_model_version = f"{agent_name} • {model_name}"
+    else:
+        agent_model_version = model_name
     if version:
         agent_model_version += f" / v{version}"
     parts.append(f"\033[95m[{agent_model_version}]\033[0m")  # Magenta
@@ -317,11 +320,11 @@ def main():
 
     except json.JSONDecodeError:
         # Handle JSON decode errors gracefully - output basic status
-        print("\033[31m[Agent • Claude] 💭 JSON Error\033[0m")
+        print("\033[31m[Claude] 💭 JSON Error\033[0m")
         sys.exit(0)
     except Exception as e:
         # Handle any other errors gracefully - output basic status
-        print(f"\033[31m[Agent • Claude] 💭 Error: {str(e)}\033[0m")
+        print(f"\033[31m[Claude] 💭 Error: {str(e)}\033[0m")
         sys.exit(0)
 
 
