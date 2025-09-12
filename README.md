@@ -90,6 +90,43 @@ cp settings.json settings.local.json
 
 Le script copie automatiquement vos fichiers vers `~/.claude/` et configure les permissions nécessaires.
 
+### Dépendances optionnelles
+
+#### ccusage (recommandé pour status line v5)
+
+La status line v5 utilise ccusage pour afficher le coût journalier d'utilisation de Claude Code.
+
+```bash
+# Installation via npm (recommandé)
+npm install -g ccusage
+
+# Vérification de l'installation
+ccusage --version
+
+# Test du suivi des coûts
+ccusage daily --json
+```
+
+**Configuration :**
+- ccusage lit automatiquement vos clés API depuis les variables d'environnement
+- Configurez `ANTHROPIC_API_KEY` si nécessaire
+- Le coût s'affiche avec l'icône 💰 dans la status line
+
+**Sans ccusage :**
+- La status line v5 fonctionne normalement
+- Le coût journalier n'est simplement pas affiché
+- Aucune erreur n'est générée
+
+#### Autres dépendances
+
+```bash
+# Pour les hooks TTS (text-to-speech)
+pip install pyttsx3
+
+# Pour les hooks avec dotenv
+pip install python-dotenv
+```
+
 ## Commandes personnalisées
 
 Les commandes personnalisées (slash commands) permettent d'étendre les capacités de Claude Code.
@@ -269,12 +306,13 @@ Les status lines affichent des informations contextuelles dans l'interface Claud
   - ⚡ Commandes slash
   - ❓ Questions
 - **Informations Git** : Branche, modifications, ahead/behind
-- **Coût journalier** : Intégration ccusage pour le suivi des coûts
+- **Coût journalier** : Intégration ccusage pour le suivi des coûts (nécessite `npm install -g ccusage`)
+- **Style de sortie actuel** : Affiche le style Claude Code en cours (📝)
 - **Agent et modèle** : Affichage conditionnel de l'agent
 - **Extras personnalisables** : Clés-valeurs configurables
 - **Logging complet** : Enregistrement dans `logs/status_line.json`
 
-**Format** : `[Agent | ]Model | vX.X.X | 🔍 Prompt actuel | 🐛 Prompt précédent | 💡 Prompt ancien… | 💰$X.XX | 🌿branch ~X | key value`
+**Format** : `[Agent | ]Model | vX.X.X | 🔍 Prompt actuel | 🐛 Prompt précédent | 💡 Prompt ancien… | 💰$X.XX | 📝Style | 🌿branch ~X | key value`
 
 ### Version 4 (`status_line_v4.py`)
 **Fonctionnalités** :
