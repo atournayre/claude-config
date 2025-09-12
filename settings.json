@@ -68,7 +68,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".claude/venv/bin/python .claude/hooks/pre_tool_use.py"
+            "command": "python3 hooks/pre_tool_use.py"
           }
         ]
       }
@@ -79,7 +79,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".claude/venv/bin/python .claude/hooks/post_tool_use.py"
+            "command": "python3 hooks/post_tool_use.py"
           }
         ]
       }
@@ -90,7 +90,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".claude/venv/bin/python .claude/hooks/notification.py --notify"
+            "command": "python3 hooks/notification.py --notify"
           }
         ]
       }
@@ -101,7 +101,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".claude/venv/bin/python .claude/hooks/stop.py --chat"
+            "command": "python3 hooks/stop.py --chat"
           }
         ]
       }
@@ -112,7 +112,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".claude/venv/bin/python .claude/hooks/subagent_stop.py --notify"
+            "command": "python3 hooks/subagent_stop.py --notify"
           }
         ]
       }
@@ -122,7 +122,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".claude/venv/bin/python .claude/hooks/user_prompt_submit.py --log-only --store-last-prompt --name-agent"
+            "command": "python3 hooks/user_prompt_submit.py --log-only --store-last-prompt --name-agent"
           }
         ]
       }
@@ -133,7 +133,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".claude/venv/bin/python .claude/hooks/pre_compact.py"
+            "command": "python3 hooks/pre_compact.py"
           }
         ]
       }
@@ -144,7 +144,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".claude/venv/bin/python .claude/hooks/session_start.py"
+            "command": "python3 hooks/session_start.py"
           }
         ]
       }
