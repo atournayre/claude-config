@@ -277,15 +277,30 @@ def generate_status_line(input_data):
     else:
         agent_model_version = model_name
     if version:
-        agent_model_version += f" / v{version}"
+        agent_model_version += f" | v{version}"
     parts.append(f"\033[95m{agent_model_version}\033[0m")  # Magenta
 
-    # Most recent prompt with icon
+    # Last 3 prompts (most recent first)
     if prompts:
+        # Current prompt - bright white with icon
         current_prompt = prompts[-1]
         icon = get_prompt_icon(current_prompt)
-        truncated = truncate_prompt(current_prompt, 80)
+        truncated = truncate_prompt(current_prompt, 70)
         parts.append(f"{icon} \033[97m{truncated}\033[0m")
+        
+        # Previous prompt - light gray, shorter
+        if len(prompts) > 1:
+            prev_prompt = prompts[-2]
+            prev_icon = get_prompt_icon(prev_prompt)
+            truncated = truncate_prompt(prev_prompt, 50)
+            parts.append(f"\033[90m{prev_icon} {truncated}\033[0m")
+        
+        # Older prompt - darker gray, even shorter
+        if len(prompts) > 2:
+            older_prompt = prompts[-3]
+            older_icon = get_prompt_icon(older_prompt)
+            truncated = truncate_prompt(older_prompt, 35)
+            parts.append(f"\033[90m{older_icon} {truncated}…\033[0m")
     else:
         parts.append("\033[90m💭 No prompts yet\033[0m")
 
