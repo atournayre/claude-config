@@ -36,6 +36,13 @@ backup_config() {
     fi
 }
 
+# Configuration des répertoires à copier
+DIRECTORIES=(
+    "output-styles"
+    "hooks"
+    "commands"
+)
+
 # Fonction pour copier la configuration
 install_config() {
     echo "Installation/synchronisation de la configuration Claude Code..."
@@ -45,7 +52,7 @@ install_config() {
     # Créer le répertoire ~/.claude s'il n'existe pas
     mkdir -p "$CLAUDE_DIR"
     
-    # Copier les fichiers et dossiers
+    # Gestion spéciale pour settings.json
     if [ -f "$CONFIG_DIR/settings.local.json" ]; then
         echo "Copie de settings.local.json..."
         cp "$CONFIG_DIR/settings.local.json" "$CLAUDE_DIR/settings.json"
@@ -55,23 +62,32 @@ install_config() {
         echo "⚠️  Conseil: créez settings.local.json pour vos paramètres personnels"
     fi
     
-    echo "Copie du dossier output-styles..."
-    rm -rf "$CLAUDE_DIR/output-styles"
-    cp -r "$CONFIG_DIR/output-styles" "$CLAUDE_DIR/output-styles"
+    # Copier tous les répertoires
+    local copied_items=("~/.claude/settings.json")
     
-    echo "Copie du dossier hooks..."
-    rm -rf "$CLAUDE_DIR/hooks"
-    cp -r "$CONFIG_DIR/hooks" "$CLAUDE_DIR/hooks"
-    
-    # S'assurer que les hooks sont exécutables
-    chmod +x "$CLAUDE_DIR/hooks"/*.sh 2>/dev/null || true
+    for dir in "${DIRECTORIES[@]}"; do
+        if [ ! -d "$CONFIG_DIR/$dir" ]; then
+            echo "⚠️  Le répertoire $dir n'existe pas, ignoré"
+            continue
+        fi
+        
+        echo "Copie du dossier $dir..."
+        rm -rf "$CLAUDE_DIR/$dir"
+        cp -r "$CONFIG_DIR/$dir" "$CLAUDE_DIR/$dir"
+        copied_items+=("~/.claude/$dir/")
+        
+        # Post-traitement spécial pour les hooks
+        if [ "$dir" = "hooks" ]; then
+            chmod +x "$CLAUDE_DIR/$dir"/*.sh 2>/dev/null || true
+        fi
+    done
     
     echo "✅ Configuration installée!"
     echo ""
     echo "Les fichiers suivants ont été copiés:"
-    echo "  ~/.claude/settings.json"
-    echo "  ~/.claude/output-styles/"
-    echo "  ~/.claude/hooks/"
+    for item in "${copied_items[@]}"; do
+        echo "  $item"
+    done
     echo ""
     echo "Pour synchroniser après des modifications, utilisez: $0 sync"
 }
