@@ -88,7 +88,21 @@ def get_daily_cost():
 def get_output_style():
     """Get current output style from settings."""
     try:
-        # Check for settings.local.json first, then settings.json
+        # Style shortcuts for compact display - includes all Claude Code styles
+        style_shortcuts = {
+            'Default': 'Default',
+            'Explanatory': 'Explain',
+            'Learning': 'Learn',
+            'Markdown Focused': 'MD',
+            'Bullet Points': 'Bullets',
+            'HTML Structured': 'HTML',
+            'YAML Structured': 'YAML',
+            'Ultra Concise': 'Concise',
+            'Table Based': 'Table',
+            'GenUI': 'GenUI'
+        }
+        
+        # Check for current style in settings
         settings_files = ['settings.local.json', 'settings.json']
         
         for settings_file in settings_files:
@@ -97,16 +111,6 @@ def get_output_style():
                     settings = json.load(f)
                     output_style = settings.get('outputStyle')
                     if output_style:
-                        # Shorten common output styles for display
-                        style_shortcuts = {
-                            'YAML Structured': 'YAML',
-                            'Markdown Focused': 'MD',
-                            'HTML Structured': 'HTML', 
-                            'Table Based': 'Table',
-                            'Bullet Points': 'Bullets',
-                            'Ultra Concise': 'Concise',
-                            'GenUI': 'GenUI'
-                        }
                         return style_shortcuts.get(output_style, output_style)
         
         return None  # No output style found
