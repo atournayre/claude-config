@@ -85,6 +85,37 @@ def get_daily_cost():
     return None  # Error occurred
 
 
+def get_output_style():
+    """Get current output style from settings."""
+    try:
+        # Check for settings.local.json first, then settings.json
+        settings_files = ['settings.local.json', 'settings.json']
+        
+        for settings_file in settings_files:
+            if Path(settings_file).exists():
+                with open(settings_file, 'r') as f:
+                    settings = json.load(f)
+                    output_style = settings.get('outputStyle')
+                    if output_style:
+                        # Shorten common output styles for display
+                        style_shortcuts = {
+                            'YAML Structured': 'YAML',
+                            'Markdown Focused': 'MD',
+                            'HTML Structured': 'HTML', 
+                            'Table Based': 'Table',
+                            'Bullet Points': 'Bullets',
+                            'Ultra Concise': 'Concise',
+                            'GenUI': 'GenUI'
+                        }
+                        return style_shortcuts.get(output_style, output_style)
+        
+        return None  # No output style found
+    except Exception:
+        pass
+    
+    return None  # Error occurred
+
+
 def get_git_info():
     """Get comprehensive git information."""
     git_info = {}
@@ -195,13 +226,17 @@ def get_prompt_icon(prompt):
         return "💬"
 
 
-def format_extras(extras, git_info, daily_cost=None):
+def format_extras(extras, git_info, daily_cost=None, output_style=None):
     """Format extras dictionary and git info into a compact string."""
     combined = {}
     
     # Add daily cost first (higher priority)
     if daily_cost:
         combined['💰'] = daily_cost
+    
+    # Add output style (high priority)
+    if output_style:
+        combined['📝'] = output_style
     
     # Add git info to extras
     if git_info:
@@ -267,6 +302,9 @@ def generate_status_line(input_data):
     
     # Get daily cost
     daily_cost = get_daily_cost()
+    
+    # Get output style
+    output_style = get_output_style()
 
     # Build status line components
     parts = []
@@ -305,7 +343,7 @@ def generate_status_line(input_data):
         parts.append("\033[90m💭 No prompts yet\033[0m")
 
     # Add extras and git info
-    extras_str = format_extras(extras, git_info, daily_cost)
+    extras_str = format_extras(extras, git_info, daily_cost, output_style)
     if extras_str:
         # Display extras in cyan
         parts.append(f"\033[36m{extras_str}\033[0m")
