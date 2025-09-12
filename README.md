@@ -17,41 +17,39 @@ Configuration personnelle versionnée pour Claude Code avec des fonctionnalités
 
 ```
 claude-config/
-├── commands/              # Commandes personnalisées (slash commands)
-│   ├── all_tools.md      # Liste tous les outils disponibles
-│   ├── git_status.md     # Affiche le statut Git
-│   └── question.md       # Pose une question structurée
-├── hooks/                 # Scripts de hooks pour automatiser les actions
-│   ├── utils/            # Utilitaires partagés
-│   │   ├── llm/         # Intégration LLM
-│   │   └── tts/         # Text-to-speech
-│   ├── notification.py   # Notifications système
-│   ├── post_tool_use.py # Exécuté après l'utilisation d'un outil
-│   ├── pre_compact.py   # Avant compactage de session
-│   ├── pre_tool_use.py  # Avant l'utilisation d'un outil
-│   ├── session_start.py # Au démarrage de session
-│   ├── stop.py          # À l'arrêt
-│   ├── subagent_stop.py # Arrêt de sous-agent
+├── commands/                 # Commandes personnalisées (slash commands)
+│   ├── all_tools.md          # Liste tous les outils disponibles
+│   ├── git_status.md         # Affiche le statut Git
+│   └── question.md           # Pose une question structurée
+├── hooks/                    # Scripts de hooks pour automatiser les actions
+│   ├── utils/                # Utilitaires partagés
+│   │   ├── llm/              # Intégration LLM
+│   │   └── tts/              # Text-to-speech
+│   ├── notification.py       # Notifications système
+│   ├── post_tool_use.py      # Exécuté après l'utilisation d'un outil
+│   ├── pre_compact.py        # Avant compactage de session
+│   ├── pre_tool_use.py       # Avant l'utilisation d'un outil
+│   ├── session_start.py      # Au démarrage de session
+│   ├── stop.py               # À l'arrêt
+│   ├── subagent_stop.py      # Arrêt de sous-agent
 │   └── user_prompt_submit.py # Soumission de prompt
-├── output-styles/         # Styles de sortie personnalisés
-│   ├── bullet-points.md  # Format liste à puces
-│   ├── genui.md         # Interface HTML générée
-│   ├── html-structured.md # HTML structuré
-│   ├── markdown-focused.md # Markdown enrichi
-│   ├── table-based.md   # Format tableau
-│   ├── ultra-concise.md # Ultra concis
-│   └── yaml-structured.md # Format YAML
-├── status_lines/          # Lignes de statut personnalisées
-│   ├── status_line.py    # Version basique
-│   ├── status_line_v2.py # Version 2
-│   ├── status_line_v3.py # Version 3 avec historique
-│   ├── status_line_v4.py # Version 4 améliorée
-│   └── status_line_v5.py # Version 5 complète
-├── logs/                  # Logs des hooks et status lines
-├── settings.json          # Configuration principale
-├── settings.local.json    # Paramètres personnels (ignoré par Git)
-├── install.sh            # Script d'installation
-└── README.md             # Ce fichier
+├── output-styles/            # Styles de sortie personnalisés
+│   ├── bullet-points.md      # Format liste à puces
+│   ├── genui.md              # Interface HTML générée
+│   ├── html-structured.md    # HTML structuré
+│   ├── markdown-focused.md   # Markdown enrichi
+│   ├── table-based.md        # Format tableau
+│   ├── ultra-concise.md      # Ultra concis
+│   └── yaml-structured.md    # Format YAML
+├── status_lines/             # Lignes de statut personnalisées
+│   ├── status_line.py        # Version basique
+│   ├── status_line_v2.py     # Version 2
+│   ├── status_line_v3.py     # Version 3 avec historique
+│   ├── status_line_v4.py     # Version 4 améliorée
+│   └── status_line_v5.py     # Version 5 complète
+├── settings.json             # Configuration principale
+├── install.sh                # Script d'installation
+└── README.md                 # Ce fichier
 ```
 
 ## Installation
