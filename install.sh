@@ -54,13 +54,13 @@ install_config() {
     mkdir -p "$CLAUDE_DIR"
     
     # Gestion spéciale pour settings.json
-    if [ -f "$CONFIG_DIR/settings.local.json" ]; then
-        echo "Copie de settings.local.json..."
-        cp "$CONFIG_DIR/settings.local.json" "$CLAUDE_DIR/settings.json"
+    if [ -f "$CONFIG_DIR/settings.json" ]; then
+        echo "Copie de settings.json..."
+        cp "$CONFIG_DIR/settings.json" "$CLAUDE_DIR/settings.json"
     elif [ -f "$CONFIG_DIR/settings.json" ]; then
         echo "Copie de settings.json (template)..."
         cp "$CONFIG_DIR/settings.json" "$CLAUDE_DIR/settings.json"
-        echo "⚠️  Conseil: créez settings.local.json pour vos paramètres personnels"
+        echo "⚠️  Conseil: créez settings.json pour vos paramètres personnels"
     fi
     
     # Copier tous les répertoires
