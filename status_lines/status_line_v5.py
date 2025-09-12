@@ -229,10 +229,10 @@ def format_extras(extras, git_info, daily_cost=None):
     # Format each key-value pair
     pairs = []
     for key, value in combined.items():
-        if key.startswith('�'):  # Emoji keys don't need colon
+        if key.startswith('�'):  # Emoji keys don't need separator
             pairs.append(f"{key}{value}")
         else:
-            pairs.append(f"{key}:{value}")
+            pairs.append(f"{key} {value}")
     
     return " | ".join(pairs)
 
