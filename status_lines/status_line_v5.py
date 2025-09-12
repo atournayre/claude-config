@@ -57,6 +57,34 @@ def log_status_line(input_data, status_line_output, error_message=None):
         json.dump(log_data, f, indent=2)
 
 
+def get_daily_cost():
+    """Get today's Claude Code usage cost."""
+    try:
+        today = datetime.now().strftime('%Y-%m-%d')
+        result = subprocess.run(
+            ['npx', 'ccusage', 'daily', '--json'],
+            capture_output=True,
+            text=True,
+            timeout=5
+        )
+        
+        if result.returncode == 0:
+            data = json.loads(result.stdout)
+            daily_data = data.get('daily', [])
+            
+            # Find today's data
+            for day_data in daily_data:
+                if day_data.get('date') == today:
+                    cost = day_data.get('totalCost', 0)
+                    return f"${cost:.2f}"
+            
+            return "$0.00"  # No usage today
+    except Exception:
+        pass
+    
+    return None  # Error occurred
+
+
 def get_git_info():
     """Get comprehensive git information."""
     git_info = {}
@@ -167,9 +195,13 @@ def get_prompt_icon(prompt):
         return "💬"
 
 
-def format_extras(extras, git_info):
+def format_extras(extras, git_info, daily_cost=None):
     """Format extras dictionary and git info into a compact string."""
     combined = {}
+    
+    # Add daily cost first (higher priority)
+    if daily_cost:
+        combined['💰'] = daily_cost
     
     # Add git info to extras
     if git_info:
@@ -222,8 +254,8 @@ def generate_status_line(input_data):
 
     if error:
         # Log the error but show a default message
-        log_status_line(input_data, f"[Agent] [{model_name}] 💭 No session data", error)
-        return f"\033[91m[Agent]\033[0m \033[34m[{model_name}]\033[0m \033[90m💭 No session data\033[0m"
+        log_status_line(input_data, f"[{model_name}] 💭 No session data", error)
+        return f"\033[34m[{model_name}]\033[0m \033[90m💭 No session data\033[0m"
 
     # Extract agent name, prompts, and extras
     agent_name = session_data.get("agent_name", "Agent")
@@ -232,6 +264,9 @@ def generate_status_line(input_data):
     
     # Get git information
     git_info = get_git_info()
+    
+    # Get daily cost
+    daily_cost = get_daily_cost()
 
     # Build status line components
     parts = []
@@ -239,7 +274,7 @@ def generate_status_line(input_data):
     # Combined Agent + Model + Version - Gradient effect
     agent_model_version = f"{agent_name} • {model_name}"
     if version:
-        agent_model_version += f" v{version}"
+        agent_model_version += f" / v{version}"
     parts.append(f"\033[95m[{agent_model_version}]\033[0m")  # Magenta
 
     # Most recent prompt with icon
@@ -252,7 +287,7 @@ def generate_status_line(input_data):
         parts.append("\033[90m💭 No prompts yet\033[0m")
 
     # Add extras and git info
-    extras_str = format_extras(extras, git_info)
+    extras_str = format_extras(extras, git_info, daily_cost)
     if extras_str:
         # Display extras in cyan with brackets
         parts.append(f"\033[36m[{extras_str}]\033[0m")
