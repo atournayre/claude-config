@@ -101,10 +101,10 @@ def get_output_style():
             'Table Based': 'Table',
             'GenUI': 'GenUI'
         }
-        
+
         # Check for current style in settings
         settings_files = ['settings.local.json', 'settings.json']
-        
+
         for settings_file in settings_files:
             if Path(settings_file).exists():
                 with open(settings_file, 'r') as f:
@@ -112,11 +112,113 @@ def get_output_style():
                     output_style = settings.get('outputStyle')
                     if output_style:
                         return style_shortcuts.get(output_style, output_style)
-        
+
         return None  # No output style found
     except Exception:
         pass
-    
+
+    return None  # Error occurred
+
+
+def parse_transcript_tokens(transcript_path):
+    """Parse transcript JSONL file to calculate current context tokens (like /context command)."""
+    try:
+        if not Path(transcript_path).exists():
+            return None
+
+        # Get the most recent assistant message with usage data
+        # This represents the current context window calculation
+        recent_usage = None
+
+        with open(transcript_path, 'r') as f:
+            for line in f:
+                try:
+                    data = json.loads(line.strip())
+                    # Look for assistant messages with usage data (most recent wins)
+                    if ('message' in data and 'usage' in data['message'] and
+                        data.get('type') == 'assistant'):
+                        recent_usage = data['message']['usage']
+                except (json.JSONDecodeError, KeyError):
+                    continue
+
+        if not recent_usage:
+            return None
+
+        # Calculate current context tokens based on Claude's context window logic
+        # System tokens (cached): cache_creation + cache_read represent system prompt + tools
+        system_tokens = recent_usage.get('cache_creation_input_tokens', 0) + recent_usage.get('cache_read_input_tokens', 0)
+
+        # Current message tokens: input + output for this interaction
+        message_tokens = recent_usage.get('input_tokens', 0) + recent_usage.get('output_tokens', 0)
+
+        # Current context = system + recent messages (approximation)
+        # This should roughly match what /context shows
+        current_context_tokens = system_tokens + message_tokens
+
+        return current_context_tokens
+
+    except Exception:
+        return None
+
+
+def get_token_usage(input_data):
+    """Get token usage information from input data."""
+    try:
+        # Check if we have token information in the input data
+        exceeds_200k = input_data.get('exceeds_200k_tokens', False)
+        max_tokens = 200000  # Claude's context window
+
+        # Try to get transcript path and parse actual tokens
+        transcript_path = input_data.get('transcript_path')
+        current_tokens = None
+
+        if transcript_path:
+            current_tokens = parse_transcript_tokens(transcript_path)
+
+        # Fallback: If we don't have actual token counts, estimate based on cost and duration
+        if current_tokens is None:
+            cost_data = input_data.get('cost', {})
+            total_duration = cost_data.get('total_duration_ms', 0)
+
+            # Rough estimation: longer conversations use more tokens
+            # Assume ~100 tokens per second of conversation
+            if total_duration > 0:
+                estimated_tokens = min(int(total_duration / 1000 * 100), max_tokens)
+                current_tokens = estimated_tokens
+            else:
+                # If we have the exceeds flag, show we're near the limit
+                if exceeds_200k:
+                    current_tokens = max_tokens
+                else:
+                    # No data available, return None
+                    return None
+
+        # Format the token usage
+        percentage = int((current_tokens / max_tokens) * 100)
+
+        # Use different formatting based on usage level
+        if percentage >= 90:
+            # Critical - red
+            icon = "🔴"
+        elif percentage >= 70:
+            # Warning - orange
+            icon = "🟠"
+        elif percentage >= 50:
+            # Moderate - yellow
+            icon = "🟡"
+        else:
+            # Good - green
+            icon = "🟢"
+
+        # Format tokens with K suffix for readability
+        current_k = f"{current_tokens/1000:.0f}k" if current_tokens >= 1000 else str(current_tokens)
+        max_k = f"{max_tokens/1000:.0f}k" if max_tokens >= 1000 else str(max_tokens)
+
+        return f"{icon} {current_k}/{max_k} ({percentage}%)"
+
+    except Exception:
+        pass
+
     return None  # Error occurred
 
 
@@ -230,18 +332,22 @@ def get_prompt_icon(prompt):
         return "💬"
 
 
-def format_extras(extras, git_info, daily_cost=None, output_style=None):
+def format_extras(extras, git_info, daily_cost=None, output_style=None, token_usage=None):
     """Format extras dictionary and git info into a compact string."""
     combined = {}
-    
-    # Add daily cost first (higher priority)
+
+    # Add token usage first (highest priority - critical info)
+    if token_usage:
+        combined['tokens'] = token_usage
+
+    # Add daily cost (high priority)
     if daily_cost:
         combined['💰'] = daily_cost
-    
+
     # Add output style (high priority)
     if output_style:
         combined['📝'] = output_style
-    
+
     # Add git info to extras
     if git_info:
         if 'branch' in git_info:
@@ -252,7 +358,7 @@ def format_extras(extras, git_info, daily_cost=None, output_style=None):
                 combined['🌿'] += f" ↑{git_info['ahead']}"
             if 'behind' in git_info:
                 combined['🌿'] += f" ↓{git_info['behind']}"
-    
+
     # Add other extras
     if extras:
         for key, value in extras.items():
@@ -261,18 +367,21 @@ def format_extras(extras, git_info, daily_cost=None, output_style=None):
             if len(str_value) > 20:
                 str_value = str_value[:17] + "..."
             combined[key] = str_value
-    
+
     if not combined:
         return None
-    
+
     # Format each key-value pair
     pairs = []
     for key, value in combined.items():
-        if key.startswith('�'):  # Emoji keys don't need separator
+        if key == 'tokens':
+            # Token usage is already formatted with its icon
+            pairs.append(value)
+        elif key.startswith('�') or key.startswith('🌿') or key.startswith('💰') or key.startswith('📝'):  # Emoji keys don't need separator
             pairs.append(f"{key}{value}")
         else:
             pairs.append(f"{key} {value}")
-    
+
     return " | ".join(pairs)
 
 
@@ -303,12 +412,15 @@ def generate_status_line(input_data):
     
     # Get git information
     git_info = get_git_info()
-    
+
     # Get daily cost
     daily_cost = get_daily_cost()
-    
+
     # Get output style
     output_style = get_output_style()
+
+    # Get token usage
+    token_usage = get_token_usage(input_data)
 
     # Build status line components
     parts = []
@@ -347,7 +459,7 @@ def generate_status_line(input_data):
         parts.append("\033[90m💭 No prompts yet\033[0m")
 
     # Add extras and git info
-    extras_str = format_extras(extras, git_info, daily_cost, output_style)
+    extras_str = format_extras(extras, git_info, daily_cost, output_style, token_usage)
     if extras_str:
         # Display extras in cyan
         parts.append(f"\033[36m{extras_str}\033[0m")
