@@ -43,6 +43,9 @@
       "Bash(tree:*)",
       "Bash(vendor/bin/phpstan:*)",
       "Bash(vendor/bin/phpunit:*)",
+      "Bash(npx claude-code-templates:*)",
+      "Bash(xdg-open:*)",
+      "Bash(sleep:*)",
       "WebFetch(domain:docs.anthropic.com)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:localhost)"
