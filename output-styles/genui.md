@@ -26,21 +26,38 @@ After every request generate complete, self-contained HTML documents with embedd
 Apply this consistent modern theme to all generated HTML:
 
 ### Color Palette
+Dark mode (default):
+- Primary blue: `#3498db` (for accents, links, borders)
+- Light text: `#e8e8e8` (for main text)
+- Medium light: `#b8b8b8` (for subheadings)
+- Dark background: `#1a1a1a` (for main background)
+- Code background: `#2d2d2d` (for code blocks)
+- Info blue: `#1a3a4a` (for info sections)
+- Success green: `#1a3a2a` (for success messages)
+- Warning orange: `#3a2a1a` (for warnings)
+- Error red: `#3a1a1a` (for errors)
+
+Light mode:
 - Primary blue: `#3498db` (for accents, links, borders)
 - Dark blue: `#2c3e50` (for main headings)
 - Medium gray: `#34495e` (for subheadings)
 - Light gray: `#f5f5f5` (for code backgrounds)
 - Info blue: `#e8f4f8` (for info sections)
-- Success green: `#27ae60` (for success messages)
-- Warning orange: `#f39c12` (for warnings)
-- Error red: `#e74c3c` (for errors)
+- Success green: `#d4edda` (for success messages)
+- Warning orange: `#fff3cd` (for warnings)
+- Error red: `#f8d7da` (for errors)
 
 ### Typography
 ```css
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
     line-height: 1.6;
+    color: #e8e8e8;
+    background-color: #1a1a1a;
+}
+body.light-mode {
     color: #333;
+    background-color: #fff;
 }
 code {
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Courier New', monospace;
@@ -55,11 +72,12 @@ code {
 
 ### Component Styling
 - **Headers**: Border-bottom accent on h2, proper spacing hierarchy
-- **Code blocks**: Light gray background (#f8f9fa) with left border accent (#007acc)
-- **Inline code**: Light background (#f5f5f5) with padding and border-radius
-- **Info/Warning/Error sections**: Colored left border with tinted background
+- **Code blocks**: Dark background (#2d2d2d) with left border accent (#3498db) - light mode: (#f8f9fa) with (#007acc)
+- **Inline code**: Dark background (#404040) with padding and border-radius - light mode: (#f5f5f5)
+- **Info/Warning/Error sections**: Colored left border with tinted background (dark mode colors by default)
 - **Tables**: Clean borders, alternating row colors, proper padding
 - **Lists**: Adequate spacing between items
+- **Mode toggle**: Button in top-right corner to switch between dark/light modes
 
 ## Document Structure Template
 ```html
@@ -70,13 +88,26 @@ code {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>[Descriptive Page Title]</title>
     <style>
-        /* Complete embedded styles here */
+        /* Complete embedded styles here with dark/light mode support */
         body { ... }
+        body.light-mode { ... }
         article { ... }
-        /* All component styles */
+        /* All component styles with mode variants */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 8px 16px;
+            border: 1px solid #3498db;
+            background: transparent;
+            color: #3498db;
+            border-radius: 4px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
+    <button class="theme-toggle" onclick="toggleTheme()">🌞 Light</button>
     <article>
         <header>
             <h1>[Main Title]</h1>
@@ -88,6 +119,13 @@ code {
             [Optional footer]
         </footer>
     </article>
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const btn = document.querySelector('.theme-toggle');
+            btn.textContent = document.body.classList.contains('light-mode') ? '🌙 Dark' : '🌞 Light';
+        }
+    </script>
 </body>
 </html>
 ```
@@ -102,7 +140,7 @@ Create styled sections for different content types:
     <p>...</p>
 </section>
 ```
-Style: Light blue background (#e8f4f8), blue left border
+Style: Dark mode - Dark blue background (#1a3a4a), blue left border. Light mode - Light blue background (#e8f4f8), blue left border
 
 ### Success Section
 ```html
@@ -111,7 +149,7 @@ Style: Light blue background (#e8f4f8), blue left border
     <p>...</p>
 </section>
 ```
-Style: Light green background, green left border
+Style: Dark mode - Dark green background (#1a3a2a), green left border. Light mode - Light green background (#d4edda), green left border
 
 ### Warning Section
 ```html
@@ -120,7 +158,7 @@ Style: Light green background, green left border
     <p>...</p>
 </section>
 ```
-Style: Light orange background, orange left border
+Style: Dark mode - Dark orange background (#3a2a1a), orange left border. Light mode - Light orange background (#fff3cd), orange left border
 
 ### Error Section
 ```html
@@ -129,7 +167,7 @@ Style: Light orange background, orange left border
     <p>...</p>
 </section>
 ```
-Style: Light red background, red left border
+Style: Dark mode - Dark red background (#3a1a1a), red left border. Light mode - Light red background (#f8d7da), red left border
 
 ## Code Display
 - Syntax highlighting through class names (language-python, language-javascript, etc.)
