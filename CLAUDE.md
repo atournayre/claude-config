@@ -69,7 +69,6 @@
 - Environnement : Linux/PhpStorm
 
 # Principes Elegant Objects & Bonnes Pratiques
-*Note : Tous les principes sont listés. À ajuster selon applicabilité.*
 
 ## CI/CD et Workflow
 - Tous les workflows CI doivent passer avant la revue de code
