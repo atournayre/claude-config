@@ -38,10 +38,12 @@ backup_config() {
 
 # Configuration des répertoires à copier
 DIRECTORIES=(
-    "output-styles"
-    "hooks"
     "commands"
+    "doc"
+    "hooks"
+    "output-styles"
     "status_lines"
+    "task"
 )
 
 # Fonction pour copier la configuration
