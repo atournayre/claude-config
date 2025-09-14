@@ -19,10 +19,46 @@
 - Créer systématiquement des tests unitaires pour toute nouvelle fonction
 - Privilégier TDD quand possible
 
-## Conventions de code (à compléter selon tes préférences)
-- Style de code : [à définir]
-- Gestion d'erreurs : [à définir]
-- Documentation : [à définir]
+## Conventions de code
+### Style de code
+**Nommage :**
+- Classes : PascalCase (`UserRepository`, `EmailService`)
+- Méthodes/variables : camelCase (`createUser`, `isActive`)
+- Constantes : SNAKE_CASE (`MAX_RETRY_COUNT`)
+- Interfaces : toujours un suffixe (`UserRepositoryInterface`, `ServiceInterface`)
+
+**Formatage :**
+- PSR-12 pour PHP
+- Indentation : 4 espaces
+- Accolades sur nouvelle ligne pour classes/méthodes
+- Longueur max de ligne : 120 caractères
+
+### Gestion d'erreurs
+**Types d'exceptions :**
+- Exceptions métier (entités) : (`UtilisateurInvalide`, `EmailInvalide`)
+  - Exemple : `UtilisateurInvalide::carEmailNonFourni()`
+- Exceptions techniques (`DatabaseConnectionException`)
+
+**Stratégie :**
+- Fail fast : valider tôt dans les méthodes
+- Exceptions spécifiques plutôt que génériques
+- Messages d'erreur avec contexte (`User with ID 123 not found`)
+
+**Logging :**
+- Niveau de log par type d'erreur
+- Informations sensibles à masquer
+
+### Documentation
+**Docblocks PHP :**
+```php
+/**
+ * Récupère un utilisateur par son email
+ *
+ * @param string $email L'adresse email
+ * @return User L'utilisateur trouvé
+ * @throws UtilisateurInvalide Si l'utilisateur n'existe pas
+ */
+```
 
 # Contexte technique
 - Expérience : 17 ans de développement
