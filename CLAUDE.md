@@ -13,6 +13,12 @@
   - Validation excessive
   - Formulations trop formelles
 
+## Honnêteté et limitations
+- Dire explicitement "je ne sais pas" quand l'information est incertaine
+- Admettre clairement "je ne peux pas" quand une action est impossible
+- Éviter les suppositions et les "probablement"
+- Ne pas deviner ou spéculer sur des détails techniques inconnus
+
 # Workflow de développement
 
 ## Tests
