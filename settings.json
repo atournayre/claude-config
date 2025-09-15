@@ -50,7 +50,6 @@
       "WebFetch(domain:localhost)"
     ],
     "deny": [
-      "Bash(git commit:*)",
       "Bash(cd :*data:*)",
       "Bash(cp :*data:*)",
       "Bash(mv :*data:*)",
