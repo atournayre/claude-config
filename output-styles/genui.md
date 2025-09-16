@@ -104,6 +104,31 @@ code {
             border-radius: 4px;
             cursor: pointer;
         }
+        /* Code container and copy button styles */
+        .code-container {
+            position: relative;
+            margin: 1em 0;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 4px 8px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            z-index: 10;
+            transition: background 0.2s;
+        }
+        .copy-btn:hover {
+            background: #2980b9;
+        }
+        .copy-btn.copied {
+            background: #27ae60;
+        }
     </style>
 </head>
 <body>
@@ -124,6 +149,39 @@ code {
             document.body.classList.toggle('light-mode');
             const btn = document.querySelector('.theme-toggle');
             btn.textContent = document.body.classList.contains('light-mode') ? '🌙 Dark' : '🌞 Light';
+        }
+
+        function copyCode(button) {
+            const codeBlock = button.parentElement.querySelector('pre code');
+            const text = codeBlock.textContent;
+
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.textContent;
+                button.textContent = '✓ Copied!';
+                button.classList.add('copied');
+
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                // Fallback pour les anciens navigateurs
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+
+                button.textContent = '✓ Copied!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = '📋 Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            });
         }
     </script>
 </body>
@@ -174,12 +232,83 @@ Style: Dark mode - Dark red background (#3a1a1a), red left border. Light mode - 
 - Line numbers for longer code blocks
 - Horizontal scrolling for wide code
 - Proper indentation and formatting
+- **Copy button**: Each code block must have a copy-to-clipboard button in the top-right corner
+
+### Code Block Structure
+```html
+<div class="code-container">
+    <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+    <pre><code class="language-javascript">// Your code here</code></pre>
+</div>
+```
+
+### Copy Button Styling
+```css
+.code-container {
+    position: relative;
+}
+.copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 4px 8px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    z-index: 10;
+}
+.copy-btn:hover {
+    background: #2980b9;
+}
+.copy-btn.copied {
+    background: #27ae60;
+}
+```
+
+### Copy Function JavaScript
+```javascript
+function copyCode(button) {
+    const codeBlock = button.parentElement.querySelector('pre code');
+    const text = codeBlock.textContent;
+
+    navigator.clipboard.writeText(text).then(() => {
+        const originalText = button.textContent;
+        button.textContent = '✓ Copied!';
+        button.classList.add('copied');
+
+        setTimeout(() => {
+            button.textContent = originalText;
+            button.classList.remove('copied');
+        }, 2000);
+    }).catch(err => {
+        // Fallback pour les anciens navigateurs
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+
+        button.textContent = '✓ Copied!';
+        button.classList.add('copied');
+        setTimeout(() => {
+            button.textContent = '📋 Copy';
+            button.classList.remove('copied');
+        }, 2000);
+    });
+}
+```
 
 ## Interactive Elements (when appropriate)
 - Buttons with hover states
 - Collapsible sections for lengthy content
 - Smooth transitions on interactive elements
-- Copy-to-clipboard buttons for code blocks (using simple JavaScript)
+- Copy-to-clipboard functionality for all code blocks (mandatory)
 
 ## File Output Convention
 When generating HTML files:
