@@ -7,6 +7,10 @@ description: Répondre aux questions sur la structure du projet et la documentat
 
 Répondre à la question de l'utilisateur en analysant la structure du projet et la documentation. Cette invite est conçue pour fournir des informations et répondre aux questions sans apporter de modifications au code.
 
+## Variables
+
+$ARGUMENTS
+
 ## Instructions
 
 - **IMPORTANT : Il s'agit uniquement d'une tâche de réponse à des questions - NE PAS écrire, éditer ou créer de fichiers**
@@ -14,18 +18,10 @@ Répondre à la question de l'utilisateur en analysant la structure du projet et
 - **IMPORTANT : Fournir des réponses claires et informatives basées sur l'analyse du projet**
 - **IMPORTANT : Si la question nécessite des modifications de code, expliquer ce qui devrait être fait conceptuellement sans implémenter**
 
-## Exécuter
+## Workflow
 
-- `git ls-files` pour comprendre la structure du projet
-
-## Lire
-
-- README.md pour l'aperçu du projet et la documentation
-
-## Approche d'analyse
-
-- Examiner la structure du projet depuis git ls-files
-- Comprendre l'objectif du projet depuis le README
+- Examiner la structure du projet depuis !`git ls-files`
+- Comprendre l'objectif du projet depuis le @docs/README.md
 - Connecter la question aux parties pertinentes du projet
 - Fournir des réponses complètes basées sur l'analyse
 
@@ -35,7 +31,3 @@ Répondre à la question de l'utilisateur en analysant la structure du projet et
 - Preuves à l'appui de la structure du projet
 - Références à la documentation pertinente
 - Explications conceptuelles le cas échéant
-
-## Question
-
-$ARGUMENTS
