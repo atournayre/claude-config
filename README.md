@@ -19,9 +19,20 @@ Configuration personnelle versionnée pour Claude Code avec des fonctionnalités
 claude-config/
 ├── commands/                 # Commandes personnalisées (slash commands)
 │   ├── git/                  # Commandes Git
+│   │   ├── commit.md         # Création de commit avec workflow
 │   │   ├── pr.md             # Création de Pull Request optimisée
 │   │   └── status.md         # Affiche le statut Git
+│   ├── sessions/             # Gestion des sessions
+│   │   ├── current.md        # Affiche la session courante
+│   │   ├── end.md            # Termine une session
+│   │   ├── help.md           # Aide sur les sessions
+│   │   ├── list.md           # Liste toutes les sessions
+│   │   ├── start.md          # Démarre une nouvelle session
+│   │   └── update.md         # Met à jour une session
 │   ├── all_tools.md          # Liste tous les outils disponibles
+│   ├── analytics.md          # Lance l'analyse d'utilisation Claude Code
+│   ├── analytics-stop.md     # Arrête l'analyse en cours
+│   ├── build.md              # Workflow de build complet
 │   └── question.md           # Pose une question structurée
 ├── hooks/                    # Scripts de hooks pour automatiser les actions
 │   ├── utils/                # Utilitaires partagés
@@ -139,6 +150,12 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 
 ### Commandes Git
 
+#### `/git:commit`
+**Description** : Création de commit avec workflow structuré
+
+**Format** : Workflow de commit avec conventions et validation
+**Usage** : `/git:commit`
+
 #### `/git:pr`
 **Description** : Crée une Pull Request optimisée avec workflow complet
 
@@ -149,6 +166,72 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 - QA automatique pour fichiers PHP
 - Demande confirmation pour branche et milestone
 - Utilise le script `scripts/assign_github_project.sh` pour l'assignation
+
+### Commandes Analytics
+
+#### `/analytics`
+**Description** : Lance le tableau de bord d'analytics pour visualiser les statistiques d'utilisation de Claude Code
+
+**Format** : Serveur local sur port 3333 avec ouverture automatique du navigateur
+**Usage** : `/analytics`
+
+**Particularités** :
+- Analyse l'utilisation de Claude Code (prompts, coûts, sessions)
+- Vérifie la disponibilité du port 3333
+- Ouverture automatique du navigateur
+- Serveur reste actif jusqu'à interruption manuelle
+- Utilise `claude-code-templates --analytics`
+
+#### `/analytics-stop`
+**Description** : Arrête proprement le serveur analytics dashboard de Claude Code
+
+**Format** : Commande de nettoyage pour libérer le port 3333
+**Usage** : `/analytics-stop`
+
+**Particularités** :
+- Détection automatique du processus sur port 3333
+- Arrêt propre avec confirmation
+- Messages informatifs si aucun serveur actif
+
+### Commandes Build
+
+#### `/build`
+**Description** : Workflow de build complet avec étapes structurées
+
+**Format** : Processus de build avec validation et tests
+**Usage** : `/build`
+
+### Commandes Sessions
+
+#### `/sessions:start`
+**Description** : Démarre une nouvelle session de travail
+
+**Usage** : `/sessions:start [nom-session]`
+
+#### `/sessions:current`
+**Description** : Affiche la session courante avec détails
+
+**Usage** : `/sessions:current`
+
+#### `/sessions:list`
+**Description** : Liste toutes les sessions disponibles
+
+**Usage** : `/sessions:list`
+
+#### `/sessions:end`
+**Description** : Termine la session courante
+
+**Usage** : `/sessions:end`
+
+#### `/sessions:update`
+**Description** : Met à jour les informations de session
+
+**Usage** : `/sessions:update`
+
+#### `/sessions:help`
+**Description** : Aide détaillée sur la gestion des sessions
+
+**Usage** : `/sessions:help`
 
 ### Commandes générales
 
