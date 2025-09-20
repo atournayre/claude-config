@@ -18,8 +18,10 @@ Configuration personnelle versionnée pour Claude Code avec des fonctionnalités
 ```
 claude-config/
 ├── commands/                 # Commandes personnalisées (slash commands)
+│   ├── git/                  # Commandes Git
+│   │   ├── pr.md             # Création de Pull Request optimisée
+│   │   └── status.md         # Affiche le statut Git
 │   ├── all_tools.md          # Liste tous les outils disponibles
-│   ├── git_status.md         # Affiche le statut Git
 │   └── question.md           # Pose une question structurée
 ├── hooks/                    # Scripts de hooks pour automatiser les actions
 │   ├── utils/                # Utilitaires partagés
@@ -33,6 +35,8 @@ claude-config/
 │   ├── stop.py               # À l'arrêt
 │   ├── subagent_stop.py      # Arrêt de sous-agent
 │   └── user_prompt_submit.py # Soumission de prompt
+├── scripts/                  # Scripts bash réutilisables
+│   └── assign_github_project.sh # Assigne une PR à un projet GitHub
 ├── output-styles/            # Styles de sortie personnalisés
 │   ├── bullet-points.md      # Format liste à puces
 │   ├── genui.md              # Interface HTML générée
@@ -47,6 +51,8 @@ claude-config/
 │   ├── status_line_v3.py     # Version 3 avec historique
 │   ├── status_line_v4.py     # Version 4 améliorée
 │   └── status_line_v5.py     # Version 5 complète
+├── _templates/               # Templates pour génération
+│   └── prompt/README.md      # Template de slash command
 ├── settings.json             # Configuration principale
 ├── install.sh                # Script d'installation
 └── README.md                 # Ce fichier
@@ -131,20 +137,58 @@ pip install python-dotenv
 
 Les commandes personnalisées (slash commands) permettent d'étendre les capacités de Claude Code.
 
-### `/all_tools`
-**Description** : Liste tous les outils disponibles dans votre système Claude Code  
-**Format** : Affiche chaque outil avec sa signature TypeScript et sa description  
+### Commandes Git
+
+#### `/git:pr`
+**Description** : Crée une Pull Request optimisée avec workflow complet
+
+**Format** : Workflow structuré incluant QA, commits, milestone et assignation projet
+**Usage** : `/git:pr [branch-base] [milestone]`
+
+**Particularités** :
+- QA automatique pour fichiers PHP
+- Demande confirmation pour branche et milestone
+- Utilise le script `scripts/assign_github_project.sh` pour l'assignation
+
+### Commandes générales
+
+#### `/all_tools`
+**Description** : Liste tous les outils disponibles dans votre système Claude Code
+
+**Format** : Affiche chaque outil avec sa signature TypeScript et sa description
+
 **Usage** : Tapez `/all_tools` dans Claude Code pour obtenir la liste complète
 
-### `/git_status`
-**Description** : Affiche un statut Git détaillé du projet actuel  
-**Format** : Informations structurées sur la branche, les modifications et l'historique  
+#### `/git_status`
+**Description** : Affiche un statut Git détaillé du projet actuel
+
+**Format** : Informations structurées sur la branche, les modifications et l'historique
+
 **Usage** : `/git_status` pour une vue d'ensemble rapide de votre dépôt
 
-### `/question`
-**Description** : Pose une question structurée avec contexte  
-**Format** : Question formatée avec sections et métadonnées  
+#### `/question`
+**Description** : Pose une question structurée avec contexte
+
+**Format** : Question formatée avec sections et métadonnées
+
 **Usage** : `/question "Votre question ici"`
+
+## Scripts réutilisables
+
+Le dossier `scripts/` contient des scripts bash modulaires utilisables par les commandes ou indépendamment.
+
+### `assign_github_project.sh`
+**Description** : Assigne une Pull Request à un projet GitHub de manière interactive
+
+**Usage** : `./scripts/assign_github_project.sh <PR_NUMBER> [OWNER] [REPO]`
+
+**Fonctionnalités** :
+- Récupère automatiquement la liste des projets disponibles
+- Filtre les projets fermés
+- Interface interactive pour la sélection
+- Validation des choix utilisateur
+- Messages colorés pour une meilleure lisibilité
+- Support des repositories locaux (détection automatique)
 
 ## Hooks système
 
