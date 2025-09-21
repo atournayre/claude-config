@@ -1,5 +1,6 @@
 ---
 allowed-tools: Read, Write, Edit, Bash
+argument-hint: [titre]
 description: Génère un Architecture Decision Record (ADR) formaté et structuré
 ---
 
@@ -13,6 +14,7 @@ Génère un Architecture Decision Record (ADR) complet et structuré pour docume
 - **DECISION_NUMBER**: Le numéro séquentiel de l'ADR (auto-généré si non fourni)
 
 ## Instructions
+- Si `TITRE` n'est pas fourni, ARRETER immediatement et demander à l'utilisateur de le fournir.
 - Crée un ADR suivant le format standard RFC
 - Utilise la numérotation séquentielle automatique
 - Intègre le contexte du projet actuel
