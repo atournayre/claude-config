@@ -40,7 +40,7 @@ backup_config() {
 DIRECTORIES=(
     "agents"
     "commands"
-    "doc"
+    "docs"
     "hooks"
     "output-styles"
     "status_lines"
