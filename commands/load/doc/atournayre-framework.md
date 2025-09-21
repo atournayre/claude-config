@@ -9,11 +9,12 @@ Charge la documentation depuis leurs sites web respectifs dans des fichiers mark
 
 ## Variables
 
+README_PATH: ~/.claude/docs/atournayre-framework/README.md
 DELETE_OLD_ATOURNAYRE_FRAMEWORK_DOCS_AFTER_HOURS: 24
 
 ## Flux de Travail
 
-1. Lire le fichier docs/atournayre-framework/README.md
+1. Lire le fichier `README_PATH`
 
 2. Vérifier si des fichiers docs/atournayre-framework/<nom-de-fichier>.md existent déjà
 
@@ -23,7 +24,7 @@ DELETE_OLD_ATOURNAYRE_FRAMEWORK_DOCS_AFTER_HOURS: 24
 
 3. Sinon, les supprimer et noter qu'ils ont été supprimés
 
-3. Pour chaque URL dans docs/atournayre-framework/README.md qui n'a pas été ignorée, utiliser l'outil Task en parallèle et suivre le `scrape_loop_prompt` comme prompt exact pour chaque Task
+3. Pour chaque URL dans `README_PATH` qui n'a pas été ignorée, utiliser l'outil Task en parallèle et suivre le `scrape_loop_prompt` comme prompt exact pour chaque Task
 
 <scrape_loop_prompt>
 

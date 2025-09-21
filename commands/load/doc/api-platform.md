@@ -9,11 +9,12 @@ Charge la documentation API Platform depuis leurs sites web respectifs dans des 
 
 ## Variables
 
+README_PATH: ~/.claude/docs/api-platform/README.md
 DELETE_OLD_API_PLATFORM_DOCS_AFTER_HOURS: 24
 
 ## Flux de Travail
 
-1. Lire le fichier docs/api-platform/README.md
+1. Lire le fichier `README_PATH`
 
 2. Vérifier si des fichiers docs/api-platform/<nom-de-fichier>.md existent déjà
 
@@ -23,7 +24,7 @@ DELETE_OLD_API_PLATFORM_DOCS_AFTER_HOURS: 24
 
 3. Sinon, les supprimer et noter qu'ils ont été supprimés
 
-3. Pour chaque URL dans docs/api-platform/README.md qui n'a pas été ignorée, utiliser l'outil Task en parallèle et suivre le `scrape_loop_prompt` comme prompt exact pour chaque Task
+3. Pour chaque URL dans `README_PATH` qui n'a pas été ignorée, utiliser l'outil Task en parallèle et suivre le `scrape_loop_prompt` comme prompt exact pour chaque Task
 
 <scrape_loop_prompt>
 

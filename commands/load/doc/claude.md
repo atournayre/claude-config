@@ -9,11 +9,12 @@ Charge la documentation Claude Code depuis docs.claude.com dans des fichiers mar
 
 ## Variables
 
+README_PATH: ~/.claude/docs/claude/README.md
 DELETE_OLD_CLAUDE_DOCS_AFTER_HOURS: 24
 
 ## Flux de Travail
 
-1. Lire le fichier docs/claude/README.md
+1. Lire le fichier `README_PATH`
 
 2. Vérifier si des fichiers docs/claude/<nom-de-fichier>.md existent déjà
 
@@ -23,7 +24,7 @@ DELETE_OLD_CLAUDE_DOCS_AFTER_HOURS: 24
 
 3. Sinon, les supprimer et noter qu'ils ont été supprimés
 
-3. Pour chaque URL dans docs/claude/README.md qui n'a pas été ignorée, utiliser l'outil Task en parallèle et suivre le `scrape_loop_prompt` comme prompt exact pour chaque Task
+3. Pour chaque URL dans `README_PATH` qui n'a pas été ignorée, utiliser l'outil Task en parallèle et suivre le `scrape_loop_prompt` comme prompt exact pour chaque Task
 
 <scrape_loop_prompt>
 
