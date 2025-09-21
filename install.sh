@@ -38,6 +38,7 @@ backup_config() {
 
 # Configuration des répertoires à copier
 DIRECTORIES=(
+    "agents"
     "commands"
     "doc"
     "hooks"
