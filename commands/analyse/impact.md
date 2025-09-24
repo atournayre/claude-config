@@ -13,7 +13,6 @@ Analyser en profondeur les modifications d'une Pull Request spécifique pour gé
 - `PR_NUMBER`: Numéro de la PR à analyser (passé en paramètre)
 - `CURRENT_BRANCH`: Branche de la PR
 - `BASE_BRANCH`: Branche de base de la PR
-- `IMPACT_REPORT_FILE`: Fichier temporaire pour stocker le rapport
 - `MODIFIED_FILES`: Liste des fichiers modifiés dans la PR
 - `COMMIT_COUNT`: Nombre de commits dans la PR
 
