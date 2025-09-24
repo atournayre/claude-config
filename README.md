@@ -32,6 +32,8 @@ claude-config/
 │   │   ├── list.md           # Liste toutes les sessions
 │   │   ├── start.md          # Démarre une nouvelle session
 │   │   └── update.md         # Met à jour une session
+│   ├── think/                # Commandes d'analyse
+│   │   └── harder.md         # Analyse intensive de problèmes complexes
 │   ├── all_tools.md          # Liste tous les outils disponibles
 │   ├── analytics.md          # Lance l'analyse d'utilisation Claude Code
 │   ├── analytics-stop.md     # Arrête l'analyse en cours
@@ -255,6 +257,26 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 **Exemples** :
 - `/cc:make:command git-hotfix "Création de hotfix avec workflow Git" --tools=Bash,Edit --category=git`
 - `/cc:make:command deploy-prod "Déploiement en production" --tools=Bash,Read --category=build`
+
+### Commandes d'analyse
+
+#### `/think:harder`
+**Description** : Engage une analyse intensive et systématique pour la résolution de problèmes complexes
+
+**Format** : Applique une méthodologie de raisonnement structurée avec décomposition multi-dimensionnelle
+**Usage** : `/think:harder "Votre problème ou question complexe"`
+
+**Particularités** :
+- Protocole d'analyse en 4 étapes : clarification, analyse multi-dimensionnelle, évaluation critique, synthèse
+- Structure de sortie standardisée avec reformulation, insights, chaîne de raisonnement
+- Considération des perspectives multiples et analyse des incertitudes
+- Recommandations actionables et implémentables
+- Idéal pour les décisions techniques et stratégiques complexes
+
+**Exemples** :
+- `/think:harder "Devons-nous refactoriser ce code legacy ou le réécrire ?"`
+- `/think:harder "Comment optimiser l'architecture de cette API ?"`
+- `/think:harder "Quelle approche adopter pour la migration de données ?"`
 
 ### Commandes générales
 
