@@ -33,7 +33,8 @@ claude-config/
 │   │   ├── start.md          # Démarre une nouvelle session
 │   │   └── update.md         # Met à jour une session
 │   ├── think/                # Commandes d'analyse
-│   │   └── harder.md         # Analyse intensive de problèmes complexes
+│   │   ├── harder.md         # Analyse intensive de problèmes complexes
+│   │   └── ultra.md          # Analyse ultra-comprehensive pour problèmes très complexes
 │   ├── all_tools.md          # Liste tous les outils disponibles
 │   ├── analytics.md          # Lance l'analyse d'utilisation Claude Code
 │   ├── analytics-stop.md     # Arrête l'analyse en cours
@@ -277,6 +278,25 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 - `/think:harder "Devons-nous refactoriser ce code legacy ou le réécrire ?"`
 - `/think:harder "Comment optimiser l'architecture de cette API ?"`
 - `/think:harder "Quelle approche adopter pour la migration de données ?"`
+
+#### `/think:ultra`
+**Description** : Ultra-comprehensive analytical thinking for the most complex problems
+
+**Format** : Applique un framework d'analyse ultra-exhaustif en 7 phases pour résoudre les problèmes les plus complexes
+**Usage** : `/think:ultra "complex problem or question"`
+
+**Particularités** :
+- Framework d'analyse ultra-complet en 7 phases : Architecture du Problème, Analyse Multi-Paradigme, Intégration Cross-Disciplinaire, Scaling Temporel/Spatial, Modélisation d'Incertitude et Risques, Théorie de Décision et des Jeux, Réflexion Meta-Cognitive
+- Sortie ultra-structurée en 7 sections : Reconceptualisation, Cartographie Multi-Dimensionnelle, Intégration de Preuves, Analyse d'Options, Évaluation des Risques, Recommandations Stratégiques, Meta-Analyse
+- Analyse exhaustive avec perspectives multiples et évaluation d'incertitudes
+- Recommandations stratégiques actionables avec feuille de route d'implémentation
+- Évaluation critique des limitations analytiques et biais cognitifs
+- Idéal pour les problèmes complexes à enjeux élevés nécessitant une analyse exhaustive
+
+**Exemples** :
+- `/think:ultra "Should we migrate our entire legacy system to microservices architecture?"`
+- `/think:ultra "How should we approach the AI transformation of our organization?"`
+- `/think:ultra "What's the optimal strategy for entering the European market?"`
 
 ### Commandes générales
 
