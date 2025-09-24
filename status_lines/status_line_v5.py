@@ -459,7 +459,7 @@ def format_extras(extras, git_info, daily_cost=None, output_style=None):
 
 
 def get_session_duration(session_id):
-    """Calculate session duration from first log entry to now."""
+    """Calculate active session duration (sum of interaction intervals) from last /clear command."""
     try:
         log_file = Path("logs/status_line.json")
         if not log_file.exists():
@@ -468,24 +468,58 @@ def get_session_duration(session_id):
         with open(log_file, "r") as f:
             log_data = json.load(f)
 
-        # Find the first entry for this session_id
-        first_timestamp = None
+        # Find entries for this session_id
+        session_entries = []
         for entry in log_data:
             if entry.get("input_data", {}).get("session_id") == session_id:
-                first_timestamp = entry.get("timestamp")
-                break
+                session_entries.append(entry)
 
-        if not first_timestamp:
+        if not session_entries:
             return None
 
-        # Parse timestamps and calculate duration
+        # Sort entries by timestamp to ensure chronological order
+        session_entries.sort(key=lambda x: x.get("timestamp", ""))
+
+        # Find the index of the last /clear command
+        clear_index = 0
+        for i, entry in enumerate(session_entries):
+            input_data = entry.get("input_data", {})
+            prompt = input_data.get("prompt", "")
+            if prompt.strip().startswith("/clear"):
+                clear_index = i
+
+        # Get entries since last /clear (including the /clear entry)
+        active_entries = session_entries[clear_index:]
+
+        if len(active_entries) < 1:
+            return None
+
+        # Calculate active time by summing intervals between consecutive interactions
         from datetime import datetime
-        start_time = datetime.fromisoformat(first_timestamp)
-        current_time = datetime.now()
-        duration = current_time - start_time
+        total_active_seconds = 0
+        inactivity_threshold = 300  # 5 minutes in seconds
+
+        for i in range(len(active_entries) - 1):
+            current_time = datetime.fromisoformat(active_entries[i]["timestamp"])
+            next_time = datetime.fromisoformat(active_entries[i + 1]["timestamp"])
+            interval_seconds = (next_time - current_time).total_seconds()
+
+            # Only count intervals shorter than inactivity threshold
+            if interval_seconds <= inactivity_threshold:
+                total_active_seconds += interval_seconds
+
+        # Add time since last interaction (if recent)
+        if active_entries:
+            last_time = datetime.fromisoformat(active_entries[-1]["timestamp"])
+            current_time = datetime.now()
+            time_since_last = (current_time - last_time).total_seconds()
+
+            # Only count if last interaction was recent (within threshold)
+            if time_since_last <= inactivity_threshold:
+                total_active_seconds += time_since_last
 
         # Format duration
-        total_seconds = int(duration.total_seconds())
+        total_seconds = int(total_active_seconds)
         if total_seconds < 60:
             return f"{total_seconds}s"
         elif total_seconds < 3600:
