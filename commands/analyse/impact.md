@@ -97,7 +97,7 @@ echo "   - Fichiers modifiés: $(echo "$MODIFIED_FILES" | wc -l)"
 echo "   - Commits: $COMMIT_COUNT"
 ```
 
-### Étape 4: Analyse des Dépendances
+### Étape 4: Analyse des Dépendances et Templates
 ```bash
 # Récupérer les fichiers modifiés de la PR
 FILES=$(gh pr diff $PR_NUMBER --name-only)
@@ -107,13 +107,52 @@ echo "$FILES" | grep "\.php$" | while read file; do
     grep "use.*;" "$file" 2>/dev/null || true
 done
 
-# Pour JavaScript
-echo "$FILES" | grep -E "\.(js|ts)$" | while read file; do
+# Pour JavaScript/TypeScript
+echo "$FILES" | grep -E "\.(js|ts|jsx|tsx)$" | while read file; do
     grep -E "import|require" "$file" 2>/dev/null || true
 done
 
+# Pour les templates (Twig, Blade, Vue, etc.)
+TEMPLATE_FILES=$(echo "$FILES" | grep -E "\.(twig|blade\.php|vue|svelte|hbs|handlebars|mustache|ejs|pug|jade)$")
+if [ -n "$TEMPLATE_FILES" ]; then
+    echo "📄 Templates modifiés:"
+    echo "$TEMPLATE_FILES" | while read file; do
+        echo "  - $file"
+        # Analyser les variables et fonctions utilisées dans les templates
+        case "$file" in
+            *.twig)
+                grep -E "\{\{|\{%" "$file" 2>/dev/null | head -10 || true
+                ;;
+            *.blade.php)
+                grep -E "@[a-zA-Z]+|\{\{" "$file" 2>/dev/null | head -10 || true
+                ;;
+            *.vue)
+                grep -E "v-|@|:\w+" "$file" 2>/dev/null | head -10 || true
+                ;;
+        esac
+    done
+fi
+
+# Fichiers de styles (CSS, SCSS, SASS, etc.)
+STYLE_FILES=$(echo "$FILES" | grep -E "\.(css|scss|sass|less|styl)$")
+if [ -n "$STYLE_FILES" ]; then
+    echo "🎨 Fichiers de styles modifiés:"
+    echo "$STYLE_FILES"
+fi
+
 # Fichiers de configuration modifiés dans la PR
-echo "$FILES" | grep -E "\.(json|yaml|yml|env|ini|conf)$"
+CONFIG_FILES=$(echo "$FILES" | grep -E "\.(json|yaml|yml|env|ini|conf|xml|toml)$")
+if [ -n "$CONFIG_FILES" ]; then
+    echo "⚙️ Fichiers de configuration modifiés:"
+    echo "$CONFIG_FILES"
+fi
+
+# Assets et medias
+ASSET_FILES=$(echo "$FILES" | grep -E "\.(png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$")
+if [ -n "$ASSET_FILES" ]; then
+    echo "🖼️ Assets modifiés:"
+    echo "$ASSET_FILES"
+fi
 ```
 
 ### Étape 5: Analyse des Tests
@@ -142,11 +181,17 @@ done
 #### Nouvelles Fonctionnalités
 - [Description claire sans jargon technique]
 
-#### Améliorations
-- [Liste des améliorations visibles pour l'utilisateur]
+#### Améliorations Interface Utilisateur
+- **Templates modifiés** : [Pages/composants impactés]
+- **Styles mis à jour** : [Changements visuels attendus]
+- **Assets ajoutés/modifiés** : [Nouvelles images, icônes, fonts]
+
+#### Améliorations Fonctionnelles
+- [Liste des améliorations de fonctionnalités]
 
 #### Corrections
-- [Bugs corrigés et leur impact utilisateur]
+- **Bugs d'interface** : [Corrections visuelles/UX]
+- **Bugs fonctionnels** : [Corrections de logique métier]
 
 ### Impact Utilisateur
 - **Expérience utilisateur** : [Changements visibles]
@@ -176,12 +221,14 @@ Commits           : [Nombre]
 ```
 
 ### Analyse par Type de Fichier
-| Type | Fichiers | Ajouts | Suppressions | Complexité |
-|------|----------|--------|--------------|------------|
-| PHP  | [N]      | +[N]   | -[N]         | [Score]    |
-| JS   | [N]      | +[N]   | -[N]         | [Score]    |
-| CSS  | [N]      | +[N]   | -[N]         | [Score]    |
-| Config | [N]    | +[N]   | -[N]         | N/A        |
+| Type | Fichiers | Ajouts | Suppressions | Impact Métier | Impact Technique |
+|------|----------|--------|--------------|---------------|------------------|
+| PHP  | [N]      | +[N]   | -[N]         | Backend       | [Score]          |
+| JS/TS| [N]      | +[N]   | -[N]         | Interface     | [Score]          |
+| Templates| [N]  | +[N]   | -[N]         | Interface/UX  | Moyen            |
+| CSS/SCSS | [N]  | +[N]   | -[N]         | Apparence     | Faible           |
+| Config | [N]    | +[N]   | -[N]         | Infrastructure| Critique         |
+| Assets | [N]    | +[N]   | -[N]         | Visuel        | Faible           |
 
 ### Changements Architecturaux
 #### Classes/Modules Modifiés
