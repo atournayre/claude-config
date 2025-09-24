@@ -21,6 +21,57 @@ except ImportError:
     pass  # dotenv is optional
 
 
+# Color helper functions
+def red(text):
+    """Format text in red."""
+    return f"\033[91m{text}\033[0m"
+
+
+def yellow(text):
+    """Format text in yellow."""
+    return f"\033[33m{text}\033[0m"
+
+
+def bright_yellow(text):
+    """Format text in bright yellow."""
+    return f"\033[93m{text}\033[0m"
+
+
+def green(text):
+    """Format text in green."""
+    return f"\033[32m{text}\033[0m"
+
+
+def cyan(text):
+    """Format text in cyan."""
+    return f"\033[36m{text}\033[0m"
+
+
+def magenta(text):
+    """Format text in magenta."""
+    return f"\033[95m{text}\033[0m"
+
+
+def white(text):
+    """Format text in white."""
+    return f"\033[37m{text}\033[0m"
+
+
+def bright_white(text):
+    """Format text in bright white."""
+    return f"\033[97m{text}\033[0m"
+
+
+def gray(text):
+    """Format text in gray."""
+    return f"\033[90m{text}\033[0m"
+
+
+def blue(text):
+    """Format text in blue."""
+    return f"\033[34m{text}\033[0m"
+
+
 def log_status_line(input_data, status_line_output, error_message=None):
     """Log status line event to logs directory."""
     # Ensure logs directory exists
@@ -332,13 +383,38 @@ def get_prompt_icon(prompt):
         return "💬"
 
 
-def format_extras(extras, git_info, daily_cost=None, output_style=None, token_usage=None):
+def format_session_duration(duration_str):
+    """Format session duration with color based on length."""
+    if not duration_str:
+        return None
+
+    # Parse duration to get total minutes for color decision
+    total_minutes = 0
+    if 'h' in duration_str:
+        # Has hours
+        parts = duration_str.replace('h', ' ').replace('m', '').split()
+        if len(parts) >= 2:
+            total_minutes = int(parts[0]) * 60 + int(parts[1])
+        else:
+            total_minutes = int(parts[0]) * 60
+    elif 'm' in duration_str:
+        # Only minutes
+        total_minutes = int(duration_str.replace('m', '').replace('s', '').split('m')[0])
+
+    # Color based on session length
+    if total_minutes >= 120:  # 2+ hours - red (long session)
+        return red(f"⏱️ {duration_str}")
+    elif total_minutes >= 60:  # 1+ hour - yellow (medium session)
+        return yellow(f"⏱️ {duration_str}")
+    elif total_minutes >= 30:  # 30+ min - green (active session)
+        return green(f"⏱️ {duration_str}")
+    else:  # < 30min - white (fresh session)
+        return white(f"⏱️ {duration_str}")
+
+
+def format_extras(extras, git_info, daily_cost=None, output_style=None):
     """Format extras dictionary and git info into a compact string."""
     combined = {}
-
-    # Add token usage first (highest priority - critical info)
-    if token_usage:
-        combined['tokens'] = token_usage
 
     # Add daily cost (high priority)
     if daily_cost:
@@ -374,15 +450,97 @@ def format_extras(extras, git_info, daily_cost=None, output_style=None, token_us
     # Format each key-value pair
     pairs = []
     for key, value in combined.items():
-        if key == 'tokens':
-            # Token usage is already formatted with its icon
-            pairs.append(value)
-        elif key.startswith('�') or key.startswith('🌿') or key.startswith('💰') or key.startswith('📝'):  # Emoji keys don't need separator
-            pairs.append(f"{key}{value}")
+        if key.startswith('�') or key.startswith('🌿') or key.startswith('💰') or key.startswith('📝'):  # Emoji keys don't need separator
+            pairs.append(f"{key} {value}")
         else:
             pairs.append(f"{key} {value}")
 
     return " | ".join(pairs)
+
+
+def get_session_duration(session_id):
+    """Calculate session duration from first log entry to now."""
+    try:
+        log_file = Path("logs/status_line.json")
+        if not log_file.exists():
+            return None
+
+        with open(log_file, "r") as f:
+            log_data = json.load(f)
+
+        # Find the first entry for this session_id
+        first_timestamp = None
+        for entry in log_data:
+            if entry.get("input_data", {}).get("session_id") == session_id:
+                first_timestamp = entry.get("timestamp")
+                break
+
+        if not first_timestamp:
+            return None
+
+        # Parse timestamps and calculate duration
+        from datetime import datetime
+        start_time = datetime.fromisoformat(first_timestamp)
+        current_time = datetime.now()
+        duration = current_time - start_time
+
+        # Format duration
+        total_seconds = int(duration.total_seconds())
+        if total_seconds < 60:
+            return f"{total_seconds}s"
+        elif total_seconds < 3600:
+            minutes = total_seconds // 60
+            seconds = total_seconds % 60
+            return f"{minutes}m{seconds}s"
+        else:
+            hours = total_seconds // 3600
+            minutes = (total_seconds % 3600) // 60
+            return f"{hours}h{minutes}m"
+
+    except Exception:
+        return None
+
+
+def format_token_usage(token_usage):
+    """Format token usage with colors instead of emojis."""
+    if not token_usage:
+        return None
+
+    # Extract the percentage from token_usage string (format: "emoji current/max (xx%)")
+    try:
+        # Find percentage in parentheses
+        import re
+        percentage_match = re.search(r'\((\d+)%\)', token_usage)
+        if not percentage_match:
+            return white(token_usage)  # Default white if can't parse
+
+        percentage = int(percentage_match.group(1))
+
+        # Remove emoji from the beginning and format with colors
+        # Extract the part without emoji (everything after first space)
+        parts = token_usage.split(' ', 1)
+        if len(parts) < 2:
+            token_text = token_usage
+        else:
+            token_text = parts[1]  # Skip emoji
+
+        # Choose color based on usage level
+        if percentage >= 90:
+            # Critical - bright red
+            return red(token_text)
+        elif percentage >= 70:
+            # Warning - bright yellow
+            return bright_yellow(token_text)
+        elif percentage >= 50:
+            # Moderate - yellow
+            return yellow(token_text)
+        else:
+            # Good - green
+            return green(token_text)
+
+    except Exception:
+        # Fallback to white if parsing fails
+        return white(token_usage)
 
 
 def generate_status_line(input_data):
@@ -403,7 +561,7 @@ def generate_status_line(input_data):
     if error:
         # Log the error but show a default message
         log_status_line(input_data, f"{model_name} 💭 No session data", error)
-        return f"\033[34m{model_name}\033[0m \033[90m💭 No session data\033[0m"
+        return f"{blue(model_name)} {gray('💭 No session data')}"
 
     # Extract agent name, prompts, and extras
     agent_name = session_data.get("agent_name", None)
@@ -422,6 +580,9 @@ def generate_status_line(input_data):
     # Get token usage
     token_usage = get_token_usage(input_data)
 
+    # Get session duration
+    session_duration = get_session_duration(session_id)
+
     # Build status line components
     parts = []
 
@@ -432,7 +593,7 @@ def generate_status_line(input_data):
         agent_model_version = model_name
     if version:
         agent_model_version += f" | v{version}"
-    parts.append(f"\033[95m{agent_model_version}\033[0m")  # Magenta
+    parts.append(magenta(agent_model_version))
 
     # Last 3 prompts (most recent first)
     if prompts:
@@ -440,29 +601,39 @@ def generate_status_line(input_data):
         current_prompt = prompts[-1]
         icon = get_prompt_icon(current_prompt)
         truncated = truncate_prompt(current_prompt, 70)
-        parts.append(f"{icon} \033[97m{truncated}\033[0m")
+        parts.append(f"{icon} {bright_white(truncated)}")
         
         # Previous prompt - light gray, shorter
         if len(prompts) > 1:
             prev_prompt = prompts[-2]
             prev_icon = get_prompt_icon(prev_prompt)
             truncated = truncate_prompt(prev_prompt, 50)
-            parts.append(f"\033[90m{prev_icon} {truncated}\033[0m")
+            parts.append(gray(f"{prev_icon} {truncated}"))
         
         # Older prompt - darker gray, even shorter
         if len(prompts) > 2:
             older_prompt = prompts[-3]
             older_icon = get_prompt_icon(older_prompt)
             truncated = truncate_prompt(older_prompt, 35)
-            parts.append(f"\033[90m{older_icon} {truncated}…\033[0m")
+            parts.append(gray(f"{older_icon} {truncated}…"))
     else:
-        parts.append("\033[90m💭 No prompts yet\033[0m")
+        parts.append(gray("💭 No prompts yet"))
+
+    # Add session duration with colors (separate from extras)
+    duration_display = format_session_duration(session_duration)
+    if duration_display:
+        parts.append(duration_display)
+
+    # Add token usage with colors (separate from extras)
+    token_display = format_token_usage(token_usage)
+    if token_display:
+        parts.append(token_display)
 
     # Add extras and git info
-    extras_str = format_extras(extras, git_info, daily_cost, output_style, token_usage)
+    extras_str = format_extras(extras, git_info, daily_cost, output_style)
     if extras_str:
         # Display extras in cyan
-        parts.append(f"\033[36m{extras_str}\033[0m")
+        parts.append(cyan(extras_str))
 
     # Join with separator
     status_line = " | ".join(parts)
@@ -489,11 +660,11 @@ def main():
 
     except json.JSONDecodeError:
         # Handle JSON decode errors gracefully - output basic status
-        print("\033[31mClaude 💭 JSON Error\033[0m")
+        print(red("Claude 💭 JSON Error"))
         sys.exit(0)
     except Exception as e:
         # Handle any other errors gracefully - output basic status
-        print(f"\033[31mClaude 💭 Error: {str(e)}\033[0m")
+        print(red(f"Claude 💭 Error: {str(e)}"))
         sys.exit(0)
 
 
