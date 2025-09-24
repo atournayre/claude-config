@@ -635,7 +635,8 @@ def generate_status_line(input_data):
         current_prompt = prompts[-1]
         icon = get_prompt_icon(current_prompt)
         truncated = truncate_prompt(current_prompt, 70)
-        parts.append(f"{icon} {bright_white(truncated)}")
+        # Combine icon with colored text to avoid spacing issues
+        parts.append(bright_white(f"{icon} {truncated}"))
         
         # Previous prompt - light gray, shorter
         if len(prompts) > 1:
