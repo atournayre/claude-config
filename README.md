@@ -18,6 +18,9 @@ Configuration personnelle versionnée pour Claude Code avec des fonctionnalités
 ```
 claude-config/
 ├── commands/                 # Commandes personnalisées (slash commands)
+│   ├── cc/                   # Méta-commandes Claude Code
+│   │   └── make/             # Générateurs de commandes
+│   │       └── command.md    # Générateur de slash commands
 │   ├── git/                  # Commandes Git
 │   │   ├── commit.md         # Création de commit avec workflow
 │   │   ├── pr.md             # Création de Pull Request optimisée
@@ -232,6 +235,26 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 **Description** : Aide détaillée sur la gestion des sessions
 
 **Usage** : `/sessions:help`
+
+### Commandes CC (Claude Code)
+
+#### `/cc:make:command`
+**Description** : Générateur de slash commands pour Claude Code avec workflow structuré
+
+**Format** : Création automatique de commandes bien documentées suivant les conventions
+**Usage** : `/cc:make:command [nom-commande] [description] [--tools=outil1,outil2] [--category=categorie]`
+
+**Particularités** :
+- Génération automatique de la structure YAML frontmatter
+- Respect des conventions de nommage kebab-case
+- Détection automatique de catégorie si non fournie
+- Inclusion des permissions d'outils appropriées
+- Templates adaptés selon le type de commande
+- Validation de l'unicité du nom
+
+**Exemples** :
+- `/cc:make:command git-hotfix "Création de hotfix avec workflow Git" --tools=Bash,Edit --category=git`
+- `/cc:make:command deploy-prod "Déploiement en production" --tools=Bash,Read --category=build`
 
 ### Commandes générales
 
