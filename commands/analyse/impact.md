@@ -213,22 +213,20 @@ done
 ## 🔧 Rapport d'Impact Technique
 
 ### Métriques de Changement
-```
-Fichiers modifiés : [Nombre]
-Lignes ajoutées   : +[Nombre]
-Lignes supprimées : -[Nombre]
-Commits           : [Nombre]
-```
+- Fichiers modifiés : [Nombre]
+- Lignes ajoutées   : +[Nombre]
+- Lignes supprimées : -[Nombre]
+- Commits           : [Nombre]
 
 ### Analyse par Type de Fichier
-| Type | Fichiers | Ajouts | Suppressions | Impact Métier | Impact Technique |
-|------|----------|--------|--------------|---------------|------------------|
-| PHP  | [N]      | +[N]   | -[N]         | Backend       | [Score]          |
-| JS/TS| [N]      | +[N]   | -[N]         | Interface     | [Score]          |
-| Templates| [N]  | +[N]   | -[N]         | Interface/UX  | Moyen            |
-| CSS/SCSS | [N]  | +[N]   | -[N]         | Apparence     | Faible           |
-| Config | [N]    | +[N]   | -[N]         | Infrastructure| Critique         |
-| Assets | [N]    | +[N]   | -[N]         | Visuel        | Faible           |
+| Type      | Fichiers | Ajouts | Suppressions | Impact Métier   | Impact Technique |
+|-----------|----------|--------|--------------|-----------------|------------------|
+| PHP       | [N]      | +[N]   | -[N]         | Backend         | [Score]          |
+| JS/TS     | [N]      | +[N]   | -[N]         | Interface       | [Score]          |
+| Templates | [N]      | +[N]   | -[N]         | Interface/UX    | Moyen            |
+| CSS/SCSS  | [N]      | +[N]   | -[N]         | Apparence       | Faible           |
+| Config    | [N]      | +[N]   | -[N]         | Infrastructure  | Critique         |
+| Assets    | [N]      | +[N]   | -[N]         | Visuel          | Faible           |
 
 ### Changements Architecturaux
 #### Classes/Modules Modifiés
@@ -250,12 +248,10 @@ Commits           : [Nombre]
 - **Validations ajoutées** : [Liste]
 
 ### Couverture de Tests
-```
-Tests ajoutés     : [Nombre]
-Tests modifiés    : [Nombre]
-Couverture estimée: [Pourcentage]%
-Fichiers non testés: [Liste]
-```
+- Tests ajoutés     : [Nombre]
+- Tests modifiés    : [Nombre]
+- Couverture estimée: [Pourcentage]%
+- Fichiers non testés: [Liste]
 
 ### Points d'Attention Technique
 1. **Performance** :
@@ -319,11 +315,15 @@ echo "✅ Rapports d'impact ajoutés à la PR #$PR_NUMBER"
 # Créer un répertoire pour les rapports
 mkdir -p .analysis-reports
 
-# Sauvegarder avec horodatage
-TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-cp /tmp/impact_report.md ".analysis-reports/impact_${TIMESTAMP}.md"
+# Sauvegarder avec le numéro de PR
+cp /tmp/impact_report.md ".analysis-reports/impact_pr_${PR_NUMBER}.md"
 
-echo "📁 Rapport sauvegardé : .analysis-reports/impact_${TIMESTAMP}.md"
+# Ajouter un timestamp dans le fichier pour tracer la date d'analyse
+echo "" >> ".analysis-reports/impact_pr_${PR_NUMBER}.md"
+echo "---" >> ".analysis-reports/impact_pr_${PR_NUMBER}.md"
+echo "*Analyse générée le $(date '+%Y-%m-%d à %H:%M:%S')*" >> ".analysis-reports/impact_pr_${PR_NUMBER}.md"
+
+echo "📁 Rapport sauvegardé : .analysis-reports/impact_pr_${PR_NUMBER}.md"
 ```
 
 ## Report
@@ -345,7 +345,7 @@ pr_update:
   pr_number: [number]
 
 local_save:
-  path: ".analysis-reports/impact_[timestamp].md"
+  path: ".analysis-reports/impact_pr_[pr_number].md"
 
 recommendations:
   - category: "testing"
@@ -375,7 +375,7 @@ recommendations:
 - URL: https://github.com/[repo]/pull/42
 
 💾 Sauvegarde locale:
-- .analysis-reports/impact_20241215_143022.md
+- .analysis-reports/impact_pr_42.md
 
 ⚠️ Actions recommandées:
 1. Tests de régression sur le module authentification
