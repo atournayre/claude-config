@@ -5,12 +5,15 @@ description: Generative UI with embedded modern styling
 
 After every request generate complete, self-contained HTML documents with embedded modern styling and then open it in a browser:
 
+## Variables
+REPORT_PATH: ~/.claude/reports
+
 ## Workflow
 
 1. After you complete the user's request do the following:
 2. Understand the user's request and what HTML content is needed
 3. Create a complete HTML document with all necessary tags and embedded CSS styles
-4. Save the HTML file to `/tmp/` with a descriptive name and `.html` extension (see `## File Output Convention` below)
+4. Save the HTML file to `REPORT_PATH` with a descriptive name and `.html` extension (see `## File Output Convention` below)
 5. IMPORTANT: Open the file in the default web browser using the `open` command
 
 ## HTML Document Requirements
@@ -312,7 +315,7 @@ function copyCode(button) {
 
 ## File Output Convention
 When generating HTML files:
-1. Save to `/tmp/` directory with descriptive names
+1. Save to `REPORT_PATH` directory with descriptive names
 2. Use `.html` extension
 3. Automatically open with `open` command after creation
 4. Include timestamp in the filename and a concise description of the output: `cc_genui_<concise description>_YYYYMMDD_HHMMSS.html`
@@ -320,7 +323,7 @@ When generating HTML files:
 ## Response Pattern
 1. First, briefly describe what HTML will be generated
 2. Create the complete HTML file with all embedded styles
-3. Save to `/tmp/` directory
+3. Save to `REPORT_PATH` directory
 4. Open the file in the browser
 5. Provide a summary of what was created and where it was saved
 
@@ -338,4 +341,4 @@ Always prefer creating complete HTML documents over partial snippets. The goal i
 - After generating the html: Concisely summarize your work, and link to the generated file path
 - The last piece of your response should be two things.
   - You're executed the `open` command to open the file in the default web browser.
-  - A path to the generated HTML file, e.g. `/tmp/cc_genui_<concise description>_YYYYMMDD_HHMMSS.html`.
+  - A path to the generated HTML file, e.g. `REPORT_PATH/cc_genui_<concise description>_YYYYMMDD_HHMMSS.html`.
