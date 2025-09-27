@@ -27,8 +27,6 @@ claude-config/
 │   │   ├── commit.md         # Création de commit avec workflow
 │   │   ├── pr.md             # Création de Pull Request optimisée
 │   │   └── status.md         # Affiche le statut Git
-│   ├── model/                # Gestion des modèles
-│   │   └── sonnet.md         # Change le modèle pour Sonnet 4
 │   ├── sessions/             # Gestion des sessions
 │   │   ├── current.md        # Affiche la session courante
 │   │   ├── end.md            # Termine une session
