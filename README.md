@@ -21,10 +21,14 @@ claude-config/
 │   ├── cc/                   # Méta-commandes Claude Code
 │   │   └── make/             # Générateurs de commandes
 │   │       └── command.md    # Générateur de slash commands
+│   ├── debug/                # Commandes de diagnostic
+│   │   └── error-fix.md      # Analyse et résolution d'erreurs
 │   ├── git/                  # Commandes Git
 │   │   ├── commit.md         # Création de commit avec workflow
 │   │   ├── pr.md             # Création de Pull Request optimisée
 │   │   └── status.md         # Affiche le statut Git
+│   ├── model/                # Gestion des modèles
+│   │   └── sonnet.md         # Change le modèle pour Sonnet 4
 │   ├── sessions/             # Gestion des sessions
 │   │   ├── current.md        # Affiche la session courante
 │   │   ├── end.md            # Termine une session
@@ -39,6 +43,7 @@ claude-config/
 │   ├── analytics.md          # Lance l'analyse d'utilisation Claude Code
 │   ├── analytics-stop.md     # Arrête l'analyse en cours
 │   ├── build.md              # Workflow de build complet
+│   ├── quick-plan.md         # Génère un plan d'implémentation technique
 │   └── question.md           # Pose une question structurée
 ├── hooks/                    # Scripts de hooks pour automatiser les actions
 │   ├── utils/                # Utilitaires partagés
@@ -207,6 +212,24 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 **Format** : Processus de build avec validation et tests
 **Usage** : `/build`
 
+#### `/build:quick-plan`
+**Description** : Génère un plan d'implémentation d'ingénierie concis et le sauvegarde dans le répertoire specs
+
+**Format** : Plan structuré avec spécifications techniques, architecture et étapes d'implémentation
+**Usage** : `/build:quick-plan [requirement-description]`
+
+**Particularités** :
+- Analyse automatique des requirements
+- Génération de spécifications techniques complètes
+- Sauvegarde versionnée dans `docs/specs/[timestamp]_[project-name]_plan.md`
+- Intégration avec TodoWrite pour le suivi des tâches
+- Évaluation des risques et estimation de temps
+- Format markdown structuré et réutilisable
+
+**Exemples** :
+- `/build:quick-plan "Add user authentication with JWT tokens"`
+- `/build:quick-plan "Implement WebSocket notification system"`
+
 ### Commandes Sessions
 
 #### `/sessions:start`
@@ -258,6 +281,29 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 **Exemples** :
 - `/cc:make:command git-hotfix "Création de hotfix avec workflow Git" --tools=Bash,Edit --category=git`
 - `/cc:make:command deploy-prod "Déploiement en production" --tools=Bash,Read --category=build`
+
+### Commandes de diagnostic
+
+#### `/error-fix`
+**Description** : Analyse et résolution d'erreurs avec workflow structuré
+
+**Format** : Diagnostic méthodique avec plan de résolution et exécution guidée
+**Usage** : `/error-fix [message-erreur-ou-fichier-log]`
+
+**Particularités** :
+- Analyse approfondie des messages d'erreur et stack traces
+- Recherche contextuelle dans les fichiers et logs du projet
+- Diagnostic des causes racines vs symptômes
+- Plan de résolution structuré en étapes priorisées
+- Exécution guidée avec validation à chaque étape
+- Support des erreurs PHP, JavaScript, build, configuration
+- Analyse des changements récents (git) pour identifier les causes
+- Documentation complète des corrections appliquées
+
+**Exemples** :
+- `/error-fix "Fatal error: Uncaught Error: Call to undefined method User::getName()"`
+- `/error-fix /var/log/app.log`
+- `/error-fix "npm ERR! missing script: build"`
 
 ### Commandes d'analyse
 

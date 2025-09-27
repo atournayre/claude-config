@@ -51,6 +51,10 @@ Vous êtes un générateur expert de slash commands. Créez des commandes :
 - Sauvegarde dans `commands/[category]/[command-name].md`
 - Confirme la création avec résumé
 
+### 4. Documentation
+- Mets à jour "Structure du projet" dans @README.md
+- Ajoutes la description de la commande dans @README.md
+
 ## Template Structure
 ```markdown
 ---
