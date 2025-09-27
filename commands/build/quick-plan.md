@@ -1,188 +1,56 @@
 ---
-allowed-tools: [Read, Write, Grep, Glob, TodoWrite]
+allowed-tools: [Read, Write, Edit, Grep, Glob, MultiEdit]
 description: Creates a concise engineering implementation plan based on user requirements and saves it to specs directory
-argument-hint: "[requirement-description]"
+argument-hint: [user prompt]
 model: claude-opus-4-1-20250805
 ---
 
-# Quick Engineering Plan Generator
 
-Generate a concise, actionable engineering implementation plan based on user requirements and save it to the specs directory for future reference.
-
-## Purpose
-Create structured implementation plans that serve as blueprints for development tasks, providing clear technical specifications, architecture decisions, and implementation steps.
+# Quick Plan
+Create a detailed implementation plan based on the user's requirements provided through the `USER_PROMPT` variable. Analyze the request, think through the implementation approach, and save a comprehensive specification document to `PLAN_OUTPUT_DIRECTORY/<name-of-plan>.md` that can be used as a blueprint for actual development work.
 
 ## Variables
-- SPEC_FOLDER: `docs/specs`
+USER_PROMPT: $ARGUMENTS
+PLAN_OUTPUT_DIRECTORY: `docs/specs/`
 
-## Relevant Files
-- @CLAUDE.md
+## Instructions
+- Carefully user's requirements provided in the USER_PROMPT variable
+- Think deeply about the best approach to implement the requested functionality or solve the problem
+- Create a concise implementation plan that includes:
+- Clear problem statement and objectives
+- Technical approach and architecture decisions
+- Step-by-step implementation guide
+- Potential challenges and solutions
+- Testing strategy
+- Success criteria
+- Generate a descriptive, kebab-case filename based on the main topic of the plan
+- Save the complete implementation plan to `PLAN_OUTPUT_DIRECTORY/<descriptive-name>.md`
+  - Ensure the plan is detailed enough that another developer could follow it to implement the solution
+  - Include code examples or pseudo-code where appropriate to clarify complex concepts
+- Consider edge cases, error handling, and scalability concerns
+  - Structure the document with clear sections and proper markdown formatting
 
 ## Workflow
 
-### 1. Requirement Analysis
-- Parse user's requirement description
-- Extract key technical components and features
-- Identify constraints and dependencies
-- Determine project scope and boundaries
+1. Analyze Requirements - THINK HARD and parse the USER_PROMPT to understand the core problem and desired outcome
+2. Design Solution - Develop technical approach including architecture decisions and implementation strategy
+3. Document Plan - Structure a comprehensive markdown document with problem statement, implementation steps, and testing approach
+4. Generate Filename - Create a descriptive kebab-case filename based on the plan's main topic
+5. Save & Report - Write the plan to `PLAN_OUTPUT_DIRECTORY/<filename>.md` and provide a summary of key components
 
-### 2. Context Discovery
-- Search existing codebase for related implementations
-- Identify reusable components or patterns
-- Note potential conflicts or integration points
-- Review project conventions and standards
+## Report
 
-### 3. Plan Generation
-Generate a structured plan containing:
+After creating and saving the implementation plan, provide a concise report with the following format:
 
-#### Technical Specification
-- **Objective**: Clear statement of what needs to be built
-- **Scope**: What's included and explicitly excluded
-- **Success Criteria**: Measurable outcomes
-
-#### Architecture Overview
-- **Components**: List of main components/modules
-- **Data Flow**: How data moves through the system
-- **Dependencies**: External and internal dependencies
-- **Technology Stack**: Specific technologies to use
-
-#### Implementation Steps
-1. **Setup Phase**
-   - Environment preparation
-   - Dependency installation
-   - Configuration requirements
-
-2. **Core Development**
-   - Step-by-step implementation tasks
-   - Order of operations
-   - Critical path items
-
-3. **Testing Strategy**
-   - Unit test requirements
-   - Integration test scenarios
-   - Acceptance criteria validation
-
-4. **Deployment Considerations**
-   - Migration requirements
-   - Configuration changes
-   - Rollback strategy
-
-#### Risk Assessment
-- **Technical Risks**: Potential technical challenges
-- **Mitigation Strategies**: How to handle risks
-- **Alternative Approaches**: Backup plans if primary approach fails
-
-#### Timeline Estimate
-- **Phase Breakdown**: Time per major phase
-- **Dependencies**: Tasks that block others
-- **Total Estimate**: Overall implementation time
-
-### 4. File Creation
-- Generate filename: `SPEC_FOLDER/[timestamp]_[project-name]_plan.md`
-- Create specs directory if it doesn't exist
-- Write the plan in markdown format
-- Include metadata (date, author, version)
-
-### 5. Plan Validation
-- Ensure all sections are complete
-- Check for technical consistency
-- Verify against project standards
-- Add to TodoWrite for tracking
-
-## Report Format
-
-```markdown
-# Implementation Plan: [Project Name]
-
-## Metadata
-- **Created**: [Timestamp]
-- **Type**: Engineering Implementation Plan
-- **Status**: Draft
-
-## Executive Summary
-[1-2 sentence overview]
-
-## Technical Specification
-### Objective
-[Clear goal statement]
-
-### Scope
-**Included:**
-- [Items in scope]
-
-**Excluded:**
-- [Items out of scope]
-
-### Success Criteria
-- [ ] [Measurable outcome 1]
-- [ ] [Measurable outcome 2]
-
-## Architecture
-### Components
-- **[Component Name]**: [Purpose and responsibility]
-
-### Data Flow
-[Description or simple diagram]
-
-### Dependencies
-- [External dependencies]
-- [Internal dependencies]
-
-## Implementation Steps
-
-### Phase 1: Setup
-- [ ] [Task 1]
-- [ ] [Task 2]
-
-### Phase 2: Core Development
-- [ ] [Task 1]
-- [ ] [Task 2]
-
-### Phase 3: Testing
-- [ ] [Unit tests]
-- [ ] [Integration tests]
-
-### Phase 4: Deployment
-- [ ] [Deployment tasks]
-
-## Risk Assessment
-| Risk | Impact | Mitigation |
-|------|--------|------------|
-| [Risk 1] | [High/Medium/Low] | [Strategy] |
-
-## Timeline
-- **Phase 1**: [Duration]
-- **Phase 2**: [Duration]
-- **Total**: [Total estimate]
-
-## Notes
-[Additional considerations]
 ```
+✅ Implementation Plan Created
 
-## Output
-- Save plan to `SPEC_FOLDER/[timestamp]_[project-name]_plan.md`
-- Display confirmation with file path
-- Show executive summary
-- Add implementation tasks to TodoWrite
-- Suggest next steps (review, refinement, implementation start)
+File: PLAN_OUTPUT_DIRECTORY/<filename>.md
 
-## Examples
+Topic: <brief description of what the plan covers>
 
-### Basic Usage
+Key Comgonents:
+- <main component 1>
+- <main component 2>
+- <main component 3>
 ```
-/quick-plan "Add user authentication with JWT tokens and refresh mechanism"
-```
-
-### Complex Feature
-```
-/quick-plan "Implement real-time notification system with WebSocket support, message queuing, and delivery tracking"
-```
-
-## Best Practices
-- Keep plans concise but comprehensive
-- Focus on actionable items
-- Include clear success criteria
-- Consider edge cases and error handling
-- Document assumptions explicitly
-- Version plans for tracking changes
-- Reference existing patterns in codebase
