@@ -1,6 +1,6 @@
 ---
 allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*), Bash(git diff:*), Bash(git log:*), Bash(git checkout:*), Bash(git branch:*), Bash(git push:*), Bash(gh pr:*), Bash(gh api:*), Bash(make qa:*), Write, Read, TodoWrite
-argument-hint: [branch-base, milestone]
+argument-hint: [branch-base, milestone, project, --delete]
 description: Crée une Pull Request optimisée avec workflow structuré
 ---
 
@@ -15,7 +15,8 @@ Automatiser la création d'une Pull Request avec un workflow intelligent incluan
 - `BRANCH_NAME`: Nom de la branche de travail en cours
 - `PR_NUMBER`: Numéro de la PR créée
 - `MILESTONE`: Milestone à assigner
-- `PROJECT_ID`: ID du projet GitHub sélectionné par l'utilisateur
+- `PROJECT_NAME`: Nom du projet GitHub fourni en argument ou sélectionné par l'utilisateur
+- `DELETE_FLAG`: Flag `--delete` pour supprimer automatiquement la branche locale
 
 ## Instructions
 
@@ -155,31 +156,60 @@ gh pr edit [PR_NUMBER] --milestone "[MILESTONE_TITLE]"
 
 ### Étape 8: Assignation Projet GitHub
 ```bash
-# Utiliser le script réutilisable pour l'assignation
-./scripts/assign_github_project.sh [PR_NUMBER]
+# Si PROJECT_NAME fourni en argument
+if [PROJECT_NAME fourni]; then
+    # Vérifier que le projet existe
+    gh api graphql -f query='query { ... }' | grep -i "$PROJECT_NAME"
 
-# Le script va automatiquement :
-# - Récupérer la liste des projets disponibles
-# - Présenter les options à l'utilisateur
-# - ATTENDRE la sélection (OBLIGATOIRE)
-# - Assigner la PR au projet sélectionné
-# - Afficher la confirmation ou ignorer si demandé
+    # Si trouvé : assigner directement
+    # Récupérer PROJECT_ID depuis le nom
+    # Assigner la PR au projet
+    echo "✅ PR assignée au projet: $PROJECT_NAME"
+
+    # Si non trouvé : erreur et demander à l'utilisateur
+    echo "❌ ERREUR: Projet '$PROJECT_NAME' introuvable"
+    # Afficher liste et demander confirmation
+fi
+
+# Sinon : workflow manuel existant
+if [PROJECT_NAME non fourni]; then
+    # Utiliser le script réutilisable pour l'assignation
+    ./scripts/assign_github_project.sh [PR_NUMBER]
+
+    # Le script va automatiquement :
+    # - Récupérer la liste des projets disponibles
+    # - Présenter les options à l'utilisateur
+    # - ATTENDRE la sélection (OBLIGATOIRE)
+    # - Assigner la PR au projet sélectionné
+    # - Afficher la confirmation ou ignorer si demandé
+fi
 ```
 
 ### Étape 9: Nettoyage Branche Locale
-```
+```bash
 ✅ Pull Request créée avec succès !
 
-Souhaitez-vous supprimer la branche locale ?
-[y/N] :
+# Si --delete fourni en argument
+if [DELETE_FLAG présent]; then
+    # Supprimer automatiquement sans confirmation
+    git checkout [BRANCH_BASE]
+    git branch -D [BRANCH_NAME]
+    echo "✅ Branche locale supprimée automatiquement"
+fi
 
-# Si oui:
-git checkout [BRANCH_BASE]
-git branch -D [BRANCH_NAME]
-"✅ Branche locale supprimée"
+# Sinon : demander confirmation
+if [DELETE_FLAG absent]; then
+    echo "Souhaitez-vous supprimer la branche locale ?"
+    echo "[y/N] :"
 
-# Si non ou pas de réponse:
-"ℹ️ Branche locale conservée"
+    # Si oui:
+    git checkout [BRANCH_BASE]
+    git branch -D [BRANCH_NAME]
+    echo "✅ Branche locale supprimée"
+
+    # Si non ou pas de réponse:
+    echo "ℹ️ Branche locale conservée"
+fi
 ```
 
 ## Expertise
@@ -194,9 +224,10 @@ git branch -D [BRANCH_NAME]
     - Exemple : `Refactoring du service de notification`
 
 ### Configuration Projet GitHub
-- **Sélection manuelle** : Toujours demander à l'utilisateur
+- **Sélection automatique** : Si `project` fourni en argument, rechercher et assigner directement
+- **Sélection manuelle** : Si `project` non fourni, demander à l'utilisateur
 - **Projets fermés** : Ne pas afficher dans la liste
-- **Assignation** : Uniquement après confirmation explicite
+- **Assignation** : Automatique si projet fourni, sinon après confirmation explicite
 
 ## Template
 
