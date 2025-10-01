@@ -45,6 +45,7 @@ DIRECTORIES=(
     "output-styles"
     "status_lines"
     "task"
+    "_templates"
 )
 
 # Fonction pour copier la configuration
