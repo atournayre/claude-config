@@ -65,8 +65,11 @@ ISSUE_OR_TEXT: $2
    - `git checkout -b $NEW_BRANCH`
    - La branche est créée depuis SOURCE_BRANCH (car on est dessus)
 
-8. **Configurer tracking vers remote**
-   - `git branch --set-upstream-to=origin/$SOURCE_BRANCH $NEW_BRANCH`
+8. **NE PAS configurer de tracking automatiquement**
+   - ❌ **INTERDIT** : `git branch --set-upstream-to=origin/$SOURCE_BRANCH $NEW_BRANCH`
+   - ✅ Le tracking sera configuré automatiquement lors du premier push avec `-u`
+   - ✅ Lors du push : `git push -u origin $NEW_BRANCH`
+   - **RAISON** : Configurer le tracking vers SOURCE_BRANCH pousse les commits sur la branche parente au lieu de créer une nouvelle branche distante
 
 ## Expertise
 Conventions de nommage des branches :
@@ -117,7 +120,7 @@ Conventions de nommage des branches :
 - Branche source utilisée
 - Issue associée (si applicable)
 - Statut du checkout
-- Configuration du tracking remote
+- Note : Le tracking remote sera configuré lors du premier push avec `git push -u origin $NEW_BRANCH`
 
 ## Validation
 - ✅ `SOURCE_BRANCH` doit exister localement
