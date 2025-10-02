@@ -32,6 +32,9 @@ Automatiser la création d'une Pull Request avec un workflow intelligent incluan
 - ❌ Ne JAMAIS choisir un milestone sans demander
 - ❌ Ne JAMAIS ignorer l'assignation au projet GitHub
 - ❌ Ne JAMAIS utiliser `git commit -m` directement
+- ❌ Ne JAMAIS pusher sans vérifier `git log origin/$BRANCH_BASE..$BRANCH_NAME` avant
+- ❌ Ne JAMAIS créer une PR si aucun commit entre origin/base et branche courante
+- ❌ Ne JAMAIS comparer avec la branche locale, TOUJOURS avec origin/BRANCH_BASE
 
 ## Relevant Files
 - `$PR_TEMPLATE_PATH`: Template PR obligatoire du projet
@@ -121,19 +124,53 @@ Options détectées : develop, main, release/1.0.0
 ```
 
 ### Étape 6: Push et Création PR
+
+**🚨 VÉRIFICATION CRITIQUE AVANT PUSH 🚨**
+
 ```bash
+# OBLIGATOIRE : Vérifier que la branche courante est bien la branche de travail
+CURRENT_BRANCH=$(git branch --show-current)
+if [ "$CURRENT_BRANCH" != "$BRANCH_NAME" ]; then
+    echo "❌ ERREUR CRITIQUE: Vous êtes sur $CURRENT_BRANCH au lieu de $BRANCH_NAME"
+    echo "Checkout vers $BRANCH_NAME avant de continuer"
+    git checkout $BRANCH_NAME
+fi
+
+# OBLIGATOIRE : Vérifier que origin/BRANCH_BASE n'a PAS le commit qu'on veut pousser
+COMMITS_TO_PUSH=$(git log --oneline origin/$BRANCH_BASE..$BRANCH_NAME | wc -l)
+if [ $COMMITS_TO_PUSH -eq 0 ]; then
+    echo "❌ ERREUR CRITIQUE: Aucun commit à pousser entre origin/$BRANCH_BASE et $BRANCH_NAME"
+    echo "La branche origin/$BRANCH_BASE contient déjà tous les commits de $BRANCH_NAME"
+    echo "ARRÊT - Impossible de créer une PR vide"
+    exit 1
+fi
+
+echo "✅ $COMMITS_TO_PUSH commit(s) à pousser"
+echo "✅ Vous êtes bien sur la branche $BRANCH_NAME"
+
+# OBLIGATOIRE : Afficher ce qui sera pushé
+echo "Commits qui seront pushés :"
+git log --oneline origin/$BRANCH_BASE..$BRANCH_NAME
+
 # Push de la branche
-git push -u origin [BRANCH_NAME]
+git push -u origin $BRANCH_NAME
 
 # Créer fichier temporaire pour éviter problèmes formatage
 Write /tmp/pr_body.md [contenu avec template]
 
 # Créer la PR avec le fichier
-gh pr create --base [BRANCH_BASE] --title "[TITRE]" --body-file /tmp/pr_body.md
+gh pr create --base $BRANCH_BASE --title "[TITRE]" --body-file /tmp/pr_body.md
 
 # Nettoyer
 rm /tmp/pr_body.md
 ```
+
+**⚠️ RÈGLES DE SÉCURITÉ PUSH** :
+1. TOUJOURS vérifier qu'on est sur la bonne branche avant de push
+2. TOUJOURS vérifier qu'il y a des commits à pousser (comparer avec origin/BRANCH_BASE)
+3. TOUJOURS afficher les commits avant de pousser
+4. JAMAIS pousser si `git log origin/$BRANCH_BASE..$BRANCH_NAME` est vide
+5. TOUJOURS comparer avec origin/BRANCH_BASE, JAMAIS avec la branche locale
 
 ### Étape 7: Assignation Milestone
 ```bash
