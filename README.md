@@ -27,6 +27,8 @@ claude-config/
 │   │   ├── commit.md         # Création de commit avec workflow
 │   │   ├── pr.md             # Création de Pull Request optimisée
 │   │   └── status.md         # Affiche le statut Git
+│   ├── qa/                   # Commandes de qualité de code
+│   │   └── phpstan.md        # Résolution automatique erreurs PHPStan
 │   ├── sessions/             # Gestion des sessions
 │   │   ├── current.md        # Affiche la session courante
 │   │   ├── end.md            # Termine une session
@@ -302,6 +304,26 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 - `/error-fix "Fatal error: Uncaught Error: Call to undefined method User::getName()"`
 - `/error-fix /var/log/app.log`
 - `/error-fix "npm ERR! missing script: build"`
+
+### Commandes de qualité de code
+
+#### `/qa:phpstan`
+**Description** : Résout automatiquement les erreurs PHPStan détectées dans le projet
+
+**Format** : Workflow itératif de détection et correction avec agent spécialisé
+**Usage** : `/qa:phpstan`
+
+**Particularités** :
+- Exécution automatique de PHPStan pour détecter les erreurs
+- Traitement par lots (5 erreurs max par fichier)
+- Utilisation de l'agent @phpstan-error-resolver pour chaque groupe d'erreurs
+- Vérification après chaque correction
+- Boucle itérative jusqu'à résolution complète ou stagnation
+- Rapport détaillé avec statistiques de résolution
+- Support du fichier de configuration phpstan.neon
+
+**Exemples** :
+- `/qa:phpstan`
 
 ### Commandes d'analyse
 
