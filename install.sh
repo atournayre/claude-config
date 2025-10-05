@@ -38,14 +38,15 @@ backup_config() {
 
 # Configuration des répertoires à copier
 DIRECTORIES=(
+    "_templates"
     "agents"
     "commands"
     "docs"
     "hooks"
+    "mcp"
     "output-styles"
     "status_lines"
     "task"
-    "_templates"
 )
 
 # Fonction pour copier la configuration
