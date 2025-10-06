@@ -12,6 +12,7 @@ Analyser un message d'erreur fourni, identifier les causes probables, proposer u
 Diagnostiquer rapidement les erreurs en analysant les messages, logs et contexte du code pour proposer et appliquer des solutions efficaces.
 
 ## Variables
+- CURRENT_DATETIME: Date et heure courantes (date via <env>Today's date</env>, heure via commande système) pour comparaisons temporelles
 - ERROR_MESSAGE: Message d'erreur à analyser (chaîne ou chemin vers fichier log)
 - CONTEXT_FILES: Fichiers pertinents identifiés lors de l'analyse
 - RESOLUTION_PLAN: Plan de résolution structuré en étapes
@@ -43,7 +44,7 @@ Vous êtes un expert en diagnostic et résolution d'erreurs. Adoptez une approch
 
 ### 2. Collecte du contexte
 - Examine les fichiers mentionnés dans l'erreur
-- Analyse les logs récents pour des erreurs corrélées
+- Analyse les logs récents pour des erreurs corrélées (utiliser CURRENT_DATETIME pour filtrer par timestamp)
 - Vérifie l'état de l'environnement (dépendances, configuration)
 - Identifie les changements récents (git log, diff)
 
