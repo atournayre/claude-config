@@ -26,6 +26,7 @@ claude-config/
 │   │   └── stack-trace.md    # Analyse de stack trace avec rapport détaillé
 │   ├── git/                  # Commandes Git
 │   │   ├── commit.md         # Création de commit avec workflow
+│   │   ├── conflit.md        # Résolution interactive de conflits git
 │   │   ├── pr.md             # Création de Pull Request optimisée
 │   │   └── status.md         # Affiche le statut Git
 │   ├── qa/                   # Commandes de qualité de code
@@ -167,6 +168,27 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 
 **Format** : Workflow de commit avec conventions et validation
 **Usage** : `/git:commit`
+
+#### `/git:conflit`
+**Description** : Résolution interactive de conflits git avec validation pas à pas
+
+**Format** : Analyse et guide la résolution des conflits git de manière interactive
+**Usage** : `/git:conflit <branche-destination>`
+
+**Particularités** :
+- Détection automatique de merge/rebase en cours
+- Analyse contextuelle de chaque fichier en conflit
+- 3 stratégies de résolution proposées :
+  - Garder la version actuelle (ours)
+  - Garder la version entrante (theirs)
+  - Résolution manuelle intelligente
+- Validation utilisateur avant chaque application
+- Rapport détaillé de résolution
+- Support annulation à tout moment (merge/rebase --abort)
+
+**Exemples** :
+- `/git:conflit main` - Merge main dans branche actuelle avec résolution de conflits
+- `/git:conflit develop` - Rebase sur develop avec résolution interactive
 
 #### `/git:pr`
 **Description** : Crée une Pull Request optimisée avec workflow complet
