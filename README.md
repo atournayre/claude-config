@@ -22,7 +22,8 @@ claude-config/
 │   │   └── make/             # Générateurs de commandes
 │   │       └── command.md    # Générateur de slash commands
 │   ├── debug/                # Commandes de diagnostic
-│   │   └── error-fix.md      # Analyse et résolution d'erreurs
+│   │   ├── error-fix.md      # Analyse et résolution d'erreurs
+│   │   └── stack-trace.md    # Analyse de stack trace avec rapport détaillé
 │   ├── git/                  # Commandes Git
 │   │   ├── commit.md         # Création de commit avec workflow
 │   │   ├── pr.md             # Création de Pull Request optimisée
@@ -304,6 +305,27 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 - `/error-fix "Fatal error: Uncaught Error: Call to undefined method User::getName()"`
 - `/error-fix /var/log/app.log`
 - `/error-fix "npm ERR! missing script: build"`
+
+#### `/debug:stack-trace`
+**Description** : Analyse une stack trace et génère un rapport formaté avec diagnostic et solutions
+
+**Format** : Parsing intelligent de trace d'erreur avec analyse contextuelle
+**Usage** : `/debug:stack-trace <stack-trace-text-or-file-path>`
+
+**Particularités** :
+- Détection automatique du type d'erreur (PHP, JavaScript, Python, etc.)
+- Formatage hiérarchique et lisible de la trace
+- Identification du point d'origine exact (fichier:ligne)
+- Analyse du code source au point d'erreur
+- Diagnostic de la cause racine vs symptôme
+- 3 solutions proposées : Quick Fix, Recommandée, Long-terme
+- Génération de rapport complet dans `/tmp/stack-trace-analysis-[timestamp].md`
+- Support texte brut ou chemin de fichier log
+
+**Exemples** :
+- `/debug:stack-trace "Fatal error: Uncaught Error: Call to undefined method User::getName() in /app/src/Service.php:42"`
+- `/debug:stack-trace /var/log/app-error.log`
+- `/debug:stack-trace "TypeError: Cannot read property 'id' of undefined at Object.process (main.js:156:23)"`
 
 ### Commandes de qualité de code
 
