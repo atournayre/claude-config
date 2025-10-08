@@ -29,6 +29,13 @@ claude-config/
 │   │   ├── conflit.md        # Résolution interactive de conflits git
 │   │   ├── pr.md             # Création de Pull Request optimisée
 │   │   └── status.md         # Affiche le statut Git
+│   ├── load/                 # Commandes de chargement de documentation
+│   │   └── doc/              # Documentation externe
+│   │       ├── api-platform.md      # Charge doc API Platform
+│   │       ├── atournayre-framework.md  # Charge doc atournayre-framework
+│   │       ├── claude.md     # Charge doc Claude Code
+│   │       ├── meilisearch.md # Charge doc Meilisearch
+│   │       └── symfony.md    # Charge doc Symfony
 │   ├── qa/                   # Commandes de qualité de code
 │   │   └── phpstan.md        # Résolution automatique erreurs PHPStan
 │   ├── sessions/             # Gestion des sessions
@@ -407,6 +414,21 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 - `/think:ultra "Should we migrate our entire legacy system to microservices architecture?"`
 - `/think:ultra "How should we approach the AI transformation of our organization?"`
 - `/think:ultra "What's the optimal strategy for entering the European market?"`
+
+### Commandes de chargement de documentation
+
+#### `/load:doc:meilisearch`
+**Description** : Charge la documentation Meilisearch depuis leur site web dans des fichiers markdown locaux
+
+**Format** : Workflow automatisé de scraping et sauvegarde locale
+**Usage** : `/load:doc:meilisearch`
+
+**Particularités** :
+- Vérifie l'âge des fichiers existants (24h par défaut)
+- Ignore les fichiers récents pour économiser les ressources
+- Utilise l'agent @meilisearch-docs-scraper
+- Sauvegarde dans `docs/meilisearch/`
+- Liste des URLs dans `docs/meilisearch/README.md`
 
 ### Commandes générales
 

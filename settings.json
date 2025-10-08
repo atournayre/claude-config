@@ -47,7 +47,8 @@
       "Bash(sleep:*)",
       "WebFetch(domain:docs.anthropic.com)",
       "WebFetch(domain:github.com)",
-      "WebFetch(domain:localhost)"
+      "WebFetch(domain:localhost)",
+      "WebFetch(domain:meilisearch.com)"
     ],
     "deny": [
       "Bash(cd :*data:*)",
