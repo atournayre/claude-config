@@ -19,8 +19,9 @@ Configuration personnelle versionnée pour Claude Code avec des fonctionnalités
 claude-config/
 ├── commands/                 # Commandes personnalisées (slash commands)
 │   ├── cc/                   # Méta-commandes Claude Code
-│   │   └── make/             # Générateurs de commandes
-│   │       └── command.md    # Générateur de slash commands
+│   │   ├── make/             # Générateurs de commandes
+│   │   │   └── command.md    # Générateur de slash commands
+│   │   └── challenge.md      # Auto-évaluation des réponses
 │   ├── debug/                # Commandes de diagnostic
 │   │   ├── error-fix.md      # Analyse et résolution d'erreurs
 │   │   └── stack-trace.md    # Analyse de stack trace avec rapport détaillé
@@ -311,6 +312,24 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 **Exemples** :
 - `/cc:make:command git-hotfix "Création de hotfix avec workflow Git" --tools=Bash,Edit --category=git`
 - `/cc:make:command deploy-prod "Déploiement en production" --tools=Bash,Read --category=build`
+
+#### `/challenge`
+**Description** : Auto-évaluation de ma dernière réponse avec notation et propositions d'amélioration
+
+**Format** : Rapport structuré avec scores détaillés par critère et version améliorée si pertinent
+**Usage** : `/challenge`
+
+**Particularités** :
+- Évaluation sur 5 critères : pertinence, clarté, complétude, précision, format/style
+- Note globale sur 10
+- Identification des points forts et axes d'amélioration
+- Proposition d'une version améliorée si note < 8/10
+- Auto-critique honnête et constructive
+- Rapport concis en format liste à puces
+
+**Exemples** :
+- `/challenge` - Après avoir fourni une réponse technique complexe
+- `/challenge` - Pour vérifier si la réponse respecte les préférences utilisateur
 
 ### Commandes de diagnostic
 
