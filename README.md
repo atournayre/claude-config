@@ -173,13 +173,52 @@ pip install python-dotenv
 
 Les commandes personnalisées (slash commands) permettent d'étendre les capacités de Claude Code.
 
+### Organisation des namespaces
+
+Les commandes sont organisées par namespaces (espaces de noms) pour regrouper les fonctionnalités similaires :
+
+- **git:** - Opérations Git (commit, pr, branch, conflit, status)
+- **github:** - Intégration GitHub (fix)
+- **sessions:** - Gestion des sessions (start, current, list, end, update, help)
+- **cc:** - Méta-commandes Claude Code (make:command, challenge)
+- **doc:** - Documentation (adr, rtfm, update)
+- **debug:** - Diagnostic et débogage (error-fix, stack-trace)
+- **qa:** - Qualité de code (phpstan)
+- **think:** - Analyse approfondie (harder, ultra)
+- **load:doc:** - Chargement de documentation externe (meilisearch, symfony, api-platform, claude, atournayre-framework)
+- **context:** - Chargement de contexte (default, elegant_object)
+- **analyse:** - Analyse de code (impact)
+- **build:** - Construction et planification (build, quick-plan)
+
+Les commandes sans namespace (analytics, question, all_tools) sont des commandes générales.
+
 ### Commandes Git
+
+#### `/git:branch`
+**Description** : Création de branche Git avec workflow structuré
+
+**Format** : Workflow de création de branche avec support des issues GitHub
+**Usage** : `/git:branch <source-branch> [issue-number-or-text]`
+
+**Particularités** :
+- Validation de l'existence de la branche source
+- Checkout automatique vers la branche source avant création
+- Pull automatique pour partir du dernier commit
+- Génération automatique du nom de branche depuis issue GitHub ou texte
+- Détection automatique entre numéro d'issue et texte descriptif
+- Conventions de nommage : `issue/123-description` ou `feature/description`
+- Le tracking remote sera configuré lors du premier push avec `-u`
+
+**Exemples** :
+- `/git:branch main 42` - Crée depuis main avec issue #42
+- `/git:branch main "Add login form"` - Crée feature/add-login-form
+- `/git:branch develop` - Crée depuis develop (nom demandé)
 
 #### `/git:commit`
 **Description** : Création de commit avec workflow structuré
 
 **Format** : Workflow de commit avec conventions et validation
-**Usage** : `/git:commit`
+**Usage** : `/git:commit [message] | --no-verify`
 
 #### `/git:conflit`
 **Description** : Résolution interactive de conflits git avec validation pas à pas
@@ -206,12 +245,45 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 **Description** : Crée une Pull Request optimisée avec workflow complet
 
 **Format** : Workflow structuré incluant QA, commits, milestone et assignation projet
-**Usage** : `/git:pr [branch-base] [milestone]`
+**Usage** : `/git:pr [branch-base] [milestone] [project] [--delete]`
 
 **Particularités** :
 - QA automatique pour fichiers PHP
 - Demande confirmation pour branche et milestone
 - Utilise le script `scripts/assign_github_project.sh` pour l'assignation
+
+#### `/git:status`
+**Description** : Affiche le statut Git détaillé du projet
+
+**Format** : Informations structurées sur la branche, modifications et historique
+**Usage** : `/git:status`
+
+**Particularités** :
+- Branche courante et statut
+- Fichiers modifiés/ajoutés/supprimés
+- Commits récents
+- État du tracking remote
+
+### Commandes GitHub
+
+#### `/github:fix`
+**Description** : Corriger une issue GitHub avec workflow simplifié et efficace
+
+**Format** : Workflow automatisé de correction d'issue depuis GitHub
+**Usage** : `/github:fix [issue-number]`
+
+**Particularités** :
+- Récupération automatique des détails de l'issue via GitHub CLI
+- Analyse du problème avec contexte Sentry si disponible
+- Création automatique de branche : `issue/N-description`
+- Investigation du code concerné
+- Implémentation avec respect des standards du projet
+- Validation PHPStan (niveau 9, zéro erreur)
+- Tests automatiques avant finalisation
+- Support des standards PHP 8.2+ avec typage strict
+
+**Exemples** :
+- `/github:fix 966` - Corrige l'issue #966 avec workflow complet
 
 ### Commandes Analytics
 
@@ -317,11 +389,11 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 - `/cc:make:command git-hotfix "Création de hotfix avec workflow Git" --tools=Bash,Edit --category=git`
 - `/cc:make:command deploy-prod "Déploiement en production" --tools=Bash,Read --category=build`
 
-#### `/challenge`
+#### `/cc:challenge`
 **Description** : Auto-évaluation de ma dernière réponse avec notation et propositions d'amélioration
 
 **Format** : Rapport structuré avec scores détaillés par critère et version améliorée si pertinent
-**Usage** : `/challenge`
+**Usage** : `/cc:challenge`
 
 **Particularités** :
 - Évaluation sur 5 critères : pertinence, clarté, complétude, précision, format/style
@@ -332,8 +404,8 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 - Rapport concis en format liste à puces
 
 **Exemples** :
-- `/challenge` - Après avoir fourni une réponse technique complexe
-- `/challenge` - Pour vérifier si la réponse respecte les préférences utilisateur
+- `/cc:challenge` - Après avoir fourni une réponse technique complexe
+- `/cc:challenge` - Pour vérifier si la réponse respecte les préférences utilisateur
 
 ### Commandes de documentation
 
@@ -397,11 +469,11 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 
 ### Commandes de diagnostic
 
-#### `/error-fix`
+#### `/debug:error-fix`
 **Description** : Analyse et résolution d'erreurs avec workflow structuré
 
 **Format** : Diagnostic méthodique avec plan de résolution et exécution guidée
-**Usage** : `/error-fix [message-erreur-ou-fichier-log]`
+**Usage** : `/debug:error-fix [message-erreur-ou-fichier-log]`
 
 **Particularités** :
 - Analyse approfondie des messages d'erreur et stack traces
@@ -414,9 +486,9 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 - Documentation complète des corrections appliquées
 
 **Exemples** :
-- `/error-fix "Fatal error: Uncaught Error: Call to undefined method User::getName()"`
-- `/error-fix /var/log/app.log`
-- `/error-fix "npm ERR! missing script: build"`
+- `/debug:error-fix "Fatal error: Uncaught Error: Call to undefined method User::getName()"`
+- `/debug:error-fix /var/log/app.log`
+- `/debug:error-fix "npm ERR! missing script: build"`
 
 #### `/debug:stack-trace`
 **Description** : Analyse une stack trace et génère un rapport formaté avec diagnostic et solutions
@@ -461,6 +533,27 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 
 ### Commandes d'analyse
 
+#### `/analyse:impact`
+**Description** : Analyse le détail des modifications d'une Pull Request et génère deux rapports d'impact (métier et technique)
+
+**Format** : Analyse automatisée avec génération de rapports intégrés à la PR
+**Usage** : `/analyse:impact <pr-number>`
+
+**Particularités** :
+- Analyse complète de tous les fichiers modifiés dans la PR
+- Génération de deux rapports complémentaires :
+  - **Rapport métier** : Impact fonctionnel, risques, recommandations (sans jargon)
+  - **Rapport technique** : Métriques, dépendances, sécurité, tests
+- Ajout automatique des rapports à la description de la PR
+- Sauvegarde locale dans `.analysis-reports/`
+- Analyse détaillée par type de fichier (PHP, JS, templates, styles, config)
+- Évaluation de la couverture de tests
+- Identification des breaking changes
+- Détection des fichiers de configuration modifiés
+
+**Exemples** :
+- `/analyse:impact 42` - Analyse complète de la PR #42 avec rapports
+
 #### `/think:harder`
 **Description** : Engage une analyse intensive et systématique pour la résolution de problèmes complexes
 
@@ -498,7 +591,80 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 - `/think:ultra "How should we approach the AI transformation of our organization?"`
 - `/think:ultra "What's the optimal strategy for entering the European market?"`
 
+### Commandes de contexte
+
+#### `/context:default`
+**Description** : Charger le contexte pour une nouvelle session d'agent
+
+**Format** : Analyse automatique de la structure du projet
+**Usage** : `/context:default`
+
+**Particularités** :
+- Liste tous les fichiers du projet via `git ls-files`
+- Lit automatiquement la documentation principale
+- Fournit un résumé de compréhension du projet
+- Idéal pour démarrer une nouvelle session de travail
+
+**Exemples** :
+- `/context:default` - Charge le contexte complet du projet
+
+#### `/context:elegant_object`
+**Description** : Charge les règles de conception Elegant Objects
+
+**Format** : Chargement des principes Elegant Objects de Yegor Bugayenko
+**Usage** : `/context:elegant_object`
+
+**Particularités** :
+- Charge tous les principes de conception Elegant Objects
+- Règles sur les classes, constructeurs, méthodes
+- Principes de tests et mocking
+- Standards de code et documentation
+- Applique les règles à tout le code écrit ou modifié
+- Support des règles personnalisées (constructeurs privés pour VO/DTO)
+
+**Exemples** :
+- `/context:elegant_object` - Active les règles Elegant Objects pour la session
+
 ### Commandes de chargement de documentation
+
+#### `/load:doc:api-platform`
+**Description** : Charge la documentation API Platform depuis leur site web
+
+**Format** : Workflow automatisé de scraping et sauvegarde locale
+**Usage** : `/load:doc:api-platform`
+
+**Particularités** :
+- Vérifie l'âge des fichiers existants (24h par défaut)
+- Ignore les fichiers récents pour économiser les ressources
+- Utilise l'agent @api-platform-docs-scraper
+- Sauvegarde dans `docs/api-platform/`
+- Liste des URLs dans `docs/api-platform/README.md`
+
+#### `/load:doc:atournayre-framework`
+**Description** : Charge la documentation atournayre-framework depuis ReadTheDocs
+
+**Format** : Workflow automatisé de scraping et sauvegarde locale
+**Usage** : `/load:doc:atournayre-framework`
+
+**Particularités** :
+- Vérifie l'âge des fichiers existants (24h par défaut)
+- Ignore les fichiers récents pour économiser les ressources
+- Utilise l'agent @atournayre-framework-docs-scraper
+- Sauvegarde dans `docs/atournayre-framework/`
+- Liste des URLs dans `docs/atournayre-framework/README.md`
+
+#### `/load:doc:claude`
+**Description** : Charge la documentation Claude Code depuis docs.claude.com
+
+**Format** : Workflow automatisé de scraping et sauvegarde locale
+**Usage** : `/load:doc:claude`
+
+**Particularités** :
+- Vérifie l'âge des fichiers existants (24h par défaut)
+- Ignore les fichiers récents pour économiser les ressources
+- Utilise l'agent @claude-docs-scraper
+- Sauvegarde dans `docs/claude/`
+- Liste des URLs dans `docs/claude/README.md`
 
 #### `/load:doc:meilisearch`
 **Description** : Charge la documentation Meilisearch depuis leur site web dans des fichiers markdown locaux
@@ -512,6 +678,19 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 - Utilise l'agent @meilisearch-docs-scraper
 - Sauvegarde dans `docs/meilisearch/`
 - Liste des URLs dans `docs/meilisearch/README.md`
+
+#### `/load:doc:symfony`
+**Description** : Charge la documentation Symfony depuis leur site web
+
+**Format** : Workflow automatisé de scraping et sauvegarde locale
+**Usage** : `/load:doc:symfony`
+
+**Particularités** :
+- Vérifie l'âge des fichiers existants (24h par défaut)
+- Ignore les fichiers récents pour économiser les ressources
+- Utilise l'agent @symfony-docs-scraper
+- Sauvegarde dans `docs/symfony/`
+- Liste des URLs dans `docs/symfony/README.md`
 
 ### Commandes générales
 
