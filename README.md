@@ -55,10 +55,14 @@ claude-config/
 │   │   └── ultra.md          # Analyse ultra-comprehensive pour problèmes très complexes
 │   ├── build/                # Commandes de build
 │   │   └── quick-plan.md     # Génère un plan d'implémentation technique
+│   ├── context/              # Commandes de contexte
+│   │   ├── default.md        # Charge contexte du projet
+│   │   └── elegant_object.md # Charge règles Elegant Objects
 │   ├── all_tools.md          # Liste tous les outils disponibles
 │   ├── analytics.md          # Lance l'analyse d'utilisation Claude Code
 │   ├── analytics-stop.md     # Arrête l'analyse en cours
 │   ├── code.md               # Workflow de code complet
+│   ├── docker.md             # Active le mode Docker pour toutes les opérations
 │   └── question.md           # Pose une question structurée
 ├── hooks/                    # Scripts de hooks pour automatiser les actions
 │   ├── utils/                # Utilitaires partagés
@@ -192,7 +196,7 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 | 💻 **cc** | 2 | make:command, challenge |
 | 📊 **analytics** | 2 | analytics, analytics-stop |
 | 🎯 **sessions** | 6 | start, current, list, end, update, help |
-| ⚙️ **générales** | 3 | all_tools, git_status, question |
+| ⚙️ **générales** | 4 | all_tools, docker, git_status, question |
 
 ### Commandes les plus utilisées
 
@@ -327,6 +331,7 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 | Commande | Description | Usage |
 |----------|-------------|-------|
 | `/all_tools` | Liste tous les outils disponibles | `/all_tools` |
+| `/docker` | Active le mode Docker pour toutes les opérations | `/docker` |
 | `/git_status` | Statut Git détaillé | `/git_status` |
 | `/question` | Question structurée avec contexte | `/question "text"` |
 

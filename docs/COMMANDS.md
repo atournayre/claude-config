@@ -607,6 +607,28 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 
 ---
 
+### `/docker`
+**Description** : Active le mode Docker pour toutes les opérations techniques
+
+**Format** : Configuration contextuelle pour l'exécution via Docker/Docker Compose
+**Usage** : `/docker`
+
+**Particularités** :
+- Détecte automatiquement la configuration Docker (docker-compose.yml, Dockerfile)
+- Transforme toutes les commandes système pour utiliser Docker
+- Exemples de transformation :
+  - `composer install` → `docker compose exec php composer install`
+  - `npm run build` → `docker compose exec node npm run build`
+  - `php bin/console` → `docker compose exec php php bin/console`
+- Affiche les services disponibles avec leur état (running/stopped)
+- Persiste le contexte Docker pour toute la session
+- Gère les erreurs si Docker n'est pas accessible ou conteneurs arrêtés
+
+**Exemples** :
+- `/docker` - Active le mode Docker pour la session actuelle
+
+---
+
 ### `/git_status`
 **Description** : Affiche un statut Git détaillé du projet actuel
 
