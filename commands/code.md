@@ -1,11 +1,11 @@
 ---
 model: claude-sonnet-4-5-20250929
-description: Build the codebase based on the plan
+description: Code the codebase based on the plan
 argument-hint: [path-to-plan]
 allowed-tools: Read, Write, Bash
 ---
 
-# Build
+# Code
 Follow the `Workflow` to implement the `PATH_TO_PLAN` then `Report` the completed work.
 
 ## Timing

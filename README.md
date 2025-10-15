@@ -53,11 +53,12 @@ claude-config/
 │   ├── think/                # Commandes d'analyse
 │   │   ├── harder.md         # Analyse intensive de problèmes complexes
 │   │   └── ultra.md          # Analyse ultra-comprehensive pour problèmes très complexes
+│   ├── build/                # Commandes de build
+│   │   └── quick-plan.md     # Génère un plan d'implémentation technique
 │   ├── all_tools.md          # Liste tous les outils disponibles
 │   ├── analytics.md          # Lance l'analyse d'utilisation Claude Code
 │   ├── analytics-stop.md     # Arrête l'analyse en cours
-│   ├── build.md              # Workflow de build complet
-│   ├── quick-plan.md         # Génère un plan d'implémentation technique
+│   ├── code.md               # Workflow de code complet
 │   └── question.md           # Pose une question structurée
 ├── hooks/                    # Scripts de hooks pour automatiser les actions
 │   ├── utils/                # Utilitaires partagés
@@ -187,7 +188,7 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 | 🔍 **analyse** | 3 | impact, think:harder, think:ultra |
 | 📚 **load:doc** | 5 | api-platform, atournayre-framework, claude, meilisearch, symfony |
 | 🧩 **context** | 2 | default, elegant_object |
-| 🏗️ **build** | 2 | build, quick-plan |
+| 🏗️ **build** | 2 | code, quick-plan |
 | 💻 **cc** | 2 | make:command, challenge |
 | 📊 **analytics** | 2 | analytics, analytics-stop |
 | 🎯 **sessions** | 6 | start, current, list, end, update, help |
@@ -285,7 +286,7 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 
 | Commande | Description | Usage |
 |----------|-------------|-------|
-| `/build` | Workflow de build complet | `/build` |
+| `/code` | Workflow de code complet | `/code` |
 | `/build:quick-plan` | Génère plan d'implémentation | `/build:quick-plan [requirement]` |
 
 [📖 Voir détails](docs/COMMANDS.md#commandes-build)

@@ -89,7 +89,7 @@ Chaque slash command dans ce projet est configurée pour utiliser le modèle Cla
 #### Workflow et Build
 | Commande | Description |
 |----------|-------------|
-| `/build` | Construire selon un plan |
+| `/code` | Construire selon un plan |
 | `/build:quick-plan` | Créer un plan rapide |
 | `/analytics` | Lancer analytics dashboard |
 

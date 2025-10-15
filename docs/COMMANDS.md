@@ -165,11 +165,11 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 
 ## Commandes Build
 
-### `/build`
-**Description** : Workflow de build complet avec étapes structurées
+### `/code`
+**Description** : Workflow de code complet avec étapes structurées
 
-**Format** : Processus de build avec validation et tests
-**Usage** : `/build`
+**Format** : Processus de code avec validation et tests
+**Usage** : `/code`
 
 ---
 
