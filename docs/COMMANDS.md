@@ -29,6 +29,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Création de branche Git avec workflow structuré
 
 **Format** : Workflow de création de branche avec support des issues GitHub
+
 **Usage** : `/git:branch <source-branch> [issue-number-or-text]`
 
 **Particularités** :
@@ -51,6 +52,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Création de commit avec workflow structuré
 
 **Format** : Workflow de commit avec conventions et validation
+
 **Usage** : `/git:commit [message] | --no-verify`
 
 **Particularités** :
@@ -65,6 +67,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Résolution interactive de conflits git avec validation pas à pas
 
 **Format** : Analyse et guide la résolution des conflits git de manière interactive
+
 **Usage** : `/git:conflit <branche-destination>`
 
 **Particularités** :
@@ -88,6 +91,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Crée une Pull Request optimisée avec workflow complet
 
 **Format** : Workflow structuré incluant QA, commits, milestone et assignation projet
+
 **Usage** : `/git:pr [branch-base] [milestone] [project] [--delete]`
 
 **Particularités** :
@@ -101,6 +105,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Affiche le statut Git détaillé du projet
 
 **Format** : Informations structurées sur la branche, modifications et historique
+
 **Usage** : `/git:status`
 
 **Particularités** :
@@ -117,6 +122,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Corriger une issue GitHub avec workflow simplifié et efficace
 
 **Format** : Workflow automatisé de correction d'issue depuis GitHub
+
 **Usage** : `/github:fix [issue-number]`
 
 **Particularités** :
@@ -140,6 +146,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Lance le tableau de bord d'analytics pour visualiser les statistiques d'utilisation de Claude Code
 
 **Format** : Serveur local sur port 3333 avec ouverture automatique du navigateur
+
 **Usage** : `/analytics`
 
 **Particularités** :
@@ -155,6 +162,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Arrête proprement le serveur analytics dashboard de Claude Code
 
 **Format** : Commande de nettoyage pour libérer le port 3333
+
 **Usage** : `/analytics-stop`
 
 **Particularités** :
@@ -170,6 +178,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Workflow de code complet avec étapes structurées
 
 **Format** : Processus de code avec validation et tests
+
 **Usage** : `/code`
 
 ---
@@ -178,6 +187,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Génère un plan d'implémentation d'ingénierie concis et le sauvegarde dans le répertoire specs
 
 **Format** : Plan structuré avec spécifications techniques, architecture et étapes d'implémentation
+
 **Usage** : `/build:quick-plan [requirement-description]`
 
 **Particularités** :
@@ -199,12 +209,14 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 ### `/sessions:start`
 **Description** : Démarre une nouvelle session de travail
 
+
 **Usage** : `/sessions:start [nom-session]`
 
 ---
 
 ### `/sessions:current`
 **Description** : Affiche la session courante avec détails
+
 
 **Usage** : `/sessions:current`
 
@@ -213,12 +225,14 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 ### `/sessions:list`
 **Description** : Liste toutes les sessions disponibles
 
+
 **Usage** : `/sessions:list`
 
 ---
 
 ### `/sessions:end`
 **Description** : Termine la session courante
+
 
 **Usage** : `/sessions:end`
 
@@ -227,12 +241,14 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 ### `/sessions:update`
 **Description** : Met à jour les informations de session
 
+
 **Usage** : `/sessions:update`
 
 ---
 
 ### `/sessions:help`
 **Description** : Aide détaillée sur la gestion des sessions
+
 
 **Usage** : `/sessions:help`
 
@@ -244,6 +260,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Générateur de slash commands pour Claude Code avec workflow structuré
 
 **Format** : Création automatique de commandes bien documentées suivant les conventions
+
 **Usage** : `/cc:make:command [nom-commande] [description] [--tools=outil1,outil2] [--category=categorie]`
 
 **Particularités** :
@@ -264,6 +281,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Auto-évaluation de ma dernière réponse avec notation et propositions d'amélioration
 
 **Format** : Rapport structuré avec scores détaillés par critère et version améliorée si pertinent
+
 **Usage** : `/cc:challenge`
 
 **Particularités** :
@@ -286,6 +304,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Génère un Architecture Decision Record (ADR) formaté et structuré
 
 **Format** : Création d'un document ADR suivant les standards
+
 **Usage** : `/doc:adr [titre]`
 
 **Particularités** :
@@ -304,6 +323,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Lit la documentation technique - RTFM (Read The Fucking Manual)
 
 **Format** : Extraction et lecture de documentation en ligne ou locale
+
 **Usage** : `/doc:rtfm [url|doc-name]`
 
 **Particularités** :
@@ -322,6 +342,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Crée la documentation pour la fonctionnalité en cours et met à jour le README global du projet si nécessaire
 
 **Format** : Génération automatique de documentation complète et interconnectée
+
 **Usage** : `/doc:update`
 
 **Particularités** :
@@ -352,6 +373,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Analyse et résolution d'erreurs avec workflow structuré
 
 **Format** : Diagnostic méthodique avec plan de résolution et exécution guidée
+
 **Usage** : `/debug:error-fix [message-erreur-ou-fichier-log]`
 
 **Particularités** :
@@ -375,6 +397,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Analyse une stack trace et génère un rapport formaté avec diagnostic et solutions
 
 **Format** : Parsing intelligent de trace d'erreur avec analyse contextuelle
+
 **Usage** : `/debug:stack-trace <stack-trace-text-or-file-path>`
 
 **Particularités** :
@@ -400,6 +423,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Résout automatiquement les erreurs PHPStan détectées dans le projet
 
 **Format** : Workflow itératif de détection et correction avec agent spécialisé
+
 **Usage** : `/qa:phpstan`
 
 **Particularités** :
@@ -422,6 +446,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Analyse le détail des modifications d'une Pull Request et génère deux rapports d'impact (métier et technique)
 
 **Format** : Analyse automatisée avec génération de rapports intégrés à la PR
+
 **Usage** : `/analyse:impact <pr-number>`
 
 **Particularités** :
@@ -445,6 +470,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Engage une analyse intensive et systématique pour la résolution de problèmes complexes
 
 **Format** : Applique une méthodologie de raisonnement structurée avec décomposition multi-dimensionnelle
+
 **Usage** : `/think:harder "Votre problème ou question complexe"`
 
 **Particularités** :
@@ -465,6 +491,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Ultra-comprehensive analytical thinking for the most complex problems
 
 **Format** : Applique un framework d'analyse ultra-exhaustif en 7 phases pour résoudre les problèmes les plus complexes
+
 **Usage** : `/think:ultra "complex problem or question"`
 
 **Particularités** :
@@ -488,6 +515,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Charger le contexte pour une nouvelle session d'agent
 
 **Format** : Analyse automatique de la structure du projet
+
 **Usage** : `/context:default`
 
 **Particularités** :
@@ -505,6 +533,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Charge les règles de conception Elegant Objects
 
 **Format** : Chargement des principes Elegant Objects de Yegor Bugayenko
+
 **Usage** : `/context:elegant_object`
 
 **Particularités** :
@@ -526,6 +555,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Charge la documentation API Platform depuis leur site web
 
 **Format** : Workflow automatisé de scraping et sauvegarde locale
+
 **Usage** : `/load:doc:api-platform`
 
 **Particularités** :
@@ -541,6 +571,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Charge la documentation atournayre-framework depuis ReadTheDocs
 
 **Format** : Workflow automatisé de scraping et sauvegarde locale
+
 **Usage** : `/load:doc:atournayre-framework`
 
 **Particularités** :
@@ -556,6 +587,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Charge la documentation Claude Code depuis docs.claude.com
 
 **Format** : Workflow automatisé de scraping et sauvegarde locale
+
 **Usage** : `/load:doc:claude`
 
 **Particularités** :
@@ -571,6 +603,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Charge la documentation Meilisearch depuis leur site web dans des fichiers markdown locaux
 
 **Format** : Workflow automatisé de scraping et sauvegarde locale
+
 **Usage** : `/load:doc:meilisearch`
 
 **Particularités** :
@@ -586,6 +619,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Charge la documentation Symfony depuis leur site web
 
 **Format** : Workflow automatisé de scraping et sauvegarde locale
+
 **Usage** : `/load:doc:symfony`
 
 **Particularités** :
@@ -599,10 +633,34 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 
 ## Commandes Symfony
 
+### `/symfony:make`
+**Description** : Cherche si il existe un maker Symfony pour faire la tache demandée et l'utilise si il existe
+
+**Format** : Recherche et exécution intelligente des makers Symfony avec fallback vers planification
+
+**Usage** : `/symfony:make <tâche>`
+
+**Particularités** :
+- Analyse automatique de la tâche pour identifier le maker approprié
+- Vérification de la disponibilité du maker dans le projet
+- Exécution interactive du maker avec arguments adaptés
+- Fallback automatique vers `/build:quick-plan` si aucun maker n'existe
+- Support de tous les makers Symfony (controller, entity, form, command, etc.)
+- Affichage du timing de début et de fin d'exécution
+- Suggestions des prochaines étapes après création
+
+**Exemples** :
+- `/symfony:make "créer un controller pour gérer les utilisateurs"` - Utilise make:controller
+- `/symfony:make "ajouter une entité Product avec nom et prix"` - Utilise make:entity
+- `/symfony:make "implémenter un système de cache Redis personnalisé"` - Génère un plan via /build:quick-plan
+
+---
+
 ### `/symfony:doc:question`
 **Description** : Interroge la documentation Symfony locale pour répondre à une question
 
 **Format** : Recherche intelligente dans la documentation Symfony stockée dans `docs/symfony/`
+
 **Usage** : `/symfony:doc:question <question>`
 
 **Particularités** :
@@ -628,6 +686,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 
 **Format** : Affiche chaque outil avec sa signature TypeScript et sa description
 
+
 **Usage** : Tapez `/all_tools` dans Claude Code pour obtenir la liste complète
 
 ---
@@ -636,6 +695,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Active le mode Docker pour toutes les opérations techniques
 
 **Format** : Configuration contextuelle pour l'exécution via Docker/Docker Compose
+
 **Usage** : `/docker`
 
 **Particularités** :
@@ -659,6 +719,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 
 **Format** : Informations structurées sur la branche, les modifications et l'historique
 
+
 **Usage** : `/git_status` pour une vue d'ensemble rapide de votre dépôt
 
 ---
@@ -667,6 +728,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Description** : Pose une question structurée avec contexte
 
 **Format** : Question formatée avec sections et métadonnées
+
 
 **Usage** : `/question "Votre question ici"`
 
