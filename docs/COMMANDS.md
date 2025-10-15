@@ -18,6 +18,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 - [Commandes d'analyse](#commandes-danalyse)
 - [Commandes de contexte](#commandes-de-contexte)
 - [Commandes de chargement de documentation](#commandes-de-chargement-de-documentation)
+- [Commandes Symfony](#commandes-symfony)
 - [Commandes générales](#commandes-générales)
 
 ---
@@ -593,6 +594,30 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 - Utilise l'agent @symfony-docs-scraper
 - Sauvegarde dans `docs/symfony/`
 - Liste des URLs dans `docs/symfony/README.md`
+
+---
+
+## Commandes Symfony
+
+### `/symfony:doc:question`
+**Description** : Interroge la documentation Symfony locale pour répondre à une question
+
+**Format** : Recherche intelligente dans la documentation Symfony stockée dans `docs/symfony/`
+**Usage** : `/symfony:doc:question <question>`
+
+**Particularités** :
+- Recherche dans la documentation Symfony locale (pas d'accès web requis)
+- Extraction de mots-clés et recherche contextuelle
+- Analyse intelligente des fichiers markdown pertinents
+- Réponses formatées avec exemples de code
+- Références aux fichiers sources consultés
+- Suggestions de documentation connexe
+- Si la documentation n'est pas disponible : suggère `/load:doc:symfony`
+
+**Exemples** :
+- `/symfony:doc:question "Comment créer une route ?"` - Routing et controllers
+- `/symfony:doc:question "Comment utiliser les formulaires avec validation ?"` - Forms et validation
+- `/symfony:doc:question "Quelle est la différence entre les voters et les guards ?"` - Security
 
 ---
 

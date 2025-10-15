@@ -50,6 +50,9 @@ claude-config/
 │   │   ├── list.md           # Liste toutes les sessions
 │   │   ├── start.md          # Démarre une nouvelle session
 │   │   └── update.md         # Met à jour une session
+│   ├── symfony/              # Commandes Symfony
+│   │   └── doc/              # Documentation Symfony
+│   │       └── question.md   # Interroge la documentation Symfony locale
 │   ├── think/                # Commandes d'analyse
 │   │   ├── harder.md         # Analyse intensive de problèmes complexes
 │   │   └── ultra.md          # Analyse ultra-comprehensive pour problèmes très complexes
@@ -196,6 +199,7 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 | 💻 **cc** | 2 | make:command, challenge |
 | 📊 **analytics** | 2 | analytics, analytics-stop |
 | 🎯 **sessions** | 6 | start, current, list, end, update, help |
+| 🎼 **symfony:doc** | 1 | question |
 | ⚙️ **générales** | 4 | all_tools, docker, git_status, question |
 
 ### Commandes les plus utilisées
@@ -325,6 +329,14 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 | `/sessions:help` | Aide sur les sessions | `/sessions:help` |
 
 [📖 Voir détails](docs/COMMANDS.md#commandes-sessions)
+
+### 🎼 Commandes Symfony
+
+| Commande | Description | Usage |
+|----------|-------------|-------|
+| `/symfony:doc:question` | Interroge la documentation Symfony locale | `/symfony:doc:question <question>` |
+
+[📖 Voir détails](docs/COMMANDS.md#commandes-symfony)
 
 ### ⚙️ Commandes générales
 
