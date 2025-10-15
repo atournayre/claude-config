@@ -115,7 +115,8 @@ Créer immédiatement une todo list avec TOUTES les étapes:
 8. Création Pull Request avec template du projet
 9. Assignation milestone (avec confirmation utilisateur)
 10. Assignation au projet GitHub
-11. Proposition nettoyage branche locale
+11. Code review automatique de la PR
+12. Proposition nettoyage branche locale
 ```
 
 ### Étape 3: Vérification QA Intelligente
@@ -253,7 +254,24 @@ if [PROJECT_NAME non fourni]; then
 fi
 ```
 
-### Étape 9: Nettoyage Branche Locale
+### Étape 9: Code Review Automatique de la PR
+```bash
+# Lancer la code review via la commande native /review
+echo "🔍 Lancement de la code review automatique..."
+
+# Utiliser la commande /review pour analyser la PR
+# La commande /review va :
+# - Analyser tous les changements de la PR
+# - Identifier les problèmes potentiels
+# - Suggérer des améliorations
+# - Poster un commentaire de review sur la PR
+
+/review
+
+echo "✅ Code review complétée et ajoutée en commentaire sur la PR #$PR_NUMBER"
+```
+
+### Étape 10: Nettoyage Branche Locale
 ```bash
 ✅ Pull Request créée avec succès !
 
@@ -331,6 +349,7 @@ Le template doit être lu depuis le fichier du projet et rempli avec les informa
 - Lignes supprimées: -[COUNT]
 
 🔍 QA: [PASSÉE/IGNORÉE/ÉCHEC]
+📝 Code Review: [COMPLÉTÉE/ÉCHEC]
 🗑️ Branche locale: [SUPPRIMÉE/CONSERVÉE]
 
 ✅ Tous les todos complétés
@@ -350,6 +369,7 @@ Le template doit être lu depuis le fichier du projet et rempli avec les informa
 - [ ] Template PR du projet respecté (pas de template générique)
 - [ ] Milestone confirmé par utilisateur
 - [ ] Projet GitHub assigné (après confirmation utilisateur)
+- [ ] Code review automatique complétée
 - [ ] Nettoyage proposé
 
 **SI UN ÉLÉMENT MANQUE**: La commande a échoué
