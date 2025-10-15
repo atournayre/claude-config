@@ -1,5 +1,5 @@
 ---
-model: claude-3-5-haiku-20241022
+model: claude-haiku-4-5-20251001
 allowed-tools: Read, Bash(date:*)
 description: Afficher le statut et les détails de la session actuelle
 ---

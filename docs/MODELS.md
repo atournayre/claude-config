@@ -6,13 +6,14 @@ Chaque slash command dans ce projet est configurée pour utiliser le modèle Cla
 
 ## Modèles Disponibles
 
-### Claude 3.5 Haiku (`claude-3-5-haiku-20241022`)
+### Claude Haiku 4.5 (`claude-haiku-4-5-20251001`)
 
 **Caractéristiques :**
 - Modèle rapide et économique
 - Excellent pour les tâches simples et répétitives
 - Temps de réponse minimal
 - Coût optimisé
+- Dernière génération de la famille Haiku
 
 **Cas d'usage idéaux :**
 - Commandes de navigation et d'information simple
@@ -175,7 +176,7 @@ Chaque slash command dans ce projet est configurée pour utiliser le modèle Cla
 1. Évaluer la complexité de la tâche
 2. Choisir le modèle selon les critères ci-dessus
 3. Ajouter le champ `model` dans le frontmatter avec la version spécifique :
-   - Haiku : `model: claude-3-5-haiku-20241022`
+   - Haiku : `model: claude-haiku-4-5-20251001`
    - Sonnet : `model: claude-sonnet-4-5-20250929`
    - Opus : `model: claude-opus-4-1-20250805`
 4. Mettre à jour ce document
