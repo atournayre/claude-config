@@ -6,12 +6,12 @@ Lister tous les outils disponibles détaillés dans votre prompt système. Les a
 
 ### Début d'Exécution
 Afficher immédiatement au lancement :
-- 🕐 **Démarrage** : [Date et heure au format ISO 8601]
-- Format : `YYYY-MM-DD HH:MM:SS`
+- 🕐 **Démarrage** : [Date et heure au fuseau horaire Europe/Paris]
+- Format : `YYYY-MM-DD HH:MM:SS CEST/CET`
 
 ### Fin d'Exécution
 Afficher en fin de rapport :
-- ✅ **Terminé** : [Date et heure au format ISO 8601]
+- ✅ **Terminé** : [Date et heure au fuseau horaire Europe/Paris]
 - ⏱️ **Durée** : [Temps écoulé au format lisible]
 - Formats durée :
   - Moins d'1 minute : `XXs` (ex: 45s)
@@ -22,8 +22,9 @@ Afficher en fin de rapport :
 - Le timestamp de début DOIT être la première sortie de la commande
 - Le timestamp de fin et la durée DOIVENT être inclus dans le rapport final
 - Calculer la durée en soustrayant le timestamp de début du timestamp de fin
+- Utiliser le fuseau horaire Europe/Paris (CEST en été, CET en hiver)
 - Arrondir les secondes (pas de millisecondes)
 
 ---
-✅ Terminé : [timestamp ISO 8601]
+✅ Terminé : [timestamp Europe/Paris avec CEST/CET]
 ⏱️ Durée : [durée formatée]
