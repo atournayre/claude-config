@@ -20,17 +20,20 @@ claude-config/
 ├── commands/                 # Commandes personnalisées (slash commands)
 │   ├── api-platform/         # Commandes API Platform
 │   │   └── doc/              # Documentation API Platform
-│   │       └── load.md       # Charge doc API Platform
+│   │       ├── load.md       # Charge doc API Platform
+│   │       └── question.md   # Interroge la documentation API Platform locale
 │   ├── atournayre-framework/ # Commandes atournayre-framework
 │   │   └── doc/              # Documentation atournayre-framework
-│   │       └── load.md       # Charge doc atournayre-framework
+│   │       ├── load.md       # Charge doc atournayre-framework
+│   │       └── question.md   # Interroge la documentation atournayre-framework locale
 │   ├── cc/                   # Méta-commandes Claude Code
 │   │   ├── make/             # Générateurs de commandes
 │   │   │   └── command.md    # Générateur de slash commands
 │   │   └── challenge.md      # Auto-évaluation des réponses
 │   ├── claude/               # Commandes Claude Code
 │   │   └── doc/              # Documentation Claude Code
-│   │       └── load.md       # Charge doc Claude Code
+│   │       ├── load.md       # Charge doc Claude Code
+│   │       └── question.md   # Interroge la documentation Claude Code locale
 │   ├── debug/                # Commandes de diagnostic
 │   │   ├── error-fix.md      # Analyse et résolution d'erreurs
 │   │   └── stack-trace.md    # Analyse de stack trace avec rapport détaillé
@@ -45,7 +48,8 @@ claude-config/
 │   │   └── status.md         # Affiche le statut Git
 │   ├── meilisearch/          # Commandes Meilisearch
 │   │   └── doc/              # Documentation Meilisearch
-│   │       └── load.md       # Charge doc Meilisearch
+│   │       ├── load.md       # Charge doc Meilisearch
+│   │       └── question.md   # Interroge la documentation Meilisearch locale
 │   ├── qa/                   # Commandes de qualité de code
 │   │   └── phpstan.md        # Résolution automatique erreurs PHPStan
 │   ├── sessions/             # Gestion des sessions
@@ -206,10 +210,10 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 | 📊 **analytics** | 2 | analytics, analytics-stop |
 | 🎯 **sessions** | 6 | start, current, list, end, update, help |
 | 🎼 **symfony** | 3 | make, doc:question, doc:load |
-| 🔌 **api-platform** | 1 | doc:load |
-| 🏛️ **atournayre-framework** | 1 | doc:load |
-| 🤖 **claude** | 1 | doc:load |
-| 🔎 **meilisearch** | 1 | doc:load |
+| 🔌 **api-platform** | 2 | doc:load, doc:question |
+| 🏛️ **atournayre-framework** | 2 | doc:load, doc:question |
+| 🤖 **claude** | 2 | doc:load, doc:question |
+| 🔎 **meilisearch** | 2 | doc:load, doc:question |
 | ⚙️ **générales** | 4 | all_tools, docker, git_status, question |
 
 ### Commandes les plus utilisées
@@ -344,6 +348,7 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 | Commande | Description | Usage |
 |----------|-------------|-------|
 | `/api-platform:doc:load` | Charge la documentation API Platform | `/api-platform:doc:load` |
+| `/api-platform:doc:question` | Interroge la documentation API Platform locale | `/api-platform:doc:question <question>` |
 
 [📖 Voir détails](docs/COMMANDS.md#commandes-api-platform)
 
@@ -352,6 +357,7 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 | Commande | Description | Usage |
 |----------|-------------|-------|
 | `/atournayre-framework:doc:load` | Charge la documentation atournayre-framework | `/atournayre-framework:doc:load` |
+| `/atournayre-framework:doc:question` | Interroge la documentation atournayre-framework locale | `/atournayre-framework:doc:question <question>` |
 
 [📖 Voir détails](docs/COMMANDS.md#commandes-atournayre-framework)
 
@@ -360,6 +366,7 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 | Commande | Description | Usage |
 |----------|-------------|-------|
 | `/claude:doc:load` | Charge la documentation Claude Code | `/claude:doc:load` |
+| `/claude:doc:question` | Interroge la documentation Claude Code locale | `/claude:doc:question <question>` |
 
 [📖 Voir détails](docs/COMMANDS.md#commandes-claude)
 
@@ -368,6 +375,7 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 | Commande | Description | Usage |
 |----------|-------------|-------|
 | `/meilisearch:doc:load` | Charge la documentation Meilisearch | `/meilisearch:doc:load` |
+| `/meilisearch:doc:question` | Interroge la documentation Meilisearch locale | `/meilisearch:doc:question <question>` |
 
 [📖 Voir détails](docs/COMMANDS.md#commandes-meilisearch)
 

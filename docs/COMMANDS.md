@@ -634,6 +634,29 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 
 ---
 
+### `/api-platform:doc:question`
+**Description** : Interroge la documentation API Platform locale pour répondre à une question
+
+**Format** : Recherche intelligente dans la documentation API Platform stockée dans `docs/api-platform/`
+
+**Usage** : `/api-platform:doc:question <question>`
+
+**Particularités** :
+- Recherche dans la documentation API Platform locale (pas d'accès web requis)
+- Extraction de mots-clés et recherche contextuelle
+- Analyse intelligente des fichiers markdown pertinents
+- Réponses formatées avec exemples de code
+- Références aux fichiers sources consultés
+- Suggestions de documentation connexe
+- Si la documentation n'est pas disponible : suggère `/api-platform:doc:load`
+
+**Exemples** :
+- `/api-platform:doc:question "Comment créer une ressource API ?"` - Resources et entités
+- `/api-platform:doc:question "Comment configurer la sérialisation ?"` - Serialization et normalization
+- `/api-platform:doc:question "Comment implémenter des filtres personnalisés ?"` - Filtres custom
+
+---
+
 ## Commandes atournayre-framework
 
 ### `/atournayre-framework:doc:load`
@@ -649,6 +672,29 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 - Utilise l'agent @atournayre-framework-docs-scraper
 - Sauvegarde dans `docs/atournayre-framework/`
 - Liste des URLs dans `docs/atournayre-framework/README.md`
+
+---
+
+### `/atournayre-framework:doc:question`
+**Description** : Interroge la documentation atournayre-framework locale pour répondre à une question
+
+**Format** : Recherche intelligente dans la documentation atournayre-framework stockée dans `docs/atournayre-framework/`
+
+**Usage** : `/atournayre-framework:doc:question <question>`
+
+**Particularités** :
+- Recherche dans la documentation atournayre-framework locale (pas d'accès web requis)
+- Extraction de mots-clés et recherche contextuelle
+- Analyse intelligente des fichiers markdown pertinents
+- Réponses formatées avec exemples de code
+- Références aux fichiers sources consultés
+- Suggestions de documentation connexe
+- Si la documentation n'est pas disponible : suggère `/atournayre-framework:doc:load`
+
+**Exemples** :
+- `/atournayre-framework:doc:question "Comment utiliser les collections ?"` - Collections et manipulation
+- `/atournayre-framework:doc:question "Comment créer un type personnalisé ?"` - Types custom
+- `/atournayre-framework:doc:question "Comment valider des objets complexes ?"` - Validation
 
 ---
 
@@ -670,6 +716,29 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 
 ---
 
+### `/claude:doc:question`
+**Description** : Interroge la documentation Claude Code locale pour répondre à une question
+
+**Format** : Recherche intelligente dans la documentation Claude Code stockée dans `docs/claude/`
+
+**Usage** : `/claude:doc:question <question>`
+
+**Particularités** :
+- Recherche dans la documentation Claude Code locale (pas d'accès web requis)
+- Extraction de mots-clés et recherche contextuelle
+- Analyse intelligente des fichiers markdown pertinents
+- Réponses formatées avec exemples de code
+- Références aux fichiers sources consultés
+- Suggestions de documentation connexe
+- Si la documentation n'est pas disponible : suggère `/claude:doc:load`
+
+**Exemples** :
+- `/claude:doc:question "Comment créer une slash command ?"` - Commandes personnalisées
+- `/claude:doc:question "Comment utiliser les hooks ?"` - Hooks et lifecycle
+- `/claude:doc:question "Comment créer un agent personnalisé ?"` - Agents custom
+
+---
+
 ## Commandes Meilisearch
 
 ### `/meilisearch:doc:load`
@@ -685,6 +754,29 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 - Utilise l'agent @meilisearch-docs-scraper
 - Sauvegarde dans `docs/meilisearch/`
 - Liste des URLs dans `docs/meilisearch/README.md`
+
+---
+
+### `/meilisearch:doc:question`
+**Description** : Interroge la documentation Meilisearch locale pour répondre à une question
+
+**Format** : Recherche intelligente dans la documentation Meilisearch stockée dans `docs/meilisearch/`
+
+**Usage** : `/meilisearch:doc:question <question>`
+
+**Particularités** :
+- Recherche dans la documentation Meilisearch locale (pas d'accès web requis)
+- Extraction de mots-clés et recherche contextuelle
+- Analyse intelligente des fichiers markdown pertinents
+- Réponses formatées avec exemples de code
+- Références aux fichiers sources consultés
+- Suggestions de documentation connexe
+- Si la documentation n'est pas disponible : suggère `/meilisearch:doc:load`
+
+**Exemples** :
+- `/meilisearch:doc:question "Comment créer un index ?"` - Indexation et création
+- `/meilisearch:doc:question "Comment configurer les filtres ?"` - Filtres et facettes
+- `/meilisearch:doc:question "Comment optimiser le ranking ?"` - Relevance et ranking
 
 ---
 
