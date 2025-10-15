@@ -25,6 +25,10 @@ claude-config/
 │   ├── debug/                # Commandes de diagnostic
 │   │   ├── error-fix.md      # Analyse et résolution d'erreurs
 │   │   └── stack-trace.md    # Analyse de stack trace avec rapport détaillé
+│   ├── doc/                  # Commandes de documentation
+│   │   ├── adr.md            # Architecture Decision Record (ADR)
+│   │   ├── rtfm.md           # Lecture de documentation technique
+│   │   └── update.md         # Documentation de fonctionnalité
 │   ├── git/                  # Commandes Git
 │   │   ├── commit.md         # Création de commit avec workflow
 │   │   ├── conflit.md        # Résolution interactive de conflits git
@@ -330,6 +334,66 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 **Exemples** :
 - `/challenge` - Après avoir fourni une réponse technique complexe
 - `/challenge` - Pour vérifier si la réponse respecte les préférences utilisateur
+
+### Commandes de documentation
+
+#### `/doc:adr`
+**Description** : Génère un Architecture Decision Record (ADR) formaté et structuré
+
+**Format** : Création d'un document ADR suivant les standards
+**Usage** : `/doc:adr [titre]`
+
+**Particularités** :
+- Format standardisé ADR avec contexte, décision, conséquences
+- Numérotation automatique dans le répertoire docs/adr
+- Template structuré pour la cohérence
+- Lien automatique avec les ADRs connexes
+
+**Exemples** :
+- `/doc:adr "Utilisation de PostgreSQL pour la base de données"`
+- `/doc:adr "Migration vers architecture microservices"`
+
+#### `/doc:rtfm`
+**Description** : Lit la documentation technique - RTFM (Read The Fucking Manual)
+
+**Format** : Extraction et lecture de documentation en ligne ou locale
+**Usage** : `/doc:rtfm [url|doc-name]`
+
+**Particularités** :
+- Support URLs web et chemins locaux
+- Extraction intelligente du contenu pertinent
+- Sauvegarde locale optionnelle pour consultation offline
+- Format markdown pour lisibilité
+
+**Exemples** :
+- `/doc:rtfm https://symfony.com/doc/current/setup.html`
+- `/doc:rtfm "API Platform documentation"`
+
+#### `/doc:update`
+**Description** : Crée la documentation pour la fonctionnalité en cours et met à jour le README global du projet si nécessaire
+
+**Format** : Génération automatique de documentation complète et interconnectée
+**Usage** : `/doc:update`
+
+**Particularités** :
+- Analyse automatique de la branche Git en cours :
+  - Nom de la branche (ex: feature/user-auth → User Authentication)
+  - Fichiers modifiés (git status)
+  - Diff par rapport à main/master
+  - Commits de la branche
+- Génération de documentation structurée :
+  - Titre et description claire
+  - Utilisation et exemples concrets
+  - Architecture et composants
+  - Configuration nécessaire
+  - Tests et validation
+- Mise à jour automatique du README principal
+- Liaison bidirectionnelle avec documents connexes
+- Validation des liens pour éviter les orphelins
+- Format Markdown optimisé pour scanabilité
+
+**Exemples** :
+- `/doc:update` - Analyse la branche en cours et génère la documentation complète
 
 ### Commandes de diagnostic
 
