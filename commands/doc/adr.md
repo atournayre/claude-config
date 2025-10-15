@@ -10,6 +10,28 @@ description: Génère un Architecture Decision Record (ADR) formaté et structur
 ## Purpose
 Génère un Architecture Decision Record (ADR) complet et structuré pour documenter les décisions architecturales importantes du projet.
 
+## Timing
+
+### Début d'Exécution
+Afficher immédiatement au lancement :
+- 🕐 **Démarrage** : [Date et heure au format ISO 8601]
+- Format : `YYYY-MM-DD HH:MM:SS`
+
+### Fin d'Exécution
+Afficher en fin de rapport :
+- ✅ **Terminé** : [Date et heure au format ISO 8601]
+- ⏱️ **Durée** : [Temps écoulé au format lisible]
+- Formats durée :
+  - Moins d'1 minute : `XXs` (ex: 45s)
+  - Moins d'1 heure : `XXm XXs` (ex: 2m 30s)
+  - Plus d'1 heure : `XXh XXm XXs` (ex: 1h 15m 30s)
+
+### Instructions
+- Le timestamp de début DOIT être la première sortie de la commande
+- Le timestamp de fin et la durée DOIVENT être inclus dans le rapport final
+- Calculer la durée en soustrayant le timestamp de début du timestamp de fin
+- Arrondir les secondes (pas de millisecondes)
+
 ## Variables
 - **DECISION_TITLE**: Le titre de la décision architecturale
 - **DECISION_NUMBER**: Le numéro séquentiel de l'ADR (auto-généré si non fourni)
@@ -37,6 +59,14 @@ docs/
 ```
 
 ## Workflow
+
+### Étape 0: Initialisation du Timing (OBLIGATOIRE - PREMIÈRE ACTION)
+```
+🕐 Démarrage: [timestamp ISO 8601]
+```
+- Cette étape DOIT être la toute première action
+- Enregistrer le timestamp pour calcul ultérieur
+
 - Analyse les ADR existants pour déterminer le prochain numéro
 - Examine le projet pour comprendre le contexte architectural
 - Crée un nouveau fichier ADR avec la numérotation appropriée
@@ -107,3 +137,7 @@ docs/
 - Confirme la création du fichier dans `docs/adr/`
 - Liste les fichiers ADR existants pour référence
 - Rappelle les prochaines étapes (review, validation)
+
+---
+✅ Terminé : [timestamp ISO 8601]
+⏱️ Durée : [durée formatée]

@@ -9,6 +9,28 @@ model: claude-opus-4-1-20250805
 # Quick Plan
 Create a detailed implementation plan based on the user's requirements provided through the `USER_PROMPT` variable. Analyze the request, think through the implementation approach, and save a comprehensive specification document to `PLAN_OUTPUT_DIRECTORY/<name-of-plan>.md` that can be used as a blueprint for actual development work.
 
+## Timing
+
+### Début d'Exécution
+Afficher immédiatement au lancement :
+- 🕐 **Démarrage** : [Date et heure au format ISO 8601]
+- Format : `YYYY-MM-DD HH:MM:SS`
+
+### Fin d'Exécution
+Afficher en fin de rapport :
+- ✅ **Terminé** : [Date et heure au format ISO 8601]
+- ⏱️ **Durée** : [Temps écoulé au format lisible]
+- Formats durée :
+  - Moins d'1 minute : `XXs` (ex: 45s)
+  - Moins d'1 heure : `XXm XXs` (ex: 2m 30s)
+  - Plus d'1 heure : `XXh XXm XXs` (ex: 1h 15m 30s)
+
+### Instructions
+- Le timestamp de début DOIT être la première sortie de la commande
+- Le timestamp de fin et la durée DOIVENT être inclus dans le rapport final
+- Calculer la durée en soustrayant le timestamp de début du timestamp de fin
+- Arrondir les secondes (pas de millisecondes)
+
 ## Variables
 USER_PROMPT: $ARGUMENTS
 PLAN_OUTPUT_DIRECTORY: `docs/specs/`
@@ -32,6 +54,13 @@ PLAN_OUTPUT_DIRECTORY: `docs/specs/`
 
 ## Workflow
 
+### Étape 0: Initialisation du Timing (OBLIGATOIRE - PREMIÈRE ACTION)
+```
+🕐 Démarrage: [timestamp ISO 8601]
+```
+- Cette étape DOIT être la toute première action
+- Enregistrer le timestamp pour calcul ultérieur
+
 1. Analyze Requirements - THINK HARD and parse the USER_PROMPT to understand the core problem and desired outcome
 2. Design Solution - Develop technical approach including architecture decisions and implementation strategy
 3. Document Plan - Structure a comprehensive markdown document with problem statement, implementation steps, and testing approach
@@ -53,4 +82,8 @@ Key Comgonents:
 - <main component 1>
 - <main component 2>
 - <main component 3>
+
+---
+✅ Terminé : [timestamp ISO 8601]
+⏱️ Durée : [durée formatée]
 ```

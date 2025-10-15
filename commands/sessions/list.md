@@ -8,6 +8,28 @@ description: Lister toutes les sessions de développement
 
 Afficher tous les fichiers de session avec les informations clés, triés par ordre chronologique inverse (plus récent en premier).
 
+## Timing
+
+### Début d'Exécution
+Afficher immédiatement au lancement :
+- 🕐 **Démarrage** : [Date et heure au format ISO 8601]
+- Format : `YYYY-MM-DD HH:MM:SS`
+
+### Fin d'Exécution
+Afficher en fin de rapport :
+- ✅ **Terminé** : [Date et heure au format ISO 8601]
+- ⏱️ **Durée** : [Temps écoulé au format lisible]
+- Formats durée :
+  - Moins d'1 minute : `XXs` (ex: 45s)
+  - Moins d'1 heure : `XXm XXs` (ex: 2m 30s)
+  - Plus d'1 heure : `XXh XXm XXs` (ex: 1h 15m 30s)
+
+### Instructions
+- Le timestamp de début DOIT être la première sortie de la commande
+- Le timestamp de fin et la durée DOIVENT être inclus dans le rapport final
+- Calculer la durée en soustrayant le timestamp de début du timestamp de fin
+- Arrondir les secondes (pas de millisecondes)
+
 ## Instructions
 
 - **IMPORTANT : Vérifier si le répertoire `.claude/sessions/` existe**
@@ -55,3 +77,7 @@ Si aucune session n'existe, fournir des conseils utiles :
 - Utiliser `session:help` pour plus d'informations
 
 Présenter les informations dans un format propre et lisible qui aide les utilisateurs à identifier rapidement les sessions pertinentes.
+
+---
+✅ Terminé : [timestamp ISO 8601]
+⏱️ Durée : [durée formatée]

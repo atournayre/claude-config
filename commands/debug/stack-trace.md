@@ -13,6 +13,28 @@ Analyser une trace d'erreur (stack trace) pour :
 - Identifier la cause racine de l'erreur
 - Proposer des solutions de résolution concrètes
 
+## Timing
+
+### Début d'Exécution
+Afficher immédiatement au lancement :
+- 🕐 **Démarrage** : [Date et heure au format ISO 8601]
+- Format : `YYYY-MM-DD HH:MM:SS`
+
+### Fin d'Exécution
+Afficher en fin de rapport :
+- ✅ **Terminé** : [Date et heure au format ISO 8601]
+- ⏱️ **Durée** : [Temps écoulé au format lisible]
+- Formats durée :
+  - Moins d'1 minute : `XXs` (ex: 45s)
+  - Moins d'1 heure : `XXm XXs` (ex: 2m 30s)
+  - Plus d'1 heure : `XXh XXm XXs` (ex: 1h 15m 30s)
+
+### Instructions
+- Le timestamp de début DOIT être la première sortie de la commande
+- Le timestamp de fin et la durée DOIVENT être inclus dans le rapport final
+- Calculer la durée en soustrayant le timestamp de début du timestamp de fin
+- Arrondir les secondes (pas de millisecondes)
+
 ## Variables
 - STACK_TRACE: Trace d'erreur fournie (texte brut ou chemin de fichier)
 - ERROR_TYPE: Type d'erreur détecté (PHP, JavaScript, Python, etc.)
@@ -33,6 +55,13 @@ Tu es un expert en debugging et analyse de stack traces. Ton rôle :
 - Logs d'application associés
 
 ## Workflow
+
+### Étape 0: Initialisation du Timing (OBLIGATOIRE - PREMIÈRE ACTION)
+```
+🕐 Démarrage: [timestamp ISO 8601]
+```
+- Cette étape DOIT être la toute première action
+- Enregistrer le timestamp pour calcul ultérieur
 
 ### 1. Lecture de la stack trace
 - Si argument est un chemin de fichier : lire avec Read
@@ -159,6 +188,10 @@ Tu es un expert en debugging et analyse de stack traces. Ton rôle :
 - Fichiers modifiés potentiels : [LIST]
 - Documentation pertinente : [LINKS]
 - Issues similaires : [REFERENCES]
+
+---
+✅ Terminé : [timestamp ISO 8601]
+⏱️ Durée : [durée formatée]
 ```
 
 ## Best Practices

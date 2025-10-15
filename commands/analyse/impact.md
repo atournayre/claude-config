@@ -10,6 +10,28 @@ description: Analyses le détail des modifications git. Fournis 2 rapports d'imp
 ## Purpose
 Analyser en profondeur les modifications d'une Pull Request spécifique pour générer deux rapports d'impact complémentaires (métier et technique) et les intégrer automatiquement à sa description.
 
+## Timing
+
+### Début d'Exécution
+Afficher immédiatement au lancement :
+- 🕐 **Démarrage** : [Date et heure au format ISO 8601]
+- Format : `YYYY-MM-DD HH:MM:SS`
+
+### Fin d'Exécution
+Afficher en fin de rapport :
+- ✅ **Terminé** : [Date et heure au format ISO 8601]
+- ⏱️ **Durée** : [Temps écoulé au format lisible]
+- Formats durée :
+  - Moins d'1 minute : `XXs` (ex: 45s)
+  - Moins d'1 heure : `XXm XXs` (ex: 2m 30s)
+  - Plus d'1 heure : `XXh XXm XXs` (ex: 1h 15m 30s)
+
+### Instructions
+- Le timestamp de début DOIT être la première sortie de la commande
+- Le timestamp de fin et la durée DOIVENT être inclus dans le rapport final
+- Calculer la durée en soustrayant le timestamp de début du timestamp de fin
+- Arrondir les secondes (pas de millisecondes)
+
 ## Variables
 - `PR_NUMBER`: Numéro de la PR à analyser (passé en paramètre)
 - `CURRENT_BRANCH`: Branche de la PR
@@ -35,6 +57,13 @@ Tu dois analyser les modifications d'une Pull Request spécifique (dont le numé
 - `config/`: Fichiers de configuration potentiellement impactés
 
 ## Workflow
+
+### Étape 0: Initialisation du Timing (OBLIGATOIRE - PREMIÈRE ACTION)
+```
+🕐 Démarrage: [timestamp ISO 8601]
+```
+- Cette étape DOIT être la toute première action
+- Enregistrer le timestamp pour calcul ultérieur
 
 ### Étape 1: Initialisation TodoWrite
 ```
@@ -382,6 +411,10 @@ recommendations:
 1. Tests de régression sur le module authentification
 2. Revue de sécurité pour les nouvelles validations
 3. Communication aux utilisateurs sur les breaking changes
+
+---
+✅ Terminé : [timestamp ISO 8601]
+⏱️ Durée : [durée formatée]
 ```
 
 ## Expertise

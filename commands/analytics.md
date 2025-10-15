@@ -7,6 +7,28 @@ description: Execute claude-code-templates analytics and open in browser
 
 Lancer le tableau de bord d'analytics pour visualiser les statistiques d'utilisation de Claude Code.
 
+## Timing
+
+### Début d'Exécution
+Afficher immédiatement au lancement :
+- 🕐 **Démarrage** : [Date et heure au format ISO 8601]
+- Format : `YYYY-MM-DD HH:MM:SS`
+
+### Fin d'Exécution
+Afficher en fin de rapport :
+- ✅ **Terminé** : [Date et heure au format ISO 8601]
+- ⏱️ **Durée** : [Temps écoulé au format lisible]
+- Formats durée :
+  - Moins d'1 minute : `XXs` (ex: 45s)
+  - Moins d'1 heure : `XXm XXs` (ex: 2m 30s)
+  - Plus d'1 heure : `XXh XXm XXs` (ex: 1h 15m 30s)
+
+### Instructions
+- Le timestamp de début DOIT être la première sortie de la commande
+- Le timestamp de fin et la durée DOIVENT être inclus dans le rapport final
+- Calculer la durée en soustrayant le timestamp de début du timestamp de fin
+- Arrondir les secondes (pas de millisecondes)
+
 ## Instructions
 
 - **IMPORTANT : Cette commande lance un serveur local sur le port 3333**
@@ -32,3 +54,7 @@ Cette commande :
 - Le serveur reste actif jusqu'à interruption manuelle
 - Les données d'analytics sont générées en temps réel
 - Compatible avec les navigateurs modernes
+
+---
+✅ Terminé : [timestamp ISO 8601]
+⏱️ Durée : [durée formatée]

@@ -12,6 +12,28 @@ Activate maximum cognitive ultrathink processing for ultra-comprehensive analysi
 ## Purpose
 Ultra-sophisticated analytical thinking framework that applies exhaustive, multi-dimensional problem analysis across seven distinct phases to provide the most comprehensive understanding and solutions for complex problems.
 
+## Timing
+
+### Début d'Exécution
+Afficher immédiatement au lancement :
+- 🕐 **Démarrage** : [Date et heure au format ISO 8601]
+- Format : `YYYY-MM-DD HH:MM:SS`
+
+### Fin d'Exécution
+Afficher en fin de rapport :
+- ✅ **Terminé** : [Date et heure au format ISO 8601]
+- ⏱️ **Durée** : [Temps écoulé au format lisible]
+- Formats durée :
+  - Moins d'1 minute : `XXs` (ex: 45s)
+  - Moins d'1 heure : `XXm XXs` (ex: 2m 30s)
+  - Plus d'1 heure : `XXh XXm XXs` (ex: 1h 15m 30s)
+
+### Instructions
+- Le timestamp de début DOIT être la première sortie de la commande
+- Le timestamp de fin et la durée DOIVENT être inclus dans le rapport final
+- Calculer la durée en soustrayant le timestamp de début du timestamp de fin
+- Arrondir les secondes (pas de millisecondes)
+
 ## Variables
 - ARGUMENTS: The complex problem or question to analyze (passed by user)
 
@@ -181,6 +203,13 @@ For less complex issues, consider using `/think:harder` instead.
 
 ## Workflow
 
+### Étape 0: Initialisation du Timing (OBLIGATOIRE - PREMIÈRE ACTION)
+```
+🕐 Démarrage: [timestamp ISO 8601]
+```
+- Cette étape DOIT être la toute première action
+- Enregistrer le timestamp pour calcul ultérieur
+
 ### Phase Execution
 - Apply each of the 7 analytical phases systematically
 - Generate comprehensive insights for each phase
@@ -219,6 +248,10 @@ Generate ultra-comprehensive analysis report including:
 - Identified limitations and biases
 - Recommendations for ongoing monitoring
 - Areas requiring additional analysis
+
+---
+✅ Terminé : [timestamp ISO 8601]
+⏱️ Durée : [durée formatée]
 
 ---
 

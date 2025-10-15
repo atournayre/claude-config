@@ -8,6 +8,28 @@ description: Ajouter une entrée de mise à jour à la session actuelle
 
 Ajouter une mise à jour de progression à la session de développement active avec horodatage et contexte pertinent.
 
+## Timing
+
+### Début d'Exécution
+Afficher immédiatement au lancement :
+- 🕐 **Démarrage** : [Date et heure au format ISO 8601]
+- Format : `YYYY-MM-DD HH:MM:SS`
+
+### Fin d'Exécution
+Afficher en fin de rapport :
+- ✅ **Terminé** : [Date et heure au format ISO 8601]
+- ⏱️ **Durée** : [Temps écoulé au format lisible]
+- Formats durée :
+  - Moins d'1 minute : `XXs` (ex: 45s)
+  - Moins d'1 heure : `XXm XXs` (ex: 2m 30s)
+  - Plus d'1 heure : `XXh XXm XXs` (ex: 1h 15m 30s)
+
+### Instructions
+- Le timestamp de début DOIT être la première sortie de la commande
+- Le timestamp de fin et la durée DOIVENT être inclus dans le rapport final
+- Calculer la durée en soustrayant le timestamp de début du timestamp de fin
+- Arrondir les secondes (pas de millisecondes)
+
 ## Instructions
 
 - **IMPORTANT : Vérifier si une session active existe dans `.claude/sessions/.current-session`**
@@ -54,3 +76,7 @@ Ajouter une mise à jour de progression à la session de développement active a
 $ARGUMENTS
 
 L'objectif est de créer des enregistrements complets mais concis pour référence future.
+
+---
+✅ Terminé : [timestamp ISO 8601]
+⏱️ Durée : [durée formatée]

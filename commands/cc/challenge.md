@@ -12,6 +12,28 @@ Analyse critique de ma dernière réponse fournie et proposition d'une version a
 ## Purpose
 Permettre à Claude d'évaluer objectivement la qualité de sa dernière réponse et d'identifier les axes d'amélioration concrets.
 
+## Timing
+
+### Début d'Exécution
+Afficher immédiatement au lancement :
+- 🕐 **Démarrage** : [Date et heure au format ISO 8601]
+- Format : `YYYY-MM-DD HH:MM:SS`
+
+### Fin d'Exécution
+Afficher en fin de rapport :
+- ✅ **Terminé** : [Date et heure au format ISO 8601]
+- ⏱️ **Durée** : [Temps écoulé au format lisible]
+- Formats durée :
+  - Moins d'1 minute : `XXs` (ex: 45s)
+  - Moins d'1 heure : `XXm XXs` (ex: 2m 30s)
+  - Plus d'1 heure : `XXh XXm XXs` (ex: 1h 15m 30s)
+
+### Instructions
+- Le timestamp de début DOIT être la première sortie de la commande
+- Le timestamp de fin et la durée DOIVENT être inclus dans le rapport final
+- Calculer la durée en soustrayant le timestamp de début du timestamp de fin
+- Arrondir les secondes (pas de millisecondes)
+
 ## Variables
 - LAST_RESPONSE: Ma dernière réponse dans la conversation
 - ORIGINAL_QUESTION: La question ou demande initiale de l'utilisateur
@@ -21,6 +43,13 @@ Permettre à Claude d'évaluer objectivement la qualité de sa dernière répons
 - Historique de conversation (contexte automatique)
 
 ## Workflow
+
+### Étape 0: Initialisation du Timing (OBLIGATOIRE - PREMIÈRE ACTION)
+```
+🕐 Démarrage: [timestamp ISO 8601]
+```
+- Cette étape DOIT être la toute première action
+- Enregistrer le timestamp pour calcul ultérieur
 
 ### 1. Identification du contexte
 - Identifie la dernière question/demande de l'utilisateur
@@ -94,6 +123,10 @@ Permettre à Claude d'évaluer objectivement la qualité de sa dernière répons
 
 **Version améliorée (si note < 8/10) :**
 [Nouvelle version de la réponse intégrant les améliorations]
+
+---
+✅ Terminé : [timestamp ISO 8601]
+⏱️ Durée : [durée formatée]
 
 ## Best Practices
 - Être honnête et autocritique sans tomber dans l'auto-flagellation

@@ -11,6 +11,28 @@ Engage in intensive analytical thinking to think harder about: **$ARGUMENTS**
 ## Purpose
 This command applies systematic reasoning methodology to complex problems, helping you break down challenges and arrive at well-reasoned solutions through deep analysis.
 
+## Timing
+
+### Début d'Exécution
+Afficher immédiatement au lancement :
+- 🕐 **Démarrage** : [Date et heure au format ISO 8601]
+- Format : `YYYY-MM-DD HH:MM:SS`
+
+### Fin d'Exécution
+Afficher en fin de rapport :
+- ✅ **Terminé** : [Date et heure au format ISO 8601]
+- ⏱️ **Durée** : [Temps écoulé au format lisible]
+- Formats durée :
+  - Moins d'1 minute : `XXs` (ex: 45s)
+  - Moins d'1 heure : `XXm XXs` (ex: 2m 30s)
+  - Plus d'1 heure : `XXh XXm XXs` (ex: 1h 15m 30s)
+
+### Instructions
+- Le timestamp de début DOIT être la première sortie de la commande
+- Le timestamp de fin et la durée DOIVENT être inclus dans le rapport final
+- Calculer la durée en soustrayant le timestamp de début du timestamp de fin
+- Arrondir les secondes (pas de millisecondes)
+
 ## Variables
 ARGUMENTS: The problem, question, or topic to analyze deeply
 
@@ -44,6 +66,13 @@ Apply systematic reasoning with the following methodology:
 - Develop meta-insights about the problem-solving process itself
 
 ## Workflow
+
+### Étape 0: Initialisation du Timing (OBLIGATOIRE - PREMIÈRE ACTION)
+```
+🕐 Démarrage: [timestamp ISO 8601]
+```
+- Cette étape DOIT être la toute première action
+- Enregistrer le timestamp pour calcul ultérieur
 
 ### Analysis Process
 - Read relevant files in the codebase if the problem is code-related
@@ -84,3 +113,7 @@ Present your analysis in this format:
 
 ## Report
 Apply the Deep Analysis Protocol to generate comprehensive insights that enable better decision-making and problem-solving for complex technical and strategic challenges.
+
+---
+✅ Terminé : [timestamp ISO 8601]
+⏱️ Durée : [durée formatée]

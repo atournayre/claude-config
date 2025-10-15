@@ -8,6 +8,28 @@ description: Afficher le statut et les détails de la session actuelle
 
 Afficher le statut de la session actuelle en vérifiant l'existence d'une session active et en affichant les informations pertinentes.
 
+## Timing
+
+### Début d'Exécution
+Afficher immédiatement au lancement :
+- 🕐 **Démarrage** : [Date et heure au format ISO 8601]
+- Format : `YYYY-MM-DD HH:MM:SS`
+
+### Fin d'Exécution
+Afficher en fin de rapport :
+- ✅ **Terminé** : [Date et heure au format ISO 8601]
+- ⏱️ **Durée** : [Temps écoulé au format lisible]
+- Formats durée :
+  - Moins d'1 minute : `XXs` (ex: 45s)
+  - Moins d'1 heure : `XXm XXs` (ex: 2m 30s)
+  - Plus d'1 heure : `XXh XXm XXs` (ex: 1h 15m 30s)
+
+### Instructions
+- Le timestamp de début DOIT être la première sortie de la commande
+- Le timestamp de fin et la durée DOIVENT être inclus dans le rapport final
+- Calculer la durée en soustrayant le timestamp de début du timestamp de fin
+- Arrondir les secondes (pas de millisecondes)
+
 ## Instructions
 
 - **IMPORTANT : Vérifier d'abord si `.claude/sessions/.current-session` existe**
@@ -42,3 +64,7 @@ Afficher le statut de la session actuelle en vérifiant l'existence d'une sessio
 - Lister toutes : `session:list`
 
 Garder la sortie propre et concentrée sur les informations exploitables.
+
+---
+✅ Terminé : [timestamp ISO 8601]
+⏱️ Durée : [durée formatée]

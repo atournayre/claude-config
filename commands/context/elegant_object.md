@@ -10,6 +10,28 @@ description: Charge les règles de conception Elegant Objects pour l'écriture d
 ## Purpose
 Charge et applique les principes de conception Elegant Objects de Yegor Bugayenko pour écrire du code orienté objet clean, maintenable et robuste.
 
+## Timing
+
+### Début d'Exécution
+Afficher immédiatement au lancement :
+- 🕐 **Démarrage** : [Date et heure au format ISO 8601]
+- Format : `YYYY-MM-DD HH:MM:SS`
+
+### Fin d'Exécution
+Afficher en fin de rapport :
+- ✅ **Terminé** : [Date et heure au format ISO 8601]
+- ⏱️ **Durée** : [Temps écoulé au format lisible]
+- Formats durée :
+  - Moins d'1 minute : `XXs` (ex: 45s)
+  - Moins d'1 heure : `XXm XXs` (ex: 2m 30s)
+  - Plus d'1 heure : `XXh XXm XXs` (ex: 1h 15m 30s)
+
+### Instructions
+- Le timestamp de début DOIT être la première sortie de la commande
+- Le timestamp de fin et la durée DOIVENT être inclus dans le rapport final
+- Calculer la durée en soustrayant le timestamp de début du timestamp de fin
+- Arrondir les secondes (pas de millisecondes)
+
 ## Workflow
 - Respecte les règles Elegant Objects ci-dessous
 - Écris des tests unitaires avant l'implémentation
@@ -118,3 +140,7 @@ Charge et applique les principes de conception Elegant Objects de Yegor Bugayenk
 
 ## Report
 Les règles de conception Elegant Objects sont maintenant chargées. Applique ces principes à tout le code que tu écris ou modifies.
+
+---
+✅ Terminé : [timestamp ISO 8601]
+⏱️ Durée : [durée formatée]

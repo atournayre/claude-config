@@ -10,6 +10,28 @@ argument-hint: "[issue-number]"
 ## Purpose
 Corriger une issue GitHub de manière structurée et efficace, en se concentrant sur l'essentiel.
 
+## Timing
+
+### Début d'Exécution
+Afficher immédiatement au lancement :
+- 🕐 **Démarrage** : [Date et heure au format ISO 8601]
+- Format : `YYYY-MM-DD HH:MM:SS`
+
+### Fin d'Exécution
+Afficher en fin de rapport :
+- ✅ **Terminé** : [Date et heure au format ISO 8601]
+- ⏱️ **Durée** : [Temps écoulé au format lisible]
+- Formats durée :
+  - Moins d'1 minute : `XXs` (ex: 45s)
+  - Moins d'1 heure : `XXm XXs` (ex: 2m 30s)
+  - Plus d'1 heure : `XXh XXm XXs` (ex: 1h 15m 30s)
+
+### Instructions
+- Le timestamp de début DOIT être la première sortie de la commande
+- Le timestamp de fin et la durée DOIVENT être inclus dans le rapport final
+- Calculer la durée en soustrayant le timestamp de début du timestamp de fin
+- Arrondir les secondes (pas de millisecondes)
+
 ## Variables
 ISSUE_NUMBER: $1 (obligatoire)
 
@@ -24,6 +46,13 @@ ISSUE_NUMBER: $1 (obligatoire)
 - Documentation technique si nécessaire
 
 ## Workflow
+
+### Étape 0: Initialisation du Timing (OBLIGATOIRE - PREMIÈRE ACTION)
+```
+🕐 Démarrage: [timestamp ISO 8601]
+```
+- Cette étape DOIT être la toute première action
+- Enregistrer le timestamp pour calcul ultérieur
 
 ### 1. Analyse de l'issue
 - Récupérer les détails de l'issue via `gh issue view $ISSUE_NUMBER`
@@ -67,6 +96,10 @@ ISSUE_NUMBER: $1 (obligatoire)
 - Branche créée avec nom approprié
 - Fichiers modifiés avec résumé des changements
 - Tests exécutés avec résultats
+
+---
+✅ Terminé : [timestamp ISO 8601]
+⏱️ Durée : [durée formatée]
 
 ## Validation
 - ✅ `ISSUE_NUMBER` doit être fourni et exister sur GitHub

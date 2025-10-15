@@ -8,6 +8,28 @@ allowed-tools: Task, Bash (./vendor/bin/phpstan:*), Read
 
 Résout les erreurs PHPStan détectées dans le projet en utilisant l'agent spécialisé phpstan-error-resolver.
 
+## Timing
+
+### Début d'Exécution
+Afficher immédiatement au lancement :
+- 🕐 **Démarrage** : [Date et heure au format ISO 8601]
+- Format : `YYYY-MM-DD HH:MM:SS`
+
+### Fin d'Exécution
+Afficher en fin de rapport :
+- ✅ **Terminé** : [Date et heure au format ISO 8601]
+- ⏱️ **Durée** : [Temps écoulé au format lisible]
+- Formats durée :
+  - Moins d'1 minute : `XXs` (ex: 45s)
+  - Moins d'1 heure : `XXm XXs` (ex: 2m 30s)
+  - Plus d'1 heure : `XXh XXm XXs` (ex: 1h 15m 30s)
+
+### Instructions
+- Le timestamp de début DOIT être la première sortie de la commande
+- Le timestamp de fin et la durée DOIVENT être inclus dans le rapport final
+- Calculer la durée en soustrayant le timestamp de début du timestamp de fin
+- Arrondir les secondes (pas de millisecondes)
+
 ## Variables
 
 PHPSTAN_CONFIG: phpstan.neon (ou phpstan.neon.dist)
@@ -15,6 +37,13 @@ PHPSTAN_BIN: ./vendor/bin/phpstan
 ERROR_BATCH_SIZE: 5
 
 ## Flux de Travail
+
+### Étape 0: Initialisation du Timing (OBLIGATOIRE - PREMIÈRE ACTION)
+```
+🕐 Démarrage: [timestamp ISO 8601]
+```
+- Cette étape DOIT être la toute première action
+- Enregistrer le timestamp pour calcul ultérieur
 
 1. Exécuter PHPStan pour récupérer la liste des erreurs
 
@@ -71,4 +100,8 @@ notes:
   - "Toutes les erreurs PHPStan ont été analysées"
   - "Les corrections ont été appliquées automatiquement"
   - "[autres notes importantes]"
+
+---
+✅ Terminé : [timestamp ISO 8601]
+⏱️ Durée : [durée formatée]
 ```

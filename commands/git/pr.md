@@ -10,6 +10,28 @@ description: Crée une Pull Request optimisée avec workflow structuré
 ## Purpose
 Automatiser la création d'une Pull Request avec un workflow intelligent incluant QA, commits structurés, milestone et assignation projet GitHub.
 
+## Timing
+
+### Début d'Exécution
+Afficher immédiatement au lancement :
+- 🕐 **Démarrage** : [Date et heure au format ISO 8601]
+- Format : `YYYY-MM-DD HH:MM:SS`
+
+### Fin d'Exécution
+Afficher en fin de rapport :
+- ✅ **Terminé** : [Date et heure au format ISO 8601]
+- ⏱️ **Durée** : [Temps écoulé au format lisible]
+- Formats durée :
+  - Moins d'1 minute : `XXs` (ex: 45s)
+  - Moins d'1 heure : `XXm XXs` (ex: 2m 30s)
+  - Plus d'1 heure : `XXh XXm XXs` (ex: 1h 15m 30s)
+
+### Instructions
+- Le timestamp de début DOIT être la première sortie de la commande
+- Le timestamp de fin et la durée DOIVENT être inclus dans le rapport final
+- Calculer la durée en soustrayant le timestamp de début du timestamp de fin
+- Arrondir les secondes (pas de millisecondes)
+
 ## Variables
 - `PR_TEMPLATE_PATH`: `.github/pull_request_template.md`
 - `BRANCH_BASE`: Branche de destination (develop, main, release/*)
@@ -55,6 +77,13 @@ project/
 ```
 
 ## Workflow
+
+### Étape 0: Initialisation du Timing (OBLIGATOIRE - PREMIÈRE ACTION)
+```
+🕐 Démarrage: [timestamp ISO 8601]
+```
+- Cette étape DOIT être la toute première action
+- Enregistrer le timestamp pour calcul ultérieur
 
 ### Étape 1: Vérification du Template PR (OBLIGATOIRE)
 ```bash
@@ -304,6 +333,10 @@ Le template doit être lu depuis le fichier du projet et rempli avec les informa
 🗑️ Branche locale: [SUPPRIMÉE/CONSERVÉE]
 
 ✅ Tous les todos complétés
+
+---
+✅ Terminé : [timestamp ISO 8601]
+⏱️ Durée : [durée formatée]
 ```
 
 ### Checklist de Validation

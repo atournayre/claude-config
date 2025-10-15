@@ -12,6 +12,28 @@ Analyser un message d'erreur fourni, identifier les causes probables, proposer u
 ## Purpose
 Diagnostiquer rapidement les erreurs en analysant les messages, logs et contexte du code pour proposer et appliquer des solutions efficaces.
 
+## Timing
+
+### Début d'Exécution
+Afficher immédiatement au lancement :
+- 🕐 **Démarrage** : [Date et heure au format ISO 8601]
+- Format : `YYYY-MM-DD HH:MM:SS`
+
+### Fin d'Exécution
+Afficher en fin de rapport :
+- ✅ **Terminé** : [Date et heure au format ISO 8601]
+- ⏱️ **Durée** : [Temps écoulé au format lisible]
+- Formats durée :
+  - Moins d'1 minute : `XXs` (ex: 45s)
+  - Moins d'1 heure : `XXm XXs` (ex: 2m 30s)
+  - Plus d'1 heure : `XXh XXm XXs` (ex: 1h 15m 30s)
+
+### Instructions
+- Le timestamp de début DOIT être la première sortie de la commande
+- Le timestamp de fin et la durée DOIVENT être inclus dans le rapport final
+- Calculer la durée en soustrayant le timestamp de début du timestamp de fin
+- Arrondir les secondes (pas de millisecondes)
+
 ## Variables
 - CURRENT_DATETIME: Date et heure courantes (date via <env>Today's date</env>, heure via commande système) pour comparaisons temporelles
 - ERROR_MESSAGE: Message d'erreur à analyser (chaîne ou chemin vers fichier log)
@@ -36,6 +58,13 @@ Vous êtes un expert en diagnostic et résolution d'erreurs. Adoptez une approch
 - Documentation technique du projet
 
 ## Workflow
+
+### Étape 0: Initialisation du Timing (OBLIGATOIRE - PREMIÈRE ACTION)
+```
+🕐 Démarrage: [timestamp ISO 8601]
+```
+- Cette étape DOIT être la toute première action
+- Enregistrer le timestamp pour calcul ultérieur
 
 ### 1. Analyse du message d'erreur
 - Parse et categorise l'erreur (syntaxe, runtime, logique, configuration)
@@ -100,6 +129,10 @@ Vous êtes un expert en diagnostic et résolution d'erreurs. Adoptez une approch
 - **Actions effectuées** : Liste détaillée des corrections appliquées
 - **Validations** : Tests et vérifications réalisés
 - **Suivi** : Points d'attention et prévention future
+
+---
+✅ Terminé : [timestamp ISO 8601]
+⏱️ Durée : [durée formatée]
 
 ## Best Practices
 - Analyser avant d'agir : comprendre complètement le problème

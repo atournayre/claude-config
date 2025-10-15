@@ -10,6 +10,28 @@ description: Création de branche Git avec workflow structuré
 ## Purpose
 Créer une nouvelle branche Git de manière structurée avec support des issues GitHub.
 
+## Timing
+
+### Début d'Exécution
+Afficher immédiatement au lancement :
+- 🕐 **Démarrage** : [Date et heure au format ISO 8601]
+- Format : `YYYY-MM-DD HH:MM:SS`
+
+### Fin d'Exécution
+Afficher en fin de rapport :
+- ✅ **Terminé** : [Date et heure au format ISO 8601]
+- ⏱️ **Durée** : [Temps écoulé au format lisible]
+- Formats durée :
+  - Moins d'1 minute : `XXs` (ex: 45s)
+  - Moins d'1 heure : `XXm XXs` (ex: 2m 30s)
+  - Plus d'1 heure : `XXh XXm XXs` (ex: 1h 15m 30s)
+
+### Instructions
+- Le timestamp de début DOIT être la première sortie de la commande
+- Le timestamp de fin et la durée DOIVENT être inclus dans le rapport final
+- Calculer la durée en soustrayant le timestamp de début du timestamp de fin
+- Arrondir les secondes (pas de millisecondes)
+
 ## Variables
 SOURCE_BRANCH: $1
 ISSUE_OR_TEXT: $2
@@ -26,6 +48,13 @@ ISSUE_OR_TEXT: $2
 - @docs/README.md
 
 ## Workflow
+
+### Étape 0: Initialisation du Timing (OBLIGATOIRE - PREMIÈRE ACTION)
+```
+🕐 Démarrage: [timestamp ISO 8601]
+```
+- Cette étape DOIT être la toute première action
+- Enregistrer le timestamp pour calcul ultérieur
 
 **🚨 ÉTAPE CRITIQUE : CHECKOUT VERS SOURCE D'ABORD 🚨**
 
@@ -122,6 +151,10 @@ Conventions de nommage des branches :
 - Issue associée (si applicable)
 - Statut du checkout
 - Note : Le tracking remote sera configuré lors du premier push avec `git push -u origin $NEW_BRANCH`
+
+---
+✅ Terminé : [timestamp ISO 8601]
+⏱️ Durée : [durée formatée]
 
 ## Validation
 - ✅ `SOURCE_BRANCH` doit exister localement
