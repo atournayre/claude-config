@@ -1,7 +1,7 @@
 ---
 model: claude-sonnet-4-5-20250929
-allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*), Bash(git diff:*), Bash(git log:*)
-argument-hint: [message] | --no-verify
+allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*), Bash(git diff:*), Bash(git log:*), Bash(git push:*)
+argument-hint: [message] | --no-verify | --push
 description: Créer des commits bien formatés avec format conventional et emoji
 ---
 
@@ -55,6 +55,7 @@ Afficher en fin de rapport :
 5. Analyse le diff pour déterminer si plusieurs changements logiques distincts sont présents
 6. Si plusieurs changements distincts sont détectés, suggère de diviser le commit en plusieurs commits plus petits
 7. Pour chaque commit (ou le commit unique si pas de division), crée un message de commit utilisant le format conventional avec emoji
+8. Si l'option --push est spécifiée, pousse automatiquement le(s) commit(s) vers le remote avec git push
 
 ## Bonnes Pratiques pour les Commits
 
@@ -180,6 +181,7 @@ Exemple de division de commits :
 ## Options de Commande
 
 - --no-verify: Ignorer l'exécution des vérifications pre-commit (qa)
+- --push: Pousser automatiquement le(s) commit(s) vers le remote après création
 
 ## Notes Importantes
 
@@ -191,3 +193,5 @@ Exemple de division de commits :
 - Avant de commiter, la commande révisera le diff pour identifier si plusieurs commits seraient plus appropriés
 - Si elle suggère plusieurs commits, elle vous aidera à stager et commiter les changements séparément
 - Révise toujours le diff du commit pour s'assurer que le message correspond aux changements
+- Avec --push, le commit sera automatiquement poussé vers le remote après création
+- Les options peuvent être combinées : /git:commit --no-verify --push
