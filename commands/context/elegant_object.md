@@ -1,4 +1,5 @@
 ---
+model: claude-sonnet-4-5-20250929
 allowed-tools: Read, Edit, Write, MultiEdit, Bash
 argument-hint:
 description: Charge les règles de conception Elegant Objects pour l'écriture de code orienté objet élégant

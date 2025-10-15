@@ -1,4 +1,5 @@
 ---
+model: claude-opus-4-1-20250805
 allowed-tools: Bash, Read, Write, Edit, Glob, Grep
 description: Engage in intensive analytical thinking for complex problem solving and decision making
 ---

@@ -1,4 +1,5 @@
 ---
+model: claude-sonnet-4-5-20250929
 allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*), Bash(git diff:*), Bash(git log:*), Bash(git checkout:*), Bash(git branch:*), Bash(git push:*), Bash(gh pr:*), Bash(gh api:*), Bash(make qa:*), Write, Read, TodoWrite
 argument-hint: [branch-base, milestone, project, --delete]
 description: Crée une Pull Request optimisée avec workflow structuré

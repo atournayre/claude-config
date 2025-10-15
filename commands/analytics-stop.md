@@ -1,4 +1,5 @@
 ---
+model: claude-3-5-haiku-20241022
 description: Stop the running analytics dashboard server
 ---
 

@@ -1,4 +1,5 @@
 ---
+model: claude-sonnet-4-5-20250929
 allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git merge:*), Bash(git rebase:*), Bash(git checkout:*), Bash(git add:*), Read, Edit
 argument-hint: <branche-destination>
 description: Analyse les conflits git et propose à l'utilisateur une résolution pas à pas avec validation de chaque étape.

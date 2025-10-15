@@ -1,4 +1,5 @@
 ---
+model: claude-sonnet-4-5-20250929
 allowed-tools: Read, Edit, Bash(git:*), Bash(date:*)
 description: Terminer la session actuelle avec un résumé complet
 ---

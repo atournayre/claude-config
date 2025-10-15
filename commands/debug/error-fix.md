@@ -1,4 +1,5 @@
 ---
+model: claude-sonnet-4-5-20250929
 allowed-tools: Bash,Read,Write,Edit,Grep,Glob,TodoWrite,Task
 description: Analyser un message d'erreur, proposer un plan de résolution et l'exécuter
 argument-hint: [message-erreur-ou-fichier-log]

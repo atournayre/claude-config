@@ -1,4 +1,5 @@
 ---
+model: claude-opus-4-1-20250805
 allowed-tools: Read, Write, Edit, Bash
 argument-hint: [titre]
 description: Génère un Architecture Decision Record (ADR) formaté et structuré

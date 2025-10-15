@@ -1,4 +1,5 @@
 ---
+model: claude-sonnet-4-5-20250929
 allowed-tools: Bash(mkdir:*), Bash(date:*), Write
 description: Démarrer une nouvelle session de développement
 ---

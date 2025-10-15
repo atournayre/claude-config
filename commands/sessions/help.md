@@ -1,4 +1,5 @@
 ---
+model: claude-3-5-haiku-20241022
 description: Afficher l'aide pour les commandes de gestion de session
 ---
 

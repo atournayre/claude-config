@@ -1,4 +1,5 @@
 ---
+model: claude-opus-4-1-20250805
 allowed-tools: Bash
 description: Ultra-comprehensive analytical thinking for the most complex problems
 argument-hint: complex problem or question

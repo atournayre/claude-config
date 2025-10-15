@@ -1,4 +1,5 @@
 ---
+model: claude-sonnet-4-5-20250929
 allowed-tools: Bash, Write, Read, Glob, Edit, MultiEdit
 description: Générateur de slash commands pour Claude Code avec workflow structuré et bonnes pratiques
 argument-hint: [nom-commande] [description] [--tools=outil1,outil2] [--category=categorie]
@@ -10,6 +11,10 @@ Créer une nouvelle slash command Claude Code : $ARGUMENTS
 
 ## Purpose
 Générer des slash commands Claude Code bien structurées, documentées et fonctionnelles suivant les conventions du projet.
+
+## Relevant files
+- @docs/COMMANDS.md
+- @docs/MODELS.md
 
 ## Variables
 - COMMAND_NAME: Nom de la commande (format kebab-case)

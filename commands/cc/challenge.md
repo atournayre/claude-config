@@ -1,4 +1,5 @@
 ---
+model: claude-3-5-haiku-20241022
 allowed-tools: [Read]
 description: Évalue ma dernière réponse, donne une note sur 10 et propose des améliorations
 argument-hint: ""

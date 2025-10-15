@@ -1,4 +1,5 @@
 ---
+model: claude-3-5-haiku-20241022
 allowed-tools: Read, Bash(ls:*), Bash(find:*)
 description: Lister toutes les sessions de développement
 ---

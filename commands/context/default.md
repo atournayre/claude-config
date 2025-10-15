@@ -1,4 +1,5 @@
 ---
+model: claude-sonnet-4-5-20250929
 allowed-tools: Bash, Read
 description: Charger le contexte pour une nouvelle session d'agent en analysant la structure du code, la documentation et le README
 ---

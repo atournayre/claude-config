@@ -1,4 +1,5 @@
 ---
+model: claude-opus-4-1-20250805
 allowed-tools: Bash(git diff:*), Bash(git log:*), Bash(git status:*), Bash(git show:*), Bash(gh pr view:*), Bash(gh pr diff:*), Read, Write, Grep, Glob, TodoWrite
 argument-hint: <pr-number>
 description: Analyses le détail des modifications git. Fournis 2 rapports d'impact - un rapport métier et un rapport technique. Ajoutes ce rapport à la description de la PR.

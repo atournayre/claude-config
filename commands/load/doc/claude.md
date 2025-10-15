@@ -1,4 +1,5 @@
 ---
+model: claude-sonnet-4-5-20250929
 description: Charge la documentation Claude Code depuis docs.claude.com dans des fichiers markdown locaux que nos agents peuvent utiliser comme contexte.
 allowed-tools: Task, WebFetch, Write, Edit, Bash (ls*), mcp_firecrawl-mcp_firecrawl_scrape
 ---

@@ -1,4 +1,5 @@
 ---
+model: claude-3-5-haiku-20241022
 allowed-tools: Bash(git:*)
 description: Comprendre l'état actuel du dépôt git
 ---

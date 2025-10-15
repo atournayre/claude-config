@@ -1,4 +1,5 @@
 ---
+model: claude-sonnet-4-5-20250929
 allowed-tools: Read,Write,Grep
 description: Prend en paramètre une trace d'erreur. Génère un fichier lisible avec la trace formatée. Fourni une première analyse de l'erreur. Propose 2 ou 3 solutions de résolution.
 argument-hint: <stack-trace-text-or-file-path>

@@ -1,4 +1,5 @@
 ---
+model: claude-opus-4-1-20250805
 description: Résoudre les erreurs PHPStan en utilisant l'agent phpstan-error-resolver
 allowed-tools: Task, Bash (./vendor/bin/phpstan:*), Read
 ---
