@@ -18,10 +18,19 @@ Configuration personnelle versionnée pour Claude Code avec des fonctionnalités
 ```
 claude-config/
 ├── commands/                 # Commandes personnalisées (slash commands)
+│   ├── api-platform/         # Commandes API Platform
+│   │   └── doc/              # Documentation API Platform
+│   │       └── load.md       # Charge doc API Platform
+│   ├── atournayre-framework/ # Commandes atournayre-framework
+│   │   └── doc/              # Documentation atournayre-framework
+│   │       └── load.md       # Charge doc atournayre-framework
 │   ├── cc/                   # Méta-commandes Claude Code
 │   │   ├── make/             # Générateurs de commandes
 │   │   │   └── command.md    # Générateur de slash commands
 │   │   └── challenge.md      # Auto-évaluation des réponses
+│   ├── claude/               # Commandes Claude Code
+│   │   └── doc/              # Documentation Claude Code
+│   │       └── load.md       # Charge doc Claude Code
 │   ├── debug/                # Commandes de diagnostic
 │   │   ├── error-fix.md      # Analyse et résolution d'erreurs
 │   │   └── stack-trace.md    # Analyse de stack trace avec rapport détaillé
@@ -34,13 +43,9 @@ claude-config/
 │   │   ├── conflit.md        # Résolution interactive de conflits git
 │   │   ├── pr.md             # Création de Pull Request optimisée
 │   │   └── status.md         # Affiche le statut Git
-│   ├── load/                 # Commandes de chargement de documentation
-│   │   └── doc/              # Documentation externe
-│   │       ├── api-platform.md      # Charge doc API Platform
-│   │       ├── atournayre-framework.md  # Charge doc atournayre-framework
-│   │       ├── claude.md     # Charge doc Claude Code
-│   │       ├── meilisearch.md # Charge doc Meilisearch
-│   │       └── symfony.md    # Charge doc Symfony
+│   ├── meilisearch/          # Commandes Meilisearch
+│   │   └── doc/              # Documentation Meilisearch
+│   │       └── load.md       # Charge doc Meilisearch
 │   ├── qa/                   # Commandes de qualité de code
 │   │   └── phpstan.md        # Résolution automatique erreurs PHPStan
 │   ├── sessions/             # Gestion des sessions
@@ -53,6 +58,7 @@ claude-config/
 │   ├── symfony/              # Commandes Symfony
 │   │   ├── make.md           # Utilise les makers Symfony ou génère un plan
 │   │   └── doc/              # Documentation Symfony
+│   │       ├── load.md       # Charge doc Symfony
 │   │       └── question.md   # Interroge la documentation Symfony locale
 │   ├── think/                # Commandes d'analyse
 │   │   ├── harder.md         # Analyse intensive de problèmes complexes
@@ -194,13 +200,16 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 | 🐛 **debug** | 2 | error-fix, stack-trace |
 | ✅ **qa** | 1 | phpstan |
 | 🔍 **analyse** | 3 | impact, think:harder, think:ultra |
-| 📚 **load:doc** | 5 | api-platform, atournayre-framework, claude, meilisearch, symfony |
 | 🧩 **context** | 2 | default, elegant_object |
 | 🏗️ **build** | 2 | code, quick-plan |
 | 💻 **cc** | 2 | make:command, challenge |
 | 📊 **analytics** | 2 | analytics, analytics-stop |
 | 🎯 **sessions** | 6 | start, current, list, end, update, help |
-| 🎼 **symfony** | 2 | make, doc:question |
+| 🎼 **symfony** | 3 | make, doc:question, doc:load |
+| 🔌 **api-platform** | 1 | doc:load |
+| 🏛️ **atournayre-framework** | 1 | doc:load |
+| 🤖 **claude** | 1 | doc:load |
+| 🔎 **meilisearch** | 1 | doc:load |
 | ⚙️ **générales** | 4 | all_tools, docker, git_status, question |
 
 ### Commandes les plus utilisées
@@ -270,17 +279,6 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 
 [📖 Voir détails](docs/COMMANDS.md#commandes-danalyse)
 
-### 📚 Commandes de chargement de documentation
-
-| Commande | Description | Usage |
-|----------|-------------|-------|
-| `/load:doc:api-platform` | Charge doc API Platform | `/load:doc:api-platform` |
-| `/load:doc:atournayre-framework` | Charge doc atournayre-framework | `/load:doc:atournayre-framework` |
-| `/load:doc:claude` | Charge doc Claude Code | `/load:doc:claude` |
-| `/load:doc:meilisearch` | Charge doc Meilisearch | `/load:doc:meilisearch` |
-| `/load:doc:symfony` | Charge doc Symfony | `/load:doc:symfony` |
-
-[📖 Voir détails](docs/COMMANDS.md#commandes-de-chargement-de-documentation)
 
 ### 🧩 Commandes de contexte
 
@@ -336,9 +334,42 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 | Commande | Description | Usage |
 |----------|-------------|-------|
 | `/symfony:make` | Utilise les makers Symfony ou génère un plan | `/symfony:make <tâche>` |
+| `/symfony:doc:load` | Charge la documentation Symfony locale | `/symfony:doc:load` |
 | `/symfony:doc:question` | Interroge la documentation Symfony locale | `/symfony:doc:question <question>` |
 
 [📖 Voir détails](docs/COMMANDS.md#commandes-symfony)
+
+### 🔌 Commandes API Platform
+
+| Commande | Description | Usage |
+|----------|-------------|-------|
+| `/api-platform:doc:load` | Charge la documentation API Platform | `/api-platform:doc:load` |
+
+[📖 Voir détails](docs/COMMANDS.md#commandes-api-platform)
+
+### 🏛️ Commandes atournayre-framework
+
+| Commande | Description | Usage |
+|----------|-------------|-------|
+| `/atournayre-framework:doc:load` | Charge la documentation atournayre-framework | `/atournayre-framework:doc:load` |
+
+[📖 Voir détails](docs/COMMANDS.md#commandes-atournayre-framework)
+
+### 🤖 Commandes Claude
+
+| Commande | Description | Usage |
+|----------|-------------|-------|
+| `/claude:doc:load` | Charge la documentation Claude Code | `/claude:doc:load` |
+
+[📖 Voir détails](docs/COMMANDS.md#commandes-claude)
+
+### 🔎 Commandes Meilisearch
+
+| Commande | Description | Usage |
+|----------|-------------|-------|
+| `/meilisearch:doc:load` | Charge la documentation Meilisearch | `/meilisearch:doc:load` |
+
+[📖 Voir détails](docs/COMMANDS.md#commandes-meilisearch)
 
 ### ⚙️ Commandes générales
 

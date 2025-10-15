@@ -17,8 +17,11 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 - [Commandes de qualité de code](#commandes-de-qualité-de-code)
 - [Commandes d'analyse](#commandes-danalyse)
 - [Commandes de contexte](#commandes-de-contexte)
-- [Commandes de chargement de documentation](#commandes-de-chargement-de-documentation)
 - [Commandes Symfony](#commandes-symfony)
+- [Commandes API Platform](#commandes-api-platform)
+- [Commandes atournayre-framework](#commandes-atournayre-framework)
+- [Commandes Claude](#commandes-claude)
+- [Commandes Meilisearch](#commandes-meilisearch)
 - [Commandes générales](#commandes-générales)
 
 ---
@@ -549,88 +552,6 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 
 ---
 
-## Commandes de chargement de documentation
-
-### `/load:doc:api-platform`
-**Description** : Charge la documentation API Platform depuis leur site web
-
-**Format** : Workflow automatisé de scraping et sauvegarde locale
-
-**Usage** : `/load:doc:api-platform`
-
-**Particularités** :
-- Vérifie l'âge des fichiers existants (24h par défaut)
-- Ignore les fichiers récents pour économiser les ressources
-- Utilise l'agent @api-platform-docs-scraper
-- Sauvegarde dans `docs/api-platform/`
-- Liste des URLs dans `docs/api-platform/README.md`
-
----
-
-### `/load:doc:atournayre-framework`
-**Description** : Charge la documentation atournayre-framework depuis ReadTheDocs
-
-**Format** : Workflow automatisé de scraping et sauvegarde locale
-
-**Usage** : `/load:doc:atournayre-framework`
-
-**Particularités** :
-- Vérifie l'âge des fichiers existants (24h par défaut)
-- Ignore les fichiers récents pour économiser les ressources
-- Utilise l'agent @atournayre-framework-docs-scraper
-- Sauvegarde dans `docs/atournayre-framework/`
-- Liste des URLs dans `docs/atournayre-framework/README.md`
-
----
-
-### `/load:doc:claude`
-**Description** : Charge la documentation Claude Code depuis docs.claude.com
-
-**Format** : Workflow automatisé de scraping et sauvegarde locale
-
-**Usage** : `/load:doc:claude`
-
-**Particularités** :
-- Vérifie l'âge des fichiers existants (24h par défaut)
-- Ignore les fichiers récents pour économiser les ressources
-- Utilise l'agent @claude-docs-scraper
-- Sauvegarde dans `docs/claude/`
-- Liste des URLs dans `docs/claude/README.md`
-
----
-
-### `/load:doc:meilisearch`
-**Description** : Charge la documentation Meilisearch depuis leur site web dans des fichiers markdown locaux
-
-**Format** : Workflow automatisé de scraping et sauvegarde locale
-
-**Usage** : `/load:doc:meilisearch`
-
-**Particularités** :
-- Vérifie l'âge des fichiers existants (24h par défaut)
-- Ignore les fichiers récents pour économiser les ressources
-- Utilise l'agent @meilisearch-docs-scraper
-- Sauvegarde dans `docs/meilisearch/`
-- Liste des URLs dans `docs/meilisearch/README.md`
-
----
-
-### `/load:doc:symfony`
-**Description** : Charge la documentation Symfony depuis leur site web
-
-**Format** : Workflow automatisé de scraping et sauvegarde locale
-
-**Usage** : `/load:doc:symfony`
-
-**Particularités** :
-- Vérifie l'âge des fichiers existants (24h par défaut)
-- Ignore les fichiers récents pour économiser les ressources
-- Utilise l'agent @symfony-docs-scraper
-- Sauvegarde dans `docs/symfony/`
-- Liste des URLs dans `docs/symfony/README.md`
-
----
-
 ## Commandes Symfony
 
 ### `/symfony:make`
@@ -656,6 +577,22 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 
 ---
 
+### `/symfony:doc:load`
+**Description** : Charge la documentation Symfony depuis leur site web
+
+**Format** : Workflow automatisé de scraping et sauvegarde locale
+
+**Usage** : `/symfony:doc:load`
+
+**Particularités** :
+- Vérifie l'âge des fichiers existants (24h par défaut)
+- Ignore les fichiers récents pour économiser les ressources
+- Utilise l'agent @symfony-docs-scraper
+- Sauvegarde dans `docs/symfony/`
+- Liste des URLs dans `docs/symfony/README.md`
+
+---
+
 ### `/symfony:doc:question`
 **Description** : Interroge la documentation Symfony locale pour répondre à une question
 
@@ -670,12 +607,84 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 - Réponses formatées avec exemples de code
 - Références aux fichiers sources consultés
 - Suggestions de documentation connexe
-- Si la documentation n'est pas disponible : suggère `/load:doc:symfony`
+- Si la documentation n'est pas disponible : suggère `/symfony:doc:load`
 
 **Exemples** :
 - `/symfony:doc:question "Comment créer une route ?"` - Routing et controllers
 - `/symfony:doc:question "Comment utiliser les formulaires avec validation ?"` - Forms et validation
 - `/symfony:doc:question "Quelle est la différence entre les voters et les guards ?"` - Security
+
+---
+
+## Commandes API Platform
+
+### `/api-platform:doc:load`
+**Description** : Charge la documentation API Platform depuis leur site web
+
+**Format** : Workflow automatisé de scraping et sauvegarde locale
+
+**Usage** : `/api-platform:doc:load`
+
+**Particularités** :
+- Vérifie l'âge des fichiers existants (24h par défaut)
+- Ignore les fichiers récents pour économiser les ressources
+- Utilise l'agent @api-platform-docs-scraper
+- Sauvegarde dans `docs/api-platform/`
+- Liste des URLs dans `docs/api-platform/README.md`
+
+---
+
+## Commandes atournayre-framework
+
+### `/atournayre-framework:doc:load`
+**Description** : Charge la documentation atournayre-framework depuis ReadTheDocs
+
+**Format** : Workflow automatisé de scraping et sauvegarde locale
+
+**Usage** : `/atournayre-framework:doc:load`
+
+**Particularités** :
+- Vérifie l'âge des fichiers existants (24h par défaut)
+- Ignore les fichiers récents pour économiser les ressources
+- Utilise l'agent @atournayre-framework-docs-scraper
+- Sauvegarde dans `docs/atournayre-framework/`
+- Liste des URLs dans `docs/atournayre-framework/README.md`
+
+---
+
+## Commandes Claude
+
+### `/claude:doc:load`
+**Description** : Charge la documentation Claude Code depuis docs.claude.com
+
+**Format** : Workflow automatisé de scraping et sauvegarde locale
+
+**Usage** : `/claude:doc:load`
+
+**Particularités** :
+- Vérifie l'âge des fichiers existants (24h par défaut)
+- Ignore les fichiers récents pour économiser les ressources
+- Utilise l'agent @claude-docs-scraper
+- Sauvegarde dans `docs/claude/`
+- Liste des URLs dans `docs/claude/README.md`
+
+---
+
+## Commandes Meilisearch
+
+### `/meilisearch:doc:load`
+**Description** : Charge la documentation Meilisearch depuis leur site web
+
+**Format** : Workflow automatisé de scraping et sauvegarde locale
+
+**Usage** : `/meilisearch:doc:load`
+
+**Particularités** :
+- Vérifie l'âge des fichiers existants (24h par défaut)
+- Ignore les fichiers récents pour économiser les ressources
+- Utilise l'agent @meilisearch-docs-scraper
+- Sauvegarde dans `docs/meilisearch/`
+- Liste des URLs dans `docs/meilisearch/README.md`
 
 ---
 
