@@ -155,6 +155,7 @@ Conventions de nommage des branches :
 
 ---
 ✅ Terminé : [timestamp Europe/Paris avec CEST/CET]
+
 ⏱️ Durée : [durée formatée]
 
 ## Validation

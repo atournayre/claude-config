@@ -337,6 +337,7 @@ Le template doit être lu depuis le fichier du projet et rempli avec les informa
 
 ---
 ✅ Terminé : [timestamp Europe/Paris avec CEST/CET]
+
 ⏱️ Durée : [durée formatée]
 ```
 

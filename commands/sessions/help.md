@@ -66,4 +66,5 @@ Le système de gestion de session aide à maintenir la continuité entre les ses
 
 ---
 ✅ Terminé : [timestamp Europe/Paris avec CEST/CET]
+
 ⏱️ Durée : [durée formatée]

@@ -144,4 +144,5 @@ Les règles de conception Elegant Objects sont maintenant chargées. Applique ce
 
 ---
 ✅ Terminé : [timestamp Europe/Paris avec CEST/CET]
+
 ⏱️ Durée : [durée formatée]

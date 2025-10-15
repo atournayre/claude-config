@@ -107,4 +107,5 @@ Créer un enregistrement permanent du travail de développement qui sert de docu
 
 ---
 ✅ Terminé : [timestamp Europe/Paris avec CEST/CET]
+
 ⏱️ Durée : [durée formatée]

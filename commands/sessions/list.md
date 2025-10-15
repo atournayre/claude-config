@@ -81,4 +81,5 @@ Présenter les informations dans un format propre et lisible qui aide les utilis
 
 ---
 ✅ Terminé : [timestamp Europe/Paris avec CEST/CET]
+
 ⏱️ Durée : [durée formatée]

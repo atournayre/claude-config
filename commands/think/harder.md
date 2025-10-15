@@ -117,4 +117,5 @@ Apply the Deep Analysis Protocol to generate comprehensive insights that enable 
 
 ---
 ✅ Terminé : [timestamp Europe/Paris avec CEST/CET]
+
 ⏱️ Durée : [durée formatée]

@@ -100,6 +100,7 @@ ISSUE_NUMBER: $1 (obligatoire)
 
 ---
 ✅ Terminé : [timestamp Europe/Paris avec CEST/CET]
+
 ⏱️ Durée : [durée formatée]
 
 ## Validation

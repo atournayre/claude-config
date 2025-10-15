@@ -68,4 +68,5 @@ Garder la sortie propre et concentrée sur les informations exploitables.
 
 ---
 ✅ Terminé : [timestamp Europe/Paris avec CEST/CET]
+
 ⏱️ Durée : [durée formatée]

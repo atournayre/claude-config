@@ -96,4 +96,5 @@ Résumé structuré de la documentation lue avec points clés et exemples pratiq
 
 ---
 ✅ Terminé : [timestamp Europe/Paris avec CEST/CET]
+
 ⏱️ Durée : [durée formatée]

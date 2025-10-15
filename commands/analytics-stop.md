@@ -54,4 +54,5 @@ Utilisez `/analytics-stop` pour arrêter le dashboard analytics lancé avec `/an
 
 ---
 ✅ Terminé : [timestamp Europe/Paris avec CEST/CET]
+
 ⏱️ Durée : [durée formatée]

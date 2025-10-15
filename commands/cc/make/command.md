@@ -125,6 +125,7 @@ Afficher en fin de rapport :
 
 ---
 ✅ Terminé : [timestamp Europe/Paris avec CEST/CET]
+
 ⏱️ Durée : [durée formatée]
 ```
 ```

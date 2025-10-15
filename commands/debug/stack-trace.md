@@ -192,6 +192,7 @@ Tu es un expert en debugging et analyse de stack traces. Ton rôle :
 
 ---
 ✅ Terminé : [timestamp Europe/Paris avec CEST/CET]
+
 ⏱️ Durée : [durée formatée]
 ```
 

@@ -80,4 +80,5 @@ L'objectif est de créer des enregistrements complets mais concis pour référen
 
 ---
 ✅ Terminé : [timestamp Europe/Paris avec CEST/CET]
+
 ⏱️ Durée : [durée formatée]

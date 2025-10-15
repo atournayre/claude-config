@@ -133,6 +133,7 @@ Vous êtes un expert en diagnostic et résolution d'erreurs. Adoptez une approch
 
 ---
 ✅ Terminé : [timestamp Europe/Paris avec CEST/CET]
+
 ⏱️ Durée : [durée formatée]
 
 ## Best Practices
