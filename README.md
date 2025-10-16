@@ -205,7 +205,7 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 | ✅ **qa** | 1 | phpstan |
 | 🔍 **analyse** | 3 | impact, think:harder, think:ultra |
 | 🧩 **context** | 2 | default, elegant_object |
-| 🏗️ **build** | 2 | code, quick-plan |
+| 🏗️ **build** | 2 | code, prepare |
 | 💻 **cc** | 2 | make:command, challenge |
 | 📊 **analytics** | 2 | analytics, analytics-stop |
 | 🎯 **sessions** | 6 | start, current, list, end, update, help |
@@ -298,7 +298,7 @@ Les commandes personnalisées (slash commands) permettent d'étendre les capacit
 | Commande | Description | Usage |
 |----------|-------------|-------|
 | `/code` | Workflow de code complet | `/code` |
-| `/build:quick-plan` | Génère plan d'implémentation | `/build:quick-plan [requirement]` |
+| `/prepare` | Génère plan d'implémentation | `/prepare [requirement]` |
 
 [📖 Voir détails](docs/COMMANDS.md#commandes-build)
 

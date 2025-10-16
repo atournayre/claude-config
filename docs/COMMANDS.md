@@ -186,12 +186,12 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 
 ---
 
-### `/build:quick-plan`
+### `/prepare`
 **Description** : Génère un plan d'implémentation d'ingénierie concis et le sauvegarde dans le répertoire specs
 
 **Format** : Plan structuré avec spécifications techniques, architecture et étapes d'implémentation
 
-**Usage** : `/build:quick-plan [requirement-description]`
+**Usage** : `/prepare [requirement-description]`
 
 **Particularités** :
 - Analyse automatique des requirements
@@ -202,8 +202,8 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 - Format markdown structuré et réutilisable
 
 **Exemples** :
-- `/build:quick-plan "Add user authentication with JWT tokens"`
-- `/build:quick-plan "Implement WebSocket notification system"`
+- `/prepare "Add user authentication with JWT tokens"`
+- `/prepare "Implement WebSocket notification system"`
 
 ---
 
@@ -565,7 +565,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 - Analyse automatique de la tâche pour identifier le maker approprié
 - Vérification de la disponibilité du maker dans le projet
 - Exécution interactive du maker avec arguments adaptés
-- Fallback automatique vers `/build:quick-plan` si aucun maker n'existe
+- Fallback automatique vers `/prepare` si aucun maker n'existe
 - Support de tous les makers Symfony (controller, entity, form, command, etc.)
 - Affichage du timing de début et de fin d'exécution
 - Suggestions des prochaines étapes après création
@@ -573,7 +573,7 @@ Cette documentation détaille toutes les commandes personnalisées (slash comman
 **Exemples** :
 - `/symfony:make "créer un controller pour gérer les utilisateurs"` - Utilise make:controller
 - `/symfony:make "ajouter une entité Product avec nom et prix"` - Utilise make:entity
-- `/symfony:make "implémenter un système de cache Redis personnalisé"` - Génère un plan via /build:quick-plan
+- `/symfony:make "implémenter un système de cache Redis personnalisé"` - Génère un plan via /prepare
 
 ---
 

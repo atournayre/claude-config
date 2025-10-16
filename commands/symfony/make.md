@@ -1,13 +1,13 @@
 ---
 allowed-tools: Bash,Read,SlashCommand
 argument-hint: <tâche>
-description: Cherche si il existe un maker Symfony pour faire la tache demandée et l'utilise si il existe. Si aucun maker n'existe alors utilise la slash command "/build:quick-plan"
+description: Cherche si il existe un maker Symfony pour faire la tache demandée et l'utilise si il existe. Si aucun maker n'existe alors utilise la slash command "/prepare"
 model: claude-sonnet-4-5-20250929
 ---
 
 # Symfony Maker - Générateur Intelligent
 
-Recherche et utilise automatiquement les makers Symfony disponibles pour la tâche demandée. Si aucun maker approprié n'existe, génère un plan d'implémentation via `/build:quick-plan`.
+Recherche et utilise automatiquement les makers Symfony disponibles pour la tâche demandée. Si aucun maker approprié n'existe, génère un plan d'implémentation via `/prepare`.
 
 ## Purpose
 Automatiser la création de code Symfony en utilisant les makers officiels lorsque disponibles, avec fallback vers la planification manuelle.
@@ -80,7 +80,7 @@ Afficher en fin de rapport :
 
 **Si aucun maker n'existe :**
 - Informer l'utilisateur qu'aucun maker n'est disponible
-- Utiliser SlashCommand pour exécuter `/build:quick-plan [TASK]`
+- Utiliser SlashCommand pour exécuter `/prepare [TASK]`
 - Transmettre la description complète de la tâche
 
 ### Étape 4: Rapport final
@@ -195,7 +195,7 @@ Analyse: système de cache Redis personnalisé
 Aucun maker Symfony disponible pour cette tâche
 
 Génération du plan d'implémentation...
-[Exécution de /build:quick-plan "implémenter un système de cache Redis personnalisé"]
+[Exécution de /prepare "implémenter un système de cache Redis personnalisé"]
 
 ---
 ✅ Terminé : 2025-10-15 23:57:30 CEST
@@ -228,7 +228,7 @@ Génération du plan d'implémentation...
 
 ## Best Practices
 - Toujours vérifier la disponibilité du maker avant exécution
-- Fournir le contexte complet au `/build:quick-plan` en cas de fallback
+- Fournir le contexte complet au `/prepare` en cas de fallback
 - Suggérer les commandes de migration si entité créée
 - Proposer la création de tests associés
 - Documenter les fichiers générés
