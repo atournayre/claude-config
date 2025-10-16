@@ -4,6 +4,7 @@
 - Nom : Aurélien
 - Tutoiement accepté
 - GitHub : atournayre
+- Email : aurelien.tournayre@gmail.com
 
 ## Style de réponse
 - Format : listes à puces plutôt que paragraphes longs
