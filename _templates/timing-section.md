@@ -1,7 +1,3 @@
-# Lister tous les outils
-
-Lister tous les outils disponibles détaillés dans votre prompt système. Les afficher sous forme de puces. Les afficher au format de signature de fonction TypeScript et ajouter le but de l'outil en suffixe. Double saut de ligne entre chaque outil pour la lisibilité.
-
 ## Timing
 
 ### Début d'Exécution
@@ -31,8 +27,3 @@ Lister tous les outils disponibles détaillés dans votre prompt système. Les a
 - Le timestamp de fin DOIT être obtenu en exécutant `date` à la fin
 - Calculer la durée en soustrayant les timestamps unix (utiliser `date +%s`)
 - NE JAMAIS supposer ou deviner l'heure
-
----
-✅ Terminé : [timestamp Europe/Paris avec CEST/CET]
-
-⏱️ Durée : [durée formatée]

@@ -47,7 +47,7 @@ Vous êtes un générateur expert de slash commands. Créez des commandes :
 ### 2. Génération de la structure
 - Crée le frontmatter YAML avec métadonnées
 - Génère les sections standard adaptées au contexte
-- **AJOUTE la section ## Timing avec instructions d'affichage**
+- **LIT le template depuis `_templates/timing-section.md` et l'insère (Read tool)**
 - **AJOUTE "Étape 0: Initialisation du Timing" en premier dans le Workflow**
 - Inclut les outils nécessaires selon la catégorie
 - Ajoute des exemples d'utilisation pertinents
@@ -80,28 +80,7 @@ argument-hint: [ARGUMENTS]
 ## Relevant Files
 [Fichiers pertinents pour la commande]
 
-## Timing
-
-### Début d'Exécution
-Afficher immédiatement au lancement :
-- 🕐 **Démarrage** : [Date et heure au fuseau horaire Europe/Paris]
-- Format : `YYYY-MM-DD HH:MM:SS CEST/CET`
-
-### Fin d'Exécution
-Afficher en fin de rapport :
-- ✅ **Terminé** : [Date et heure au fuseau horaire Europe/Paris]
-- ⏱️ **Durée** : [Temps écoulé au format lisible]
-- Formats durée :
-  - Moins d'1 minute : `XXs` (ex: 45s)
-  - Moins d'1 heure : `XXm XXs` (ex: 2m 30s)
-  - Plus d'1 heure : `XXh XXm XXs` (ex: 1h 15m 30s)
-
-### Instructions
-- Le timestamp de début DOIT être la première sortie de la commande
-- Le timestamp de fin et la durée DOIVENT être inclus dans le rapport final
-- Utiliser le fuseau horaire Europe/Paris (CEST en été, CET en hiver)
-- Calculer la durée en soustrayant le timestamp de début du timestamp de fin
-- Arrondir les secondes (pas de millisecondes)
+[INSÉRER ICI le contenu de _templates/timing-section.md via Read]
 
 ## Workflow
 
@@ -130,6 +109,9 @@ Afficher en fin de rapport :
 ```
 ```
 
+**IMPORTANT** : Ne PAS copier-coller la section Timing manuellement.
+Utiliser `Read` pour lire `_templates/timing-section.md` et l'insérer.
+
 ## Examples
 
 ### Commande Git
@@ -154,5 +136,13 @@ Afficher en fin de rapport :
 - Outils minimaux nécessaires
 - Workflow en étapes logiques
 - Format de rapport structuré
-- **Timing obligatoire avec timestamp début/fin et durée**
+- **Timing : TOUJOURS lire depuis `_templates/timing-section.md` (Read tool)**
+- **Ne JAMAIS copier-coller manuellement la section Timing**
 - **Étape 0 du workflow = initialisation timing**
+
+## Maintenance du Template Timing
+
+Si tu dois modifier la section Timing :
+1. Éditer **uniquement** `_templates/timing-section.md`
+2. Exécuter `./scripts/sync-timing.sh` pour synchroniser les 43 commandes
+3. Ne **JAMAIS** éditer la section Timing directement dans une commande
