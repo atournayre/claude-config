@@ -73,9 +73,9 @@ def main():
         # Read JSON input from stdin
         input_data = json.loads(sys.stdin.read())
         
-        # Ensure log directory exists
+        # Ensure log directory exists in plugin data dir
         import os
-        log_dir = os.path.join(os.getcwd(), '.claude', 'logs')
+        log_dir = os.path.expanduser('~/.claude/data/plugins/claude-config/logs')
         os.makedirs(log_dir, exist_ok=True)
         log_file = os.path.join(log_dir, 'notification.json')
         

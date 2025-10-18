@@ -16,8 +16,8 @@ except ImportError:
 
 def log_pre_compact(input_data):
     """Log pre-compact event to logs directory."""
-    # Ensure logs directory exists
-    log_dir = Path(".claude/logs")
+    # Ensure logs directory exists in plugin data dir
+    log_dir = Path.home() / ".claude" / "data" / "plugins" / "claude-config" / "logs"
     log_dir.mkdir(parents=True, exist_ok=True)
     log_file = log_dir / 'pre_compact.json'
     
@@ -45,8 +45,8 @@ def backup_transcript(transcript_path, trigger):
         if not os.path.exists(transcript_path):
             return
         
-        # Create backup directory
-        backup_dir = Path(".claude/logs") / "transcript_backups"
+        # Create backup directory in plugin data dir
+        backup_dir = Path.home() / ".claude" / "data" / "plugins" / "claude-config" / "logs" / "transcript_backups"
         backup_dir.mkdir(parents=True, exist_ok=True)
         
         # Generate backup filename with timestamp and trigger type

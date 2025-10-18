@@ -116,8 +116,8 @@ def main():
         session_id = input_data.get("session_id", "")
         stop_hook_active = input_data.get("stop_hook_active", False)
 
-        # Ensure log directory exists
-        log_dir = os.path.join(os.getcwd(), ".claude", "logs")
+        # Ensure log directory exists in plugin data dir
+        log_dir = os.path.expanduser("~/.claude/data/plugins/claude-config/logs")
         os.makedirs(log_dir, exist_ok=True)
         log_path = os.path.join(log_dir, "stop.json")
 
@@ -154,7 +154,7 @@ def main():
                                 except json.JSONDecodeError:
                                     pass  # Skip invalid lines
                     
-                    # Write to .claude/logs/chat.json
+                    # Write to plugin logs/chat.json
                     chat_file = os.path.join(log_dir, 'chat.json')
                     with open(chat_file, 'w') as f:
                         json.dump(chat_data, f, indent=2)

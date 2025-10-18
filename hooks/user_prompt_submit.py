@@ -16,8 +16,8 @@ except ImportError:
 
 def log_user_prompt(session_id, input_data):
     """Log user prompt to logs directory."""
-    # Ensure logs directory exists
-    log_dir = Path(".claude/logs")
+    # Ensure logs directory exists in plugin data dir
+    log_dir = Path.home() / ".claude" / "data" / "plugins" / "claude-config" / "logs"
     log_dir.mkdir(parents=True, exist_ok=True)
     log_file = log_dir / 'user_prompt_submit.json'
     
@@ -46,8 +46,8 @@ def manage_session_data(session_id, prompt, name_agent=False):
     """Manage session data in the new JSON structure."""
     import subprocess
     
-    # Ensure sessions directory exists
-    sessions_dir = Path(".claude/data/sessions")
+    # Ensure sessions directory exists in plugin data dir
+    sessions_dir = Path.home() / ".claude" / "data" / "plugins" / "claude-config" / "sessions"
     sessions_dir.mkdir(parents=True, exist_ok=True)
     
     # Load or create session file

@@ -61,8 +61,9 @@ def main():
         tool_name = input_data.get('tool_name')
         tool_input = input_data.get('tool_input', {})
 
-        # Debug log
-        debug_path = Path.cwd() / '.claude' / 'logs' / 'permissions_debug.log'
+        # Debug log in plugin data dir
+        debug_path = Path.home() / ".claude" / "data" / "plugins" / "claude-config" / "logs" / "permissions_debug.log"
+        debug_path.parent.mkdir(parents=True, exist_ok=True)
         with open(debug_path, 'a') as f:
             f.write(f"Tool: {tool_name}, Input: {tool_input}\n")
 
@@ -71,8 +72,8 @@ def main():
         elif tool_name == 'Bash':
             process_bash_tool(tool_input)
 
-        # Ensure log directory exists
-        log_dir = Path.cwd() / '.claude' / 'logs'
+        # Ensure log directory exists in plugin data dir
+        log_dir = Path.home() / ".claude" / "data" / "plugins" / "claude-config" / "logs"
         log_dir.mkdir(parents=True, exist_ok=True)
         log_path = log_dir / 'post_tool_use.json'
 
