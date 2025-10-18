@@ -122,22 +122,35 @@ claude-config/
 git clone <votre-repo> claude-config
 cd claude-config
 
-# Installation automatique
-./install.sh install
+# Installation automatique (copie la config + installe les alias)
+./install.sh
 
 # Création de votre configuration locale
 cp settings.json settings.local.json
 # Éditez settings.local.json selon vos besoins
+
+# Activer les alias
+source ~/.bashrc  # ou source ~/.zshrc
 ```
+
+Le script :
+- Copie automatiquement vos fichiers vers `~/.claude/`
+- Configure les permissions nécessaires
+- Installe les alias shell automatiquement (sans doublon)
 
 ### Commandes du script d'installation
 
 ```bash
-# Installation complète
+# Installation complète (config + alias)
+./install.sh
+# ou
 ./install.sh install
 
 # Synchroniser après modifications
 ./install.sh sync
+
+# Réinstaller uniquement les alias (mode interactif)
+./install.sh aliases
 
 # Sauvegarder la configuration actuelle
 ./install.sh backup
@@ -149,7 +162,54 @@ cp settings.json settings.local.json
 ./install.sh help
 ```
 
-Le script copie automatiquement vos fichiers vers `~/.claude/` et configure les permissions nécessaires.
+### Alias Linux
+
+Les alias sont installés automatiquement lors de `./install.sh`. Si tu veux les réinstaller ou les modifier :
+
+```bash
+./install.sh aliases
+```
+
+#### Alias pratique pour l'installation
+
+Pour simplifier l'installation et les mises à jour, ajoute ces lignes dans ton shell :
+
+```bash
+# Pour bash (~/.bashrc)
+export CLAUDE_CONFIG_DIR="$HOME/PhpstormProjects/claude-config"  # Adapte ce chemin
+alias claude-install='cd "$CLAUDE_CONFIG_DIR" && ./install.sh && source ~/.bashrc'
+
+# Pour zsh (~/.zshrc)
+export CLAUDE_CONFIG_DIR="$HOME/PhpstormProjects/claude-config"  # Adapte ce chemin
+alias claude-install='cd "$CLAUDE_CONFIG_DIR" && ./install.sh && source ~/.zshrc'
+```
+
+**Important** : Remplace `$HOME/PhpstormProjects/claude-config` par le chemin réel où tu as cloné le repo.
+
+Ensuite, tu pourras juste taper `claude-install` pour tout mettre à jour et activer les alias.
+
+#### Alias Claude Code disponibles
+
+```bash
+# Alias Claude Code
+alias cc='claude'
+alias ccy='claude --dangerously-skip-permissions'
+
+alias cld='claude'
+alias cldy='claude --dangerously-skip-permissions'
+
+alias cld-chrome='claude --mcp-config ~/.claude/mcp/chrome-dev-tools.json --strict-mcp-config'
+alias cldy-chrome='claude --mcp-config ~/.claude/mcp/chrome-dev-tools.json --strict-mcp-config --dangerously-skip-permissions'
+
+alias cld-sentry='claude --mcp-config ~/.claude/mcp/sentry.json --strict-mcp-config'
+alias cldy-sentry='claude --mcp-config ~/.claude/mcp/sentry.json --strict-mcp-config --dangerously-skip-permissions'
+```
+
+**Usage** :
+- `cc` / `cld` : Claude Code normal
+- `ccy` / `cldy` : Version yolo (⚠️ skip permissions)
+- `cld-chrome` / `cldy-chrome` : Avec Chrome DevTools MCP
+- `cld-sentry` / `cldy-sentry` : Avec Sentry MCP
 
 ### Dépendances optionnelles
 
