@@ -1,793 +1,350 @@
-# Configuration Claude Code
+# Claude Config - Plugin Claude Code
 
-Configuration personnelle versionnée pour Claude Code avec des fonctionnalités avancées pour optimiser votre workflow de développement.
+Plugin avancé pour Claude Code avec workflows Git, documentation automatique, analyse de code et support Symfony/PHP.
 
-## Table des matières
-
-- [Structure du projet](#structure-du-projet)
-- [Installation](#installation)
-- [Commandes personnalisées](#commandes-personnalisées)
-- [Hooks système](#hooks-système)
-- [Styles de sortie](#styles-de-sortie)
-- [Status Lines](#status-lines)
-- [Configuration des permissions](#configuration-des-permissions)
-- [Utilisation avancée](#utilisation-avancée)
-
-## Structure du projet
-
-```
-claude-config/
-├── commands/                 # Commandes personnalisées (slash commands)
-│   ├── api-platform/         # Commandes API Platform
-│   │   └── doc/              # Documentation API Platform
-│   │       ├── load.md       # Charge doc API Platform
-│   │       └── question.md   # Interroge la documentation API Platform locale
-│   ├── atournayre-framework/ # Commandes atournayre-framework
-│   │   └── doc/              # Documentation atournayre-framework
-│   │       ├── load.md       # Charge doc atournayre-framework
-│   │       └── question.md   # Interroge la documentation atournayre-framework locale
-│   ├── cc/                   # Méta-commandes Claude Code
-│   │   ├── make/             # Générateurs de commandes
-│   │   │   └── command.md    # Générateur de slash commands
-│   │   └── challenge.md      # Auto-évaluation des réponses
-│   ├── claude/               # Commandes Claude Code
-│   │   └── doc/              # Documentation Claude Code
-│   │       ├── load.md       # Charge doc Claude Code
-│   │       └── question.md   # Interroge la documentation Claude Code locale
-│   ├── debug/                # Commandes de diagnostic
-│   │   ├── error-fix.md      # Analyse et résolution d'erreurs
-│   │   └── stack-trace.md    # Analyse de stack trace avec rapport détaillé
-│   ├── doc/                  # Commandes de documentation
-│   │   ├── adr.md            # Architecture Decision Record (ADR)
-│   │   ├── rtfm.md           # Lecture de documentation technique
-│   │   └── update.md         # Documentation de fonctionnalité
-│   ├── git/                  # Commandes Git
-│   │   ├── commit.md         # Création de commit avec workflow
-│   │   ├── conflit.md        # Résolution interactive de conflits git
-│   │   ├── pr.md             # Création de Pull Request optimisée
-│   │   └── status.md         # Affiche le statut Git
-│   ├── meilisearch/          # Commandes Meilisearch
-│   │   └── doc/              # Documentation Meilisearch
-│   │       ├── load.md       # Charge doc Meilisearch
-│   │       └── question.md   # Interroge la documentation Meilisearch locale
-│   ├── qa/                   # Commandes de qualité de code
-│   │   └── phpstan.md        # Résolution automatique erreurs PHPStan
-│   ├── sessions/             # Gestion des sessions
-│   │   ├── current.md        # Affiche la session courante
-│   │   ├── end.md            # Termine une session
-│   │   ├── help.md           # Aide sur les sessions
-│   │   ├── list.md           # Liste toutes les sessions
-│   │   ├── start.md          # Démarre une nouvelle session
-│   │   └── update.md         # Met à jour une session
-│   ├── symfony/              # Commandes Symfony
-│   │   ├── make.md           # Utilise les makers Symfony ou génère un plan
-│   │   └── doc/              # Documentation Symfony
-│   │       ├── load.md       # Charge doc Symfony
-│   │       └── question.md   # Interroge la documentation Symfony locale
-│   ├── think/                # Commandes d'analyse
-│   │   ├── harder.md         # Analyse intensive de problèmes complexes
-│   │   └── ultra.md          # Analyse ultra-comprehensive pour problèmes très complexes
-│   ├── build/                # Commandes de build
-│   │   └── quick-plan.md     # Génère un plan d'implémentation technique
-│   ├── context/              # Commandes de contexte
-│   │   ├── default.md        # Charge contexte du projet
-│   │   └── elegant_object.md # Charge règles Elegant Objects
-│   ├── all_tools.md          # Liste tous les outils disponibles
-│   ├── analytics.md          # Lance l'analyse d'utilisation Claude Code
-│   ├── analytics-stop.md     # Arrête l'analyse en cours
-│   ├── code.md               # Workflow de code complet
-│   ├── docker.md             # Active le mode Docker pour toutes les opérations
-│   └── question.md           # Pose une question structurée
-├── hooks/                    # Scripts de hooks pour automatiser les actions
-│   ├── utils/                # Utilitaires partagés
-│   │   ├── llm/              # Intégration LLM
-│   │   └── tts/              # Text-to-speech
-│   ├── notification.py       # Notifications système
-│   ├── post_tool_use.py      # Exécuté après l'utilisation d'un outil
-│   ├── pre_compact.py        # Avant compactage de session
-│   ├── pre_tool_use.py       # Avant l'utilisation d'un outil
-│   ├── session_start.py      # Au démarrage de session
-│   ├── stop.py               # À l'arrêt
-│   ├── subagent_stop.py      # Arrêt de sous-agent
-│   └── user_prompt_submit.py # Soumission de prompt
-├── scripts/                  # Scripts bash réutilisables
-│   └── assign_github_project.sh # Assigne une PR à un projet GitHub
-├── output-styles/            # Styles de sortie personnalisés
-│   ├── bullet-points.md      # Format liste à puces
-│   ├── genui.md              # Interface HTML générée
-│   ├── html-structured.md    # HTML structuré
-│   ├── markdown-focused.md   # Markdown enrichi
-│   ├── table-based.md        # Format tableau
-│   ├── ultra-concise.md      # Ultra concis
-│   └── yaml-structured.md    # Format YAML
-├── status_lines/             # Lignes de statut personnalisées
-│   ├── status_line.py        # Version basique
-│   ├── status_line_v2.py     # Version 2
-│   ├── status_line_v3.py     # Version 3 avec historique
-│   ├── status_line_v4.py     # Version 4 améliorée
-│   └── status_line_v5.py     # Version 5 complète
-├── _templates/               # Templates pour génération
-│   └── prompt/README.md      # Template de slash command
-├── settings.json             # Configuration principale
-├── install.sh                # Script d'installation
-└── README.md                 # Ce fichier
-```
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/atournayre/claude-config)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ## Installation
 
-### Installation initiale
+### Via Plugin Marketplace (Recommandé)
 
 ```bash
-# Clone du dépôt
-git clone <votre-repo> claude-config
-cd claude-config
-
-# Installation automatique
-./install.sh install
-
-# Création de votre configuration locale
-cp settings.json settings.local.json
-# Éditez settings.local.json selon vos besoins
+/plugin install claude-config@marketplace
 ```
 
-### Commandes du script d'installation
+### Installation des Extras
+
+Certains éléments (output-styles, status-lines) nécessitent une installation complémentaire :
 
 ```bash
-# Installation complète
-./install.sh install
-
-# Synchroniser après modifications
-./install.sh sync
-
-# Sauvegarder la configuration actuelle
-./install.sh backup
-
-# Restaurer depuis la dernière sauvegarde
-./install.sh restore
-
-# Aide
-./install.sh help
+cd ~/.claude/plugins/claude-config
+bash scripts/install-extras.sh
 ```
 
-Le script copie automatiquement vos fichiers vers `~/.claude/` et configure les permissions nécessaires.
+### Configuration des Permissions
 
-### Dépendances optionnelles
+Consultez [docs/PERMISSIONS.md](docs/PERMISSIONS.md) pour configurer les permissions recommandées dans `~/.claude/settings.json`.
 
-#### ccusage (recommandé pour status line v5)
+### Utilisateurs existants
 
-La status line v5 utilise ccusage pour afficher le coût journalier d'utilisation de Claude Code.
+Si vous utilisiez l'ancienne installation manuelle, voir [MIGRATION.md](MIGRATION.md).
 
-```bash
-# Installation via npm (recommandé)
-npm install -g ccusage
+## Fonctionnalités
 
-# Vérification de l'installation
-ccusage --version
+### 🔧 Workflows Git Avancés (5 commandes)
+- `/git:branch` - Création de branche depuis GitHub issues
+- `/git:commit` - Commits structurés avec conventional commits
+- `/git:conflit` - Résolution interactive de conflits
+- `/git:pr` - Pull Request avec QA automatique
+- `/git:status` - Statut Git enrichi
 
-# Test du suivi des coûts
-ccusage daily --json
-```
+### 📝 Documentation Automatique (3 commandes)
+- `/doc:adr` - Architecture Decision Records
+- `/doc:rtfm` - Lecture de documentation technique
+- `/doc:update` - Documentation automatique de fonctionnalités
 
-**Configuration :**
-- ccusage lit automatiquement vos clés API depuis les variables d'environnement
-- Configurez `ANTHROPIC_API_KEY` si nécessaire
-- Le coût s'affiche avec l'icône 💰 dans la status line
+### 🐛 Diagnostic et Debug (2 commandes)
+- `/debug:error-fix` - Analyse et résolution d'erreurs
+- `/debug:stack-trace` - Analyse détaillée de stack traces
 
-**Sans ccusage :**
-- La status line v5 fonctionne normalement
-- Le coût journalier n'est simplement pas affiché
-- Aucune erreur n'est générée
+### ✅ Qualité de Code (1 commande)
+- `/qa:phpstan` - Résolution automatique d'erreurs PHPStan niveau 9
 
-#### Autres dépendances
+### 🎼 Support Symfony (3 commandes)
+- `/symfony:make` - Utilise les makers Symfony ou génère un plan
+- `/symfony:doc:load` - Charge documentation Symfony localement
+- `/symfony:doc:question` - Interroge la doc Symfony
 
-```bash
-# Pour les hooks TTS (text-to-speech)
-pip install pyttsx3
+### 🔌 Support API Platform (2 commandes)
+- `/api-platform:doc:load` - Charge documentation API Platform
+- `/api-platform:doc:question` - Interroge la doc API Platform
 
-# Pour les hooks avec dotenv
-pip install python-dotenv
-```
+### 🔎 Support Meilisearch (2 commandes)
+- `/meilisearch:doc:load` - Charge documentation Meilisearch
+- `/meilisearch:doc:question` - Interroge la doc Meilisearch
 
-## Commandes personnalisées
+### 🔍 Analyse Avancée (3 commandes)
+- `/analyse:impact` - Analyse d'impact de PR (métier + technique)
+- `/think:harder` - Analyse intensive de problèmes complexes
+- `/think:ultra` - Analyse ultra-exhaustive (7 phases)
 
-Les commandes personnalisées (slash commands) permettent d'étendre les capacités de Claude Code.
+### 🎯 Gestion de Sessions (6 commandes)
+- `/sessions:start`, `/sessions:current`, `/sessions:list`
+- `/sessions:end`, `/sessions:update`, `/sessions:help`
 
-**📖 [Documentation complète des commandes](docs/COMMANDS.md)**
+### 💻 Méta-Commandes (2 commandes)
+- `/cc:make:command` - Générateur de slash commands
+- `/cc:challenge` - Auto-évaluation des réponses
 
-### 📑 Index des commandes par namespace
+### 📊 Analytics (2 commandes)
+- `/analytics` - Dashboard d'utilisation Claude Code
+- `/analytics-stop` - Arrêt du serveur analytics
 
-| Namespace | Nombre | Commandes |
-|-----------|--------|-----------|
-| 🔧 **git** | 5 | branch, commit, conflit, pr, status |
-| 🐙 **github** | 1 | fix |
-| 📝 **doc** | 3 | adr, rtfm, update |
-| 🐛 **debug** | 2 | error-fix, stack-trace |
-| ✅ **qa** | 1 | phpstan |
-| 🔍 **analyse** | 3 | impact, think:harder, think:ultra |
-| 🧩 **context** | 2 | default, elegant_object |
-| 🏗️ **build** | 2 | code, prepare |
-| 💻 **cc** | 2 | make:command, challenge |
-| 📊 **analytics** | 2 | analytics, analytics-stop |
-| 🎯 **sessions** | 6 | start, current, list, end, update, help |
-| 🎼 **symfony** | 3 | make, doc:question, doc:load |
-| 🔌 **api-platform** | 2 | doc:load, doc:question |
-| 🏛️ **atournayre-framework** | 2 | doc:load, doc:question |
-| 🤖 **claude** | 2 | doc:load, doc:question |
-| 🔎 **meilisearch** | 2 | doc:load, doc:question |
-| ⚙️ **générales** | 4 | all_tools, docker, git_status, question |
+### 🏗️ Build et Planification (2 commandes)
+- `/prepare` - Génère un plan d'implémentation technique
+- `/code` - Workflow de code complet avec QA
 
-### Commandes les plus utilisées
+**Total : 42 commandes personnalisées**
 
-| Commande | Description | Usage |
-|----------|-------------|-------|
-| `/git:commit` | Commit avec conventions structurées | `/git:commit [message]` |
-| `/git:pr` | Création de PR avec workflow complet | `/git:pr [base] [milestone]` |
-| `/git:branch` | Création de branche depuis issue GitHub | `/git:branch <source> [issue]` |
-| `/doc:update` | Doc automatique de la fonctionnalité | `/doc:update` |
-| `/debug:error-fix` | Analyse et résolution d'erreurs | `/debug:error-fix [error]` |
+[📖 Documentation complète des commandes](docs/COMMANDS.md)
 
-### 🔧 Commandes Git
+## Agents Spécialisés
 
-| Commande | Description | Usage |
-|----------|-------------|-------|
-| `/git:branch` | Création de branche avec support GitHub issues | `/git:branch <source> [issue\|text]` |
-| `/git:commit` | Commit structuré avec conventions | `/git:commit [message]` |
-| `/git:conflit` | Résolution interactive de conflits | `/git:conflit <branch>` |
-| `/git:pr` | Pull Request avec QA et workflow | `/git:pr [base] [milestone] [project]` |
-| `/git:status` | Statut Git détaillé | `/git:status` |
+Le plugin inclut 8 agents spécialisés :
 
-[📖 Voir détails](docs/COMMANDS.md#commandes-git)
+- **phpstan-error-resolver** - Résolution automatique erreurs PHPStan niveau 9
+- **elegant-objects-reviewer** - Vérification conformité Elegant Objects
+- **symfony-docs-scraper** - Extraction documentation Symfony
+- **api-platform-docs-scraper** - Extraction documentation API Platform
+- **meilisearch-docs-scraper** - Extraction documentation Meilisearch
+- **claude-docs-scraper** - Extraction documentation Claude Code
+- **atournayre-framework-docs-scraper** - Extraction documentation atournayre-framework
+- **meta-agent** - Génération de nouveaux agents
 
-### 🐙 Commandes GitHub
+## Hooks Système
 
-| Commande | Description | Usage |
-|----------|-------------|-------|
-| `/github:fix` | Correction automatisée d'issue GitHub | `/github:fix [issue-number]` |
+7 hooks pour automatiser votre workflow :
 
-[📖 Voir détails](docs/COMMANDS.md#commandes-github)
+- **session_start** - Chargement contexte au démarrage
+- **user_prompt_submit** - Validation et enrichissement des prompts
+- **pre_tool_use** - Protections (rm -rf, .env)
+- **post_tool_use** - Ajustement automatique des permissions
+- **pre_compact** - Sauvegarde avant compactage
+- **stop** - Nettoyage à l'arrêt
+- **subagent_stop** - Gestion des sous-agents
 
-### 📝 Commandes de documentation
+### Sécurité des Hooks
 
-| Commande | Description | Usage |
-|----------|-------------|-------|
-| `/doc:adr` | Génère un ADR structuré | `/doc:adr [titre]` |
-| `/doc:rtfm` | Lit la documentation technique | `/doc:rtfm [url\|doc-name]` |
-| `/doc:update` | Doc automatique de fonctionnalité | `/doc:update` |
+- Blocage automatique des commandes `rm -rf` dangereuses
+- Protection des fichiers `.env` sensibles
+- Gestion gracieuse des dépendances manquantes
 
-[📖 Voir détails](docs/COMMANDS.md#commandes-de-documentation)
+## Scripts Réutilisables
 
-### 🐛 Commandes de diagnostic
-
-| Commande | Description | Usage |
-|----------|-------------|-------|
-| `/debug:error-fix` | Analyse et résolution d'erreurs | `/debug:error-fix [error]` |
-| `/debug:stack-trace` | Analyse de stack trace avec rapport | `/debug:stack-trace <trace>` |
-
-[📖 Voir détails](docs/COMMANDS.md#commandes-de-diagnostic)
-
-### ✅ Commandes de qualité de code
-
-| Commande | Description | Usage |
-|----------|-------------|-------|
-| `/qa:phpstan` | Résolution automatique erreurs PHPStan | `/qa:phpstan` |
-
-[📖 Voir détails](docs/COMMANDS.md#commandes-de-qualité-de-code)
-
-### 🔍 Commandes d'analyse
-
-| Commande | Description | Usage |
-|----------|-------------|-------|
-| `/analyse:impact` | Analyse PR avec rapports métier/technique | `/analyse:impact <pr-number>` |
-| `/think:harder` | Analyse intensive de problèmes complexes | `/think:harder "question"` |
-| `/think:ultra` | Analyse ultra-exhaustive (7 phases) | `/think:ultra "question"` |
-
-[📖 Voir détails](docs/COMMANDS.md#commandes-danalyse)
-
-
-### 🧩 Commandes de contexte
-
-| Commande | Description | Usage |
-|----------|-------------|-------|
-| `/context:default` | Charge contexte du projet | `/context:default` |
-| `/context:elegant_object` | Charge règles Elegant Objects | `/context:elegant_object` |
-
-[📖 Voir détails](docs/COMMANDS.md#commandes-de-contexte)
-
-### 🏗️ Commandes Build
-
-| Commande | Description | Usage |
-|----------|-------------|-------|
-| `/code` | Workflow de code complet | `/code` |
-| `/prepare` | Génère plan d'implémentation | `/prepare [requirement]` |
-
-[📖 Voir détails](docs/COMMANDS.md#commandes-build)
-
-### 💻 Commandes CC (Claude Code)
-
-| Commande | Description | Usage |
-|----------|-------------|-------|
-| `/cc:make:command` | Générateur de slash commands | `/cc:make:command [name] [desc]` |
-| `/cc:challenge` | Auto-évaluation de réponse | `/cc:challenge` |
-
-[📖 Voir détails](docs/COMMANDS.md#commandes-cc-claude-code)
-
-### 📊 Commandes Analytics
-
-| Commande | Description | Usage |
-|----------|-------------|-------|
-| `/analytics` | Lance dashboard analytics | `/analytics` |
-| `/analytics-stop` | Arrête le serveur analytics | `/analytics-stop` |
-
-[📖 Voir détails](docs/COMMANDS.md#commandes-analytics)
-
-### 🎯 Commandes Sessions
-
-| Commande | Description | Usage |
-|----------|-------------|-------|
-| `/sessions:start` | Démarre une session | `/sessions:start [name]` |
-| `/sessions:current` | Affiche session courante | `/sessions:current` |
-| `/sessions:list` | Liste toutes les sessions | `/sessions:list` |
-| `/sessions:end` | Termine la session | `/sessions:end` |
-| `/sessions:update` | Met à jour la session | `/sessions:update` |
-| `/sessions:help` | Aide sur les sessions | `/sessions:help` |
-
-[📖 Voir détails](docs/COMMANDS.md#commandes-sessions)
-
-### 🎼 Commandes Symfony
-
-| Commande | Description | Usage |
-|----------|-------------|-------|
-| `/symfony:make` | Utilise les makers Symfony ou génère un plan | `/symfony:make <tâche>` |
-| `/symfony:doc:load` | Charge la documentation Symfony locale | `/symfony:doc:load` |
-| `/symfony:doc:question` | Interroge la documentation Symfony locale | `/symfony:doc:question <question>` |
-
-[📖 Voir détails](docs/COMMANDS.md#commandes-symfony)
-
-### 🔌 Commandes API Platform
-
-| Commande | Description | Usage |
-|----------|-------------|-------|
-| `/api-platform:doc:load` | Charge la documentation API Platform | `/api-platform:doc:load` |
-| `/api-platform:doc:question` | Interroge la documentation API Platform locale | `/api-platform:doc:question <question>` |
-
-[📖 Voir détails](docs/COMMANDS.md#commandes-api-platform)
-
-### 🏛️ Commandes atournayre-framework
-
-| Commande | Description | Usage |
-|----------|-------------|-------|
-| `/atournayre-framework:doc:load` | Charge la documentation atournayre-framework | `/atournayre-framework:doc:load` |
-| `/atournayre-framework:doc:question` | Interroge la documentation atournayre-framework locale | `/atournayre-framework:doc:question <question>` |
-
-[📖 Voir détails](docs/COMMANDS.md#commandes-atournayre-framework)
-
-### 🤖 Commandes Claude
-
-| Commande | Description | Usage |
-|----------|-------------|-------|
-| `/claude:doc:load` | Charge la documentation Claude Code | `/claude:doc:load` |
-| `/claude:doc:question` | Interroge la documentation Claude Code locale | `/claude:doc:question <question>` |
-
-[📖 Voir détails](docs/COMMANDS.md#commandes-claude)
-
-### 🔎 Commandes Meilisearch
-
-| Commande | Description | Usage |
-|----------|-------------|-------|
-| `/meilisearch:doc:load` | Charge la documentation Meilisearch | `/meilisearch:doc:load` |
-| `/meilisearch:doc:question` | Interroge la documentation Meilisearch locale | `/meilisearch:doc:question <question>` |
-
-[📖 Voir détails](docs/COMMANDS.md#commandes-meilisearch)
-
-### ⚙️ Commandes générales
-
-| Commande | Description | Usage |
-|----------|-------------|-------|
-| `/all_tools` | Liste tous les outils disponibles | `/all_tools` |
-| `/docker` | Active le mode Docker pour toutes les opérations | `/docker` |
-| `/git_status` | Statut Git détaillé | `/git_status` |
-| `/question` | Question structurée avec contexte | `/question "text"` |
-
-[📖 Voir détails](docs/COMMANDS.md#commandes-générales)
-
-## Scripts réutilisables
-
-Le dossier `scripts/` contient des scripts bash modulaires utilisables par les commandes ou indépendamment.
-
-### `assign_github_project.sh`
-**Description** : Assigne une Pull Request à un projet GitHub de manière interactive
-
-**Usage** : `./scripts/assign_github_project.sh <PR_NUMBER> [OWNER] [REPO]`
-
-**Fonctionnalités** :
-- Récupère automatiquement la liste des projets disponibles
-- Filtre les projets fermés
-- Interface interactive pour la sélection
-- Validation des choix utilisateur
-- Messages colorés pour une meilleure lisibilité
-- Support des repositories locaux (détection automatique)
-
-## Hooks système
-
-Les hooks permettent d'automatiser des actions à différents moments du cycle de vie de Claude Code.
-
-### Hooks disponibles
-
-#### `session_start.py`
-- **Déclencheur** : Au démarrage d'une nouvelle session Claude Code
-- **Fonctionnalités** :
-  - Enregistre les métadonnées de session dans `logs/session_start.json`
-  - Capture l'ID de session, le modèle utilisé, et le timestamp
-  - Peut être étendu pour des actions d'initialisation personnalisées
-
-#### `user_prompt_submit.py`
-- **Déclencheur** : À chaque soumission de prompt utilisateur
-- **Fonctionnalités** :
-  - Validation et traitement du prompt avant envoi
-  - Peut modifier ou enrichir le prompt
-  - Logging des prompts pour analyse
-
-#### `pre_tool_use.py`
-- **Déclencheur** : Avant l'exécution de tout outil
-- **Fonctionnalités** :
-  - Validation des paramètres d'outil
-  - Peut bloquer l'exécution si nécessaire
-  - Logging des intentions d'utilisation
-
-#### `post_tool_use.py`
-- **Déclencheur** : Après l'exécution d'un outil
-- **Fonctionnalités** :
-  - Traitement des résultats d'outil
-  - Notifications en cas d'erreur
-  - Statistiques d'utilisation
-
-#### `pre_compact.py`
-- **Déclencheur** : Avant le compactage d'une session
-- **Fonctionnalités** :
-  - Sauvegarde de l'état de session
-  - Nettoyage des ressources temporaires
-
-#### `notification.py`
-- **Déclencheur** : Sur événements configurables
-- **Fonctionnalités** :
-  - Notifications système natives
-  - Intégration avec services externes
-  - Support multi-plateforme
-
-#### `stop.py`
-- **Déclencheur** : À l'arrêt de Claude Code
-- **Fonctionnalités** :
-  - Sauvegarde finale de l'état
-  - Nettoyage des ressources
-  - Statistiques de session
-
-#### `subagent_stop.py`
-- **Déclencheur** : À l'arrêt d'un sous-agent
-- **Fonctionnalités** :
-  - Gestion des sous-agents
-  - Consolidation des résultats
-
-### Utilitaires des hooks
-
-#### `utils/llm/anth.py`
-- Intégration avec l'API Anthropic
-- Fonctions helper pour les appels LLM
-- Gestion du contexte et des tokens
-
-#### `utils/tts/pyttsx3_tts.py`
-- Text-to-speech avec pyttsx3
-- Lecture vocale des réponses
-- Configuration multi-voix
-
-## Styles de sortie
-
-Les styles de sortie définissent comment Claude Code formate ses réponses.
-
-### GenUI (`genui.md`)
-**Caractéristiques** :
-- Génère des pages HTML complètes auto-contenues
-- CSS moderne intégré avec thème cohérent
-- Ouvre automatiquement dans le navigateur
-- Palette de couleurs professionnelle
-- Support des sections info/warning/error
-- Responsive design
-
-**Usage idéal** : Rapports, dashboards, présentations visuelles
-
-### Markdown Focused (`markdown-focused.md`)
-**Caractéristiques** :
-- Markdown enrichi avec formatage avancé
-- Tables, listes, et blocs de code
-- Emojis et icônes contextuelles
-- Sections bien structurées
-
-**Usage idéal** : Documentation, README, notes techniques
-
-### HTML Structured (`html-structured.md`)
-**Caractéristiques** :
-- HTML sémantique structuré
-- Styles inline pour portabilité
-- Compatible email
-- Sections organisées
-
-**Usage idéal** : Rapports formels, exports
-
-### Table Based (`table-based.md`)
-**Caractéristiques** :
-- Données en format tabulaire
-- Colonnes alignées
-- Headers descriptifs
-- Support des données complexes
-
-**Usage idéal** : Comparaisons, données structurées
-
-### Bullet Points (`bullet-points.md`)
-**Caractéristiques** :
-- Listes hiérarchiques
-- Points concis
-- Sous-niveaux organisés
-- Facile à scanner
-
-**Usage idéal** : Résumés, todo lists, outlines
-
-### Ultra Concise (`ultra-concise.md`)
-**Caractéristiques** :
-- Réponses minimales
-- Pas de formatage superflu
-- Direct au but
-- Maximum d'efficacité
-
-**Usage idéal** : Réponses rapides, confirmations
-
-### YAML Structured (`yaml-structured.md`)
-**Caractéristiques** :
-- Format YAML valide
-- Hiérarchie claire
-- Parsable programmatiquement
-- Métadonnées incluses
-
-**Usage idéal** : Configuration, API responses, données structurées
+- `assign_github_project.sh` - Assignation interactive de PR à un projet GitHub
+- `install-extras.sh` - Installation des output-styles et status-lines
+
+## Output Styles Inclus
+
+7 styles de sortie personnalisés :
+
+- **GenUI** - Interface HTML générée avec CSS moderne
+- **Markdown Focused** - Markdown enrichi avec emojis
+- **HTML Structured** - HTML sémantique portable
+- **Table Based** - Format tabulaire pour comparaisons
+- **Bullet Points** - Listes hiérarchiques concises
+- **Ultra Concise** - Réponses minimales directes
+- **YAML Structured** - Format YAML parsable
 
 ## Status Lines
 
-Les status lines affichent des informations contextuelles dans l'interface Claude Code.
+5 versions de status line avec fonctionnalités croissantes :
 
-### Version 5 (`status_line_v5.py`) - RECOMMANDÉE
-**Fonctionnalités complètes** :
-- **Historique des prompts** : Affiche les 3 derniers prompts avec hiérarchie visuelle
-  - Prompt actuel : Blanc brillant, 70 caractères max
-  - Prompt précédent : Gris clair, 50 caractères max
-  - Prompt ancien : Gris sombre, 35 caractères max
-- **Icônes intelligentes** : Détection automatique du type de prompt
-  - 💡 Création/implémentation
-  - 🐛 Correction de bugs
-  - ♻️ Refactoring
-  - 🧪 Tests
-  - 🔍 Analyse
-  - ⚡ Commandes slash
-  - ❓ Questions
-- **Informations Git** : Branche, modifications, ahead/behind
-- **Coût journalier** : Intégration ccusage pour le suivi des coûts (nécessite `npm install -g ccusage`)
-- **Style de sortie actuel** : Affiche le style Claude Code en cours (📝)
-- **Agent et modèle** : Affichage conditionnel de l'agent
-- **Extras personnalisables** : Clés-valeurs configurables
-- **Logging complet** : Enregistrement dans `logs/status_line.json`
+- **v5 (Recommandée)** - Historique 3 prompts, icônes intelligentes, coût journalier (ccusage), Git enrichi
+- **v4** - Prompt unique avec icône, Git basique
+- **v3** - Historique 3 prompts, couleurs différenciées
+- **v2** - Agent + prompt actuel
+- **v1** - Affichage minimal
 
-**Format** : `[Agent | ]Model | vX.X.X | 🔍 Prompt actuel | 🐛 Prompt précédent | 💡 Prompt ancien… | 💰$X.XX | 📝Style | 🌿branch ~X | key value`
+## Dépendances Optionnelles
 
-### Version 4 (`status_line_v4.py`)
-**Fonctionnalités** :
-- Agent, modèle et version
-- Prompt unique avec icône
-- Informations Git basiques
-- Extras simples
+```bash
+# Analyse de coûts (status line v5)
+npm install -g ccusage
 
-### Version 3 (`status_line_v3.py`)
-**Fonctionnalités** :
-- Historique de 3 prompts
-- Couleurs différenciées
-- Format plus compact
+# Text-to-speech (hooks)
+pip install pyttsx3
 
-### Version 2 (`status_line_v2.py`)
-**Fonctionnalités** :
-- Agent et modèle
-- Prompt actuel uniquement
-- Format basique
-
-### Version 1 (`status_line.py`)
-**Fonctionnalités** :
-- Affichage minimal
-- Modèle et prompt
-- Pas d'extras
-
-### Configuration d'une status line
-
-Dans `settings.json` ou `settings.local.json` :
-
-```json
-{
-  "status_line_hook": "python3 /chemin/vers/status_lines/status_line_v5.py"
-}
+# Variables d'environnement (hooks)
+pip install python-dotenv
 ```
 
-## Configuration des permissions
+Le plugin fonctionne en mode dégradé sans ces dépendances.
 
-Le fichier `settings.json` contient les permissions pour les outils Bash et WebFetch.
+## Configuration Avancée
 
-### Permissions Bash autorisées
+### Permissions Bash
+
+Ajoutez dans `~/.claude/settings.json` :
 
 ```json
 {
   "permissions": {
     "allow": [
       "Bash(git:*)",
-      "Bash(docker:*)",
-      "Bash(composer:*)",
-      "Bash(npm:*)",
-      "Bash(make:*)",
       "Bash(gh:*)",
-      "Bash(ls:*)",
-      "Bash(mkdir:*)",
+      "Bash(composer:*)",
+      "Bash(docker:*)",
+      "Bash(make:*)",
       "Bash(php:*)",
-      "Bash(vendor/bin/*:*)"
+      "WebFetch(domain:docs.anthropic.com)",
+      "WebFetch(domain:github.com)"
     ]
   }
 }
 ```
 
-**Explications des permissions** :
-- `Bash(git:*)` : Toutes les commandes git
-- `Bash(docker:*)` : Docker et docker-compose
-- `Bash(composer:*)` : Composer PHP
-- `Bash(npm:*)` : NPM
-- `Bash(make:*)` : Make
-- `Bash(gh:*)` : GitHub CLI
-- `Bash(ls:*)` : Navigation
-- `Bash(mkdir:*)` : Création de dossiers
-- `Bash(php:*)` : PHP et outils associés
-- `Bash(vendor/bin/*:*)` : Binaires vendor PHP
+Voir [docs/PERMISSIONS.md](docs/PERMISSIONS.md) pour la liste complète.
 
-### Permissions WebFetch
+### Status Line
+
+Dans `settings.json` :
 
 ```json
 {
-  "permissions": {
-    "allow": [
-      "WebFetch(domain:docs.anthropic.com)",
-      "WebFetch(domain:github.com)",
-      "WebFetch(domain:localhost)"
-    ]
-  }
+  "status_line_hook": "python3 ~/.claude/plugins/claude-config/status_lines/status_line_v5.py"
 }
 ```
 
-### Permissions refusées
+### Hooks
 
-Configurez les outils à bloquer dans la section `deny`.
+La configuration des hooks est automatique via `hooks/hooks.json`.
 
-## Utilisation avancée
+## Structure du Projet
 
-### Workflow recommandé
-
-1. **Démarrage de session** :
-   - Le hook `session_start.py` s'exécute
-   - La status line v5 affiche les informations de contexte
-   - Les logs commencent l'enregistrement
-
-2. **Pendant le développement** :
-   - Utilisez `/git_status` pour des mises à jour rapides
-   - La status line affiche l'historique des 3 derniers prompts
-   - Les hooks pre/post surveillent l'utilisation des outils
-
-3. **Génération de rapports** :
-   - Activez le style GenUI pour des rapports visuels
-   - Les pages HTML s'ouvrent automatiquement
-   - Format auto-contenu pour le partage
-
-### Personnalisation
-
-#### Créer un nouveau hook
-
-1. Créez un fichier Python dans `hooks/`
-2. Implémentez la logique du hook
-3. Ajoutez la configuration dans `settings.json`
-
-```python
-#!/usr/bin/env python3
-import json
-import sys
-
-def main():
-    # Lire l'input JSON
-    input_data = json.loads(sys.stdin.read())
-    
-    # Votre logique ici
-    
-    # Retourner le résultat
-    print(json.dumps({"status": "ok"}))
-    sys.exit(0)
-
-if __name__ == "__main__":
-    main()
+```
+claude-config/
+├── .claude-plugin/
+│   └── plugin.json              # Métadonnées du plugin
+├── commands/                    # 42 slash commands
+│   ├── git/                     # Workflows Git (5)
+│   ├── doc/                     # Documentation (3)
+│   ├── debug/                   # Diagnostic (2)
+│   ├── qa/                      # Qualité (1)
+│   ├── symfony/                 # Symfony (3)
+│   ├── api-platform/            # API Platform (2)
+│   ├── meilisearch/             # Meilisearch (2)
+│   ├── sessions/                # Sessions (6)
+│   ├── think/                   # Analyse (2)
+│   ├── cc/                      # Méta (2)
+│   └── ...
+├── agents/                      # 8 agents spécialisés
+├── hooks/                       # 7 hooks système
+│   ├── hooks.json               # Configuration hooks
+│   └── ...
+├── scripts/                     # Scripts bash réutilisables
+├── output-styles/               # 7 styles de sortie
+├── status_lines/                # 5 versions status line
+├── docs/                        # Documentation
+│   ├── COMMANDS.md              # Référence complète commandes
+│   ├── PERMISSIONS.md           # Guide des permissions
+│   └── specs/                   # Spécifications techniques
+├── README.md                    # Ce fichier
+├── CHANGELOG.md                 # Historique des versions
+└── MIGRATION.md                 # Guide de migration
 ```
 
-#### Créer un nouveau style
+## Exemples d'Utilisation
 
-1. Créez un fichier `.md` dans `output-styles/`
-2. Ajoutez les métadonnées YAML en header
-3. Définissez les instructions de formatage
-
-```markdown
----
-name: MonStyle
-description: Description de mon style
----
-
-Instructions de formatage ici...
-```
-
-#### Créer une nouvelle status line
-
-1. Copiez `status_line_v5.py` comme base
-2. Modifiez la fonction `generate_status_line()`
-3. Testez avec : `echo '{"session_id": "test", "model": {"display_name": "Claude"}}' | python3 votre_status_line.py`
-
-### Debugging
-
-#### Logs disponibles
-
-- `logs/status_line.json` : Historique des status lines
-- `logs/session_start.json` : Démarrages de session
-- `.claude/logs/` : Logs système Claude Code
-
-#### Test des hooks
+### Workflow Git Complet
 
 ```bash
-# Tester un hook manuellement
-echo '{"test": "data"}' | python3 hooks/votre_hook.py
+# 1. Créer branche depuis issue GitHub #42
+/git:branch main 42
+
+# 2. Faire les modifications...
+
+# 3. Commit structuré
+/git:commit "feat: ajouter authentification OAuth"
+
+# 4. Créer PR avec QA automatique
+/git:pr main "v1.2.0" "Project Alpha"
 ```
 
-#### Test des status lines
+### Documentation Automatique
 
 ```bash
-# Créer un fichier de session test
-mkdir -p .claude/data/sessions
-echo '{"agent_name": "Test", "prompts": ["Test prompt"], "extras": {"key": "value"}}' > .claude/data/sessions/test.json
+# 1. Implémenter une fonctionnalité...
 
-# Tester la status line
-echo '{"session_id": "test", "model": {"display_name": "Claude"}}' | python3 status_lines/status_line_v5.py
+# 2. Générer la documentation automatiquement
+/doc:update
+
+# 3. Créer un ADR pour décision importante
+/doc:adr "Choix de l'architecture microservices"
 ```
 
-### Bonnes pratiques
+### Analyse d'Erreurs
 
-1. **Versionnement** : Committez régulièrement vos changements
-2. **Settings local** : Utilisez `settings.local.json` pour vos paramètres personnels
-3. **Logs** : Consultez régulièrement les logs pour le debugging
-4. **Backup** : Utilisez `./install.sh backup` avant les changements majeurs
-5. **Documentation** : Documentez vos hooks et styles personnalisés
+```bash
+# 1. Analyser erreur PHPStan
+/qa:phpstan
 
-## Contribution
+# 2. Analyser stack trace
+/debug:stack-trace "Error: Undefined variable..."
 
-Pour contribuer à cette configuration :
+# 3. Résolution guidée
+/debug:error-fix "TypeError in UserController"
+```
+
+### Documentation Externe
+
+```bash
+# 1. Charger doc Symfony localement
+/symfony:doc:load
+
+# 2. Interroger la documentation
+/symfony:doc:question "Comment créer un service?"
+
+# 3. Lire doc externe
+/doc:rtfm https://symfony.com/doc/current/service_container.html
+```
+
+## Commandes les Plus Utilisées
+
+| Commande | Usage | Description |
+|----------|-------|-------------|
+| `/git:commit` | `/git:commit [message]` | Commit structuré |
+| `/git:pr` | `/git:pr [base] [milestone]` | Pull Request avec QA |
+| `/doc:update` | `/doc:update` | Documentation auto |
+| `/debug:error-fix` | `/debug:error-fix [error]` | Résolution d'erreurs |
+| `/qa:phpstan` | `/qa:phpstan` | Correction PHPStan |
+
+## Workflow Recommandé
+
+1. **Démarrage** - Hook `session_start` charge le contexte
+2. **Développement** - Status line v5 affiche historique et coût
+3. **Documentation** - `/doc:update` génère la doc automatiquement
+4. **Qualité** - `/qa:phpstan` corrige les erreurs d'analyse
+5. **Git** - `/git:commit` et `/git:pr` gèrent le versioning
+6. **Analyse** - `/analyse:impact` évalue l'impact des changements
+
+## Support et Contribution
+
+### Rapporter un Bug
+
+Ouvrez une issue sur GitHub avec :
+- Description du problème
+- Logs pertinents (`.claude/data/plugins/claude-config/logs/`)
+- Commande utilisée
+- Version du plugin
+
+### Contribuer
 
 1. Fork le repository
-2. Créez une branche feature (`git checkout -b feature/AmazingFeature`)
-3. Committez vos changements (`git commit -m 'Add AmazingFeature'`)
-4. Push vers la branche (`git push origin feature/AmazingFeature`)
-5. Ouvrez une Pull Request
+2. Créez une branche feature
+3. Committez vos changements
+4. Ouvrez une Pull Request
 
-## Support
+### Documentation
 
-Pour toute question ou problème :
-- Ouvrez une issue sur GitHub
-- Consultez les logs dans `logs/` et `.claude/logs/`
-- Vérifiez la configuration dans `settings.json`
+- [Documentation complète des commandes](docs/COMMANDS.md)
+- [Guide des permissions](docs/PERMISSIONS.md)
+- [Guide de migration](MIGRATION.md)
+- [Changelog](CHANGELOG.md)
+
+## Auteur
+
+**Aurélien Tournayre**
+- GitHub: [@atournayre](https://github.com/atournayre)
+- Email: aurelien.tournayre@gmail.com
 
 ## Licence
 
-Ce projet est sous licence MIT - voir le fichier LICENSE pour plus de détails.
+MIT License - Voir [LICENSE](LICENSE) pour plus de détails.
 
 ## Remerciements
 
 - Anthropic pour Claude Code
 - La communauté Claude Code pour les idées et contributions
+- Yegor Bugayenko pour les principes Elegant Objects
