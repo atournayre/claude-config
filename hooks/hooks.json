@@ -1,0 +1,9 @@
+{
+  "session_start": "python3 hooks/session_start.py",
+  "user_prompt_submit": "python3 hooks/user_prompt_submit.py",
+  "pre_tool_use": "python3 hooks/pre_tool_use.py",
+  "post_tool_use": "python3 hooks/post_tool_use.py",
+  "pre_compact": "python3 hooks/pre_compact.py",
+  "stop": "python3 hooks/stop.py",
+  "subagent_stop": "python3 hooks/subagent_stop.py"
+}

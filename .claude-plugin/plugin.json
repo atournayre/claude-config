@@ -1,0 +1,10 @@
+{
+  "name": "claude-config",
+  "version": "1.0.0",
+  "description": "Configuration avancée pour Claude Code avec commandes Git, documentation, analyse, et workflows Symfony/PHP",
+  "author": "Aurélien Tournayre <aurelien.tournayre@gmail.com>",
+  "homepage": "https://github.com/atournayre/claude-config",
+  "keywords": ["git", "symfony", "php", "documentation", "workflow", "elegant-objects"],
+  "license": "MIT",
+  "dependencies": {}
+}
