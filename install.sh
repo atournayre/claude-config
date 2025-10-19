@@ -163,6 +163,7 @@ DIRECTORIES=(
     "hooks"
     "mcp"
     "output-styles"
+    "skills"
     "status_lines"
     "task"
 )
