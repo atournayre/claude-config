@@ -1,7 +1,7 @@
 ---
 model: claude-sonnet-4-5-20250929
 allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*), Bash(git diff:*), Bash(git log:*), Bash(git checkout:*), Bash(git branch:*), Bash(git push:*), Bash(gh pr:*), Bash(gh api:*), Bash(make qa:*), Write, Read, TodoWrite
-argument-hint: [branch-base, milestone, project, --delete]
+argument-hint: [branch-base, milestone, project, --delete, --no-review]
 description: Crée une Pull Request optimisée avec workflow structuré
 ---
 
@@ -48,6 +48,7 @@ Automatiser la création d'une Pull Request avec un workflow intelligent incluan
 - `MILESTONE`: Milestone à assigner
 - `PROJECT_NAME`: Nom du projet GitHub fourni en argument ou sélectionné par l'utilisateur
 - `DELETE_FLAG`: Flag `--delete` pour supprimer automatiquement la branche locale
+- `NO_REVIEW_FLAG`: Flag `--no-review` pour skipper la review automatique de la PR
 
 ## Instructions
 
@@ -263,19 +264,24 @@ fi
 
 ### Étape 9: Code Review Automatique de la PR
 ```bash
-# Lancer la code review via la commande native /review
-echo "🔍 Lancement de la code review automatique..."
+# Si --no-review fourni en argument
+if [NO_REVIEW_FLAG présent]; then
+    echo "ℹ️ Review automatique ignorée (--no-review spécifié)"
+else
+    # Lancer la code review via la commande native /review
+    echo "🔍 Lancement de la code review automatique..."
 
-# Utiliser la commande /review pour analyser la PR
-# La commande /review va :
-# - Analyser tous les changements de la PR
-# - Identifier les problèmes potentiels
-# - Suggérer des améliorations
-# - Poster un commentaire de review sur la PR
+    # Utiliser la commande /review pour analyser la PR
+    # La commande /review va :
+    # - Analyser tous les changements de la PR
+    # - Identifier les problèmes potentiels
+    # - Suggérer des améliorations
+    # - Poster un commentaire de review sur la PR
 
-/review
+    /review
 
-echo "✅ Code review complétée et ajoutée en commentaire sur la PR #$PR_NUMBER"
+    echo "✅ Code review complétée et ajoutée en commentaire sur la PR #$PR_NUMBER"
+fi
 ```
 
 ### Étape 10: Nettoyage Branche Locale
@@ -356,7 +362,7 @@ Le template doit être lu depuis le fichier du projet et rempli avec les informa
 - Lignes supprimées: -[COUNT]
 
 🔍 QA: [PASSÉE/IGNORÉE/ÉCHEC]
-📝 Code Review: [COMPLÉTÉE/ÉCHEC]
+📝 Code Review: [COMPLÉTÉE/IGNORÉE/ÉCHEC]
 🗑️ Branche locale: [SUPPRIMÉE/CONSERVÉE]
 
 ✅ Tous les todos complétés
