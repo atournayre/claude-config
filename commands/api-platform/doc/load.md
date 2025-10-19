@@ -43,6 +43,16 @@ Charge la documentation API Platform depuis leurs sites web respectifs dans des 
 README_PATH: ~/.claude/docs/api-platform/README.md
 DELETE_OLD_API_PLATFORM_DOCS_AFTER_HOURS: 24
 
+## Gestion du Rate Limiting et Restrictions d'Accès
+
+**IMPORTANT** : Les sites web de documentation peuvent implémenter des rate limiters ou restrictions d'accès qui limitent le nombre de requêtes par période de temps. Si tu rencontres des erreurs de type 429 (Too Many Requests), 401 (Unauthorized) ou des échecs de connexion :
+
+1. Implémenter des délais entre les requêtes (pause de 2-3 secondes entre chaque URL)
+2. Réduire le nombre de tâches parallèles si nécessaire
+3. En cas d'échec, réessayer avec un délai exponentiel (attendre 5s, puis 10s, puis 20s, etc.)
+4. Pour les erreurs 401 : tenter avec des user-agents différents ou signaler l'URL comme inaccessible
+5. Noter les URLs qui échouent (rate limiting, accès refusé, etc.) dans le rapport final avec le type d'erreur
+
 ## Flux de Travail
 
 1. Lire le fichier `README_PATH`
