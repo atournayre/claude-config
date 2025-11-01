@@ -4,157 +4,178 @@ Configuration personnelle minimale pour Claude Code. Ce projet s'appuie sur le m
 
 ## Table des matières
 
+- [Philosophie](#philosophie)
 - [Structure du projet](#structure-du-projet)
 - [Installation](#installation)
 - [Marketplace claude-plugin](#marketplace-claude-plugin)
 - [Configuration des permissions](#configuration-des-permissions)
+- [Utilisation](#utilisation)
+
+## Philosophie
+
+Ce projet adopte une approche **minimaliste** :
+- Configuration uniquement (permissions, préférences)
+- Documentation locale pour un accès hors-ligne
+- Configurations MCP pour les intégrations externes
+- **Zéro duplication** : toutes les fonctionnalités sont dans le marketplace
 
 ## Structure du projet
 
 ```
 claude-config/
-├── docs/                   # Documentation locale
-│   ├── api-platform/       # Docs API Platform
-│   ├── atournayre-framework/ # Docs atournayre-framework
-│   ├── claude/             # Docs Claude Code
-│   ├── meilisearch/        # Docs Meilisearch
-│   └── symfony/            # Docs Symfony
-├── mcp/                    # Configurations MCP
-│   ├── chrome-dev-tools.json # Chrome DevTools MCP
-│   └── sentry.json         # Sentry MCP
-├── settings.json           # Configuration principale
-├── CLAUDE.md               # Préférences utilisateur
+├── docs/                   # Documentation locale (API Platform, Symfony, etc.)
+├── mcp/                    # Configurations MCP (Chrome DevTools, Sentry)
+├── settings.json           # Permissions Bash et WebFetch
+├── CLAUDE.md               # Préférences utilisateur et conventions de code
+├── install.sh              # Script d'installation automatique
 └── README.md               # Ce fichier
 ```
 
+**Ce qui n'est PAS ici (disponible dans le marketplace) :**
+- Commandes (43 slash commands)
+- Agents (8 agents spécialisés)
+- Hooks système (8 hooks)
+- Status lines (5 versions)
+- Output styles (7 styles)
+- Scripts utilitaires (assign_github_project.sh, sync-timing.sh)
+- Templates (prompt template, timing-section)
+
 ## Installation
 
-### Installation initiale
+### Prérequis
+
+1. **Claude Code** installé
+2. **Marketplace claude-plugin** cloné :
+   ```bash
+   git clone https://github.com/atournayre/claude-plugin ~/PhpstormProjects/claude-plugin
+   ```
+
+### Installation automatique
 
 ```bash
-# Clone du dépôt
-git clone <votre-repo> claude-config
-cd claude-config
+# Clone ce dépôt
+git clone <votre-repo> ~/PhpstormProjects/claude-config
+cd ~/PhpstormProjects/claude-config
 
-# Installation automatique
+# Installation (copie vers ~/.claude + installe les alias)
 ./install.sh
 
 # Activer les alias
 source ~/.bashrc  # ou source ~/.zshrc
 ```
 
-Le script copie automatiquement la configuration vers `~/.claude/`.
+Le script d'installation :
+- Copie `docs/` et `mcp/` vers `~/.claude/`
+- Copie `settings.json` vers `~/.claude/`
+- Installe automatiquement les alias shell
 
-### Commandes du script d'installation
+### Commandes du script
 
 ```bash
-# Installation complète
-./install.sh
-# ou
-./install.sh install
-
-# Synchroniser après modifications
-./install.sh sync
-
-# Sauvegarder la configuration actuelle
-./install.sh backup
-
-# Restaurer depuis la dernière sauvegarde
-./install.sh restore
-
-# Aide
-./install.sh help
+./install.sh install   # Installation complète (défaut)
+./install.sh sync      # Synchroniser après modifications
+./install.sh backup    # Sauvegarder ~/.claude
+./install.sh restore   # Restaurer depuis backup
+./install.sh aliases   # Réinstaller uniquement les alias
+./install.sh help      # Aide
 ```
 
-### Alias Claude Code disponibles
+### Alias installés
 
 ```bash
-# Alias Claude Code
-alias cc='claude'
-alias ccy='claude --dangerously-skip-permissions'
+# Normal
+cc='claude'
+cld='claude'
 
-alias cld='claude'
-alias cldy='claude --dangerously-skip-permissions'
+# Yolo (skip permissions)
+ccy='claude --dangerously-skip-permissions'
+cldy='claude --dangerously-skip-permissions'
 
-alias cld-chrome='claude --mcp-config ~/.claude/mcp/chrome-dev-tools.json --strict-mcp-config'
-alias cldy-chrome='claude --mcp-config ~/.claude/mcp/chrome-dev-tools.json --strict-mcp-config --dangerously-skip-permissions'
+# Avec MCP Chrome DevTools
+cld-chrome='claude --mcp-config ~/.claude/mcp/chrome-dev-tools.json --strict-mcp-config'
+cldy-chrome='...(avec --dangerously-skip-permissions)'
 
-alias cld-sentry='claude --mcp-config ~/.claude/mcp/sentry.json --strict-mcp-config'
-alias cldy-sentry='claude --mcp-config ~/.claude/mcp/sentry.json --strict-mcp-config --dangerously-skip-permissions'
+# Avec MCP Sentry
+cld-sentry='claude --mcp-config ~/.claude/mcp/sentry.json --strict-mcp-config'
+cldy-sentry='...(avec --dangerously-skip-permissions)'
 ```
 
 ## Marketplace claude-plugin
 
-Ce projet utilise le [marketplace claude-plugin](https://github.com/atournayre/claude-plugin) qui fournit :
+Toutes les fonctionnalités avancées proviennent du [marketplace](https://github.com/atournayre/claude-plugin) composé de **5 plugins modulaires**.
 
 ### Plugins disponibles
 
-1. **claude** - Fonctionnalités de base
-   - `/claude:challenge` - Évaluation de réponses
-   - `/claude:alias:add` - Créer des alias
-   - `/claude:doc:load` - Charger doc Claude Code
-   - `/claude:doc:question` - Interroger doc Claude Code
-   - `/claude:make:command` - Générateur de commandes
+#### 1. **claude** - Outils de base Claude Code
+- `/claude:challenge` - Auto-évaluation des réponses
+- `/claude:alias:add` - Créer des alias de commandes
+- `/claude:doc:load` - Charger la documentation Claude Code
+- `/claude:doc:question` - Interroger la doc locale
+- `/claude:make:command` - Générateur de slash commands
 
-2. **customize** - Personnalisation
-   - 8 hooks système (session, tools, notifications)
-   - 5 status lines (v1 à v5)
-   - Utilitaires (LLM, TTS)
+#### 2. **customize** - Personnalisation avancée
+- **8 hooks système** :
+  - `session_start`, `user_prompt_submit`, `pre_tool_use`, `post_tool_use`
+  - `pre_compact`, `notification`, `stop`, `subagent_stop`
+- **5 status lines** : v1 à v5 (v5 recommandée : historique 3 prompts, coût, Git info)
+- **Utilitaires** : LLM helpers, Text-to-Speech
 
-3. **dev** - Développement PHP/Symfony
-   - **Git** : branch, commit, pr, conflit, status
-   - **GitHub** : fix
-   - **Doc** : adr, rtfm, update
-   - **Debug** : error-fix, stack-trace
-   - **QA** : phpstan
-   - **Analyse** : impact
-   - **Context** : default, elegant_object
-   - **Sessions** : start, current, list, end, update, help
-   - **Frameworks** : symfony, api-platform, meilisearch, atournayre-framework
-   - **Think** : harder, ultra
-   - **Workflow** : docker, analytics, question, code, prepare
-   - **8 agents spécialisés** : scrapers docs, reviewers, error resolvers
-   - **1 script** : assign_github_project.sh
+#### 3. **dev** - Développement PHP/Symfony (36+ commandes)
+- **Git** : `/git:branch`, `/git:commit`, `/git:pr`, `/git:conflit`, `/git:status`
+- **GitHub** : `/github:fix` (correction automatique d'issues)
+- **Doc** : `/doc:adr`, `/doc:rtfm`, `/doc:update`
+- **Debug** : `/debug:error-fix`, `/debug:stack-trace`
+- **QA** : `/qa:phpstan` (résolution automatique niveau 9)
+- **Analyse** : `/analyse:impact` (rapports métier/technique)
+- **Context** : `/context:default`, `/context:elegant_object`
+- **Sessions** : 6 commandes de gestion
+- **Frameworks** : Symfony, API Platform, Meilisearch, atournayre-framework
+- **Think** : `/think:harder`, `/think:ultra` (analyse approfondie)
+- **Workflow** : docker, analytics, question, code, prepare
+- **8 agents** : scrapers docs, elegant-objects-reviewer, phpstan-error-resolver, meta-agent
+- **2 scripts** : assign_github_project.sh, sync-timing.sh
+- **2 templates** : prompt/README.md, timing-section.md
 
-4. **symfony** - Symfony 6.4
-   - `/symfony:make` - Makers Symfony
-   - `/symfony:doc:load` - Doc Symfony
-   - `/symfony:doc:question` - Questions doc
-   - **Skill complet** : workflows, best practices, références
+#### 4. **symfony** - Symfony 6.4 complet
+- `/symfony:make` - Utilise les makers Symfony
+- `/symfony:doc:load` - Doc Symfony locale
+- `/symfony:doc:question` - Questions sur la doc
+- **Skill complet** : workflows, best practices, références (API Platform, Doctrine, Performance, Security, Testing)
 
-5. **output-styles** - Styles de sortie
-   - GenUI, Markdown, HTML, Table, Bullet points, Ultra concise, YAML
+#### 5. **output-styles** - 7 styles de sortie
+- **GenUI** : Pages HTML auto-contenues (rapports visuels)
+- **Markdown Focused** : Markdown enrichi
+- **HTML Structured** : HTML sémantique
+- **Table Based** : Format tabulaire
+- **Bullet Points** : Listes hiérarchiques
+- **Ultra Concise** : Réponses minimales
+- **YAML Structured** : Format YAML valide
 
-### Installation du marketplace
+### Installation des plugins
 
-```bash
-# Clone le marketplace
-git clone https://github.com/atournayre/claude-plugin ~/PhpstormProjects/claude-plugin
-
-# Installe les plugins via Claude Code
-# Les plugins seront disponibles automatiquement
-```
+Les plugins sont automatiquement détectés par Claude Code si placés dans `~/PhpstormProjects/claude-plugin`.
 
 Voir la [documentation complète du marketplace](https://github.com/atournayre/claude-plugin).
 
 ## Configuration des permissions
 
-Le fichier `settings.json` contient uniquement les permissions pour les outils Bash et WebFetch.
+### Permissions Bash
 
-### Permissions Bash autorisées
+Commandes autorisées dans `settings.json` :
 
 ```json
 {
   "permissions": {
     "allow": [
-      "Bash(git:*)",
-      "Bash(docker:*)",
+      "Bash(./vendor/bin/phpstan:*)",
+      "Bash(bin/console:*)",
+      "Bash(chmod:*)",
       "Bash(composer:*)",
-      "Bash(npm:*)",
-      "Bash(make:*)",
+      "Bash(docker:*)",
+      "Bash(git:*)",
       "Bash(gh:*)",
-      "Bash(ls:*)",
-      "Bash(mkdir:*)",
+      "Bash(make:*)",
+      "Bash(npm:*)",
       "Bash(php:*)",
       "Bash(vendor/bin/*:*)"
     ],
@@ -171,6 +192,8 @@ Le fichier `settings.json` contient uniquement les permissions pour les outils B
 
 ### Permissions WebFetch
 
+Domaines autorisés :
+
 ```json
 {
   "permissions": {
@@ -184,20 +207,102 @@ Le fichier `settings.json` contient uniquement les permissions pour les outils B
 }
 ```
 
+## Utilisation
+
+### Workflow recommandé
+
+1. **Démarrer Claude Code** avec un alias :
+   ```bash
+   cc  # ou cld, ccy, cld-chrome, etc.
+   ```
+
+2. **Utiliser les commandes du marketplace** :
+   ```bash
+   /git:commit                    # Commit conventionnel
+   /git:pr                        # Pull Request
+   /symfony:make Controller       # Maker Symfony
+   /qa:phpstan                    # Fix PHPStan
+   /doc:update                    # Doc auto
+   ```
+
+3. **Personnaliser avec les hooks** (plugin customize) :
+   - Status line v5 pour l'historique et les coûts
+   - Notifications système sur événements
+   - Hooks pre/post pour validation
+
+### Documentation locale
+
+La documentation est stockée localement dans `docs/` pour un accès hors-ligne :
+- API Platform
+- atournayre-framework
+- Claude Code
+- Meilisearch
+- Symfony
+
+Charger avec `/[framework]:doc:load`, interroger avec `/[framework]:doc:question`.
+
+### Configurations MCP
+
+Deux configurations disponibles dans `mcp/` :
+- **Chrome DevTools** : Debugging navigateur
+- **Sentry** : Monitoring erreurs
+
+Utiliser avec `cld-chrome` ou `cld-sentry`.
+
+## Avantages de cette architecture
+
+✅ **Maintenabilité** : Une seule source de vérité (marketplace)
+✅ **Réutilisabilité** : Plugins partagés entre projets
+✅ **Modularité** : Activer uniquement ce dont on a besoin
+✅ **Collaboration** : Améliorer les plugins profite à tous
+✅ **Légèreté** : claude-config reste ultra-minimal
+
 ## Contribution
 
-Pour contribuer :
+### claude-config (ce projet)
+Uniquement pour :
+- Permissions (settings.json)
+- Préférences personnelles (CLAUDE.md)
+- Documentation locale (docs/)
+- Configurations MCP (mcp/)
 
-1. Fork le repository
-2. Créez une branche feature (`git checkout -b feature/AmazingFeature`)
+### claude-plugin (marketplace)
+Pour toutes les fonctionnalités :
+- Nouvelles commandes
+- Nouveaux agents
+- Hooks et status lines
+- Output styles
+- Scripts et templates
+
+1. Fork [claude-plugin](https://github.com/atournayre/claude-plugin)
+2. Créez une branche (`git checkout -b feature/AmazingFeature`)
 3. Committez (`git commit -m 'Add AmazingFeature'`)
 4. Push (`git push origin feature/AmazingFeature`)
 5. Ouvrez une Pull Request
 
 ## Support
 
-- Ouvrez une issue sur GitHub
-- Consultez la [documentation du marketplace](https://github.com/atournayre/claude-plugin)
+- Issues : [claude-config](https://github.com/atournayre/claude-config/issues) ou [claude-plugin](https://github.com/atournayre/claude-plugin/issues)
+- Documentation marketplace : [claude-plugin](https://github.com/atournayre/claude-plugin)
+
+## Statistiques
+
+**claude-config (minimal)** :
+- 2 répertoires copiés (docs, mcp)
+- 1 fichier de config (settings.json)
+- 1 fichier de préférences (CLAUDE.md)
+
+**claude-plugin (complet)** :
+- 5 plugins modulaires
+- 43+ slash commands
+- 8 agents spécialisés
+- 8 hooks système
+- 5 status lines
+- 7 output styles
+- 2 scripts utilitaires
+- 2 templates
+
+**Total migré** : 78 fichiers, 11269 lignes (90% de réduction)
 
 ## Licence
 
@@ -205,5 +310,5 @@ MIT License
 
 ## Remerciements
 
-- Anthropic pour Claude Code
-- La communauté Claude Code
+- [Anthropic](https://www.anthropic.com) pour Claude Code
+- La communauté Claude Code pour les contributions
