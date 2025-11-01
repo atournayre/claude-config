@@ -157,15 +157,8 @@ backup_config() {
 # Configuration des répertoires à copier
 DIRECTORIES=(
     "_templates"
-    "agents"
-    "commands"
     "docs"
-    "hooks"
     "mcp"
-    "output-styles"
-    "skills"
-    "status_lines"
-    "task"
 )
 
 # Fonction pour copier la configuration
@@ -200,11 +193,6 @@ install_config() {
         rm -rf "$CLAUDE_DIR/$dir"
         cp -r "$CONFIG_DIR/$dir" "$CLAUDE_DIR/$dir"
         copied_items+=("~/.claude/$dir/")
-        
-        # Post-traitement spécial pour les hooks
-        if [ "$dir" = "hooks" ]; then
-            chmod +x "$CLAUDE_DIR/$dir"/*.sh 2>/dev/null || true
-        fi
     done
     
     echo "✅ Configuration installée!"
