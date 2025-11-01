@@ -22,8 +22,6 @@ claude-config/
 ├── mcp/                    # Configurations MCP
 │   ├── chrome-dev-tools.json # Chrome DevTools MCP
 │   └── sentry.json         # Sentry MCP
-├── _templates/             # Templates pour génération
-│   └── prompt/README.md    # Template de slash command
 ├── settings.json           # Configuration principale
 ├── CLAUDE.md               # Préférences utilisateur
 └── README.md               # Ce fichier

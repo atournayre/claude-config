@@ -156,7 +156,6 @@ backup_config() {
 
 # Configuration des répertoires à copier
 DIRECTORIES=(
-    "_templates"
     "docs"
     "mcp"
 )
