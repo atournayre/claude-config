@@ -158,6 +158,7 @@ backup_config() {
 DIRECTORIES=(
     "docs"
     "mcp"
+    "status-line"
 )
 
 # Fonction pour copier la configuration
